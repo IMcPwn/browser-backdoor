@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 # BrowserBackdoorServer - https://github.com/IMcPwn/browser-backdoor
 
 # BrowserBackdoorServer is a WebSocket server that listens for connections 
