@@ -5,7 +5,8 @@
 #
 
 host: "0.0.0.0"
-port: 8080
-secure: true
+port: 1234
+# Requires valid private key and certificate.
+secure: false
 priv_key: "privkey.pem"
 cert_chain: "cert.pem"
