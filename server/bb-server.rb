@@ -106,6 +106,8 @@ def main()
                 # TODO: Support space
                 sendCommand(cmdIn[1], $wsList[$selected])
             end
+        else
+            puts "Invalid command"
         end
     end
 end
