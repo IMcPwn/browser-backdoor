@@ -1,14 +1,15 @@
 language: ruby
 rvm:
   - 2.1.5
+
 addons:
   apt:
     packages:
     - xvfb
+
 cache:
   directories:
     - "$HOME/.npm"
-    - "$HOME/.electron"
     - "$HOME/.rvm"
     - "client/node_modules"
 
@@ -25,6 +26,7 @@ install:
   - nvm install $NODE_VERSION
   - nvm use $NODE_VERSION
   - npm install electron-packager -g
+
 script:
   - cd client && npm install && electron-packager . --all; cd -
   - cd server && bundle install && ruby -c *.rb; cd -
