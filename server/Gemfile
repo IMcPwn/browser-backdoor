@@ -8,7 +8,3 @@ source 'https://rubygems.org'
 
 gem 'eventmachine'
 gem 'em-websocket'
-
-group :test do
-    gem 'rake'
-end
