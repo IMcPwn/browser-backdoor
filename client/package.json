@@ -1,0 +1,23 @@
+{
+  "name": "BrowserBackdoor",
+  "version": "1.0.0",
+  "description": "Electron application to connect to BrowserBackdoorServer",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IMcPwn/browser-backdoor.git"
+  },
+  "author": "IMcPwn ",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IMcPwn/browser-backdoor/issues"
+  },
+  "homepage": "https://github.com/IMcPwn/browser-backdoor",
+  "devDependencies": {
+    "electron-prebuilt": "^1.1.2",
+    "auto-launch": "2.0.1"
+  }
+}
