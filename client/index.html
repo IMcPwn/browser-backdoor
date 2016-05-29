@@ -10,8 +10,11 @@
     (function connect() {
         if ("WebSocket" in window)
         {
-            // Change to where you're hosting the WebSocket server.
-            var ws = new WebSocket("wss://i.imcpwn.com:8080");
+            // Change host and port to where you're hosting
+            // the WebSocket server.
+            // Also change ws:// to wss:// if secure is enabled on the
+            // server.
+            var ws = new WebSocket("ws://your-server-here:1234");
             ws.onmessage = function(evt)
             {
                 if (ws.readyState === 1) {
