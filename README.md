@@ -11,7 +11,7 @@ It will not have access to the Electron API of the host computer unless the Brow
 
 Some things you can do if you have access to the Electron API:
 
-1. [Open new browser windows that points to any website.]
+1. [Open new browser windows that can point to any website.]
 (https://github.com/electron/electron/blob/master/docs/api/browser-window.md#new-browserwindowoptions)
 
 2. [Change and view the clipboard.]
