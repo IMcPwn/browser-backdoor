@@ -4,7 +4,6 @@ rvm:
 addons:
   apt:
     packages:
-    - nodejs
     - xvfb
 cache:
 - apt: true
@@ -12,11 +11,19 @@ cache:
 - "$HOME/.electron"
 - "$HOME/.rvm"
 - "client/node_modules"
+
 gemfile: server/Gemfile
+
+env: NODE_VERSION=4
+
 install:
   - export DISPLAY=':99.0'
   - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+  - git clone https://github.com/creationix/nvm.git /tmp/.nvm
+  - source /tmp/.nvm/nvm.sh
+  - nvm install $NODE_VERSION
+  - nvm use $NODE_VERSION
   - npm install electron-packager -g
 script:
-  - cd client && npm install && electron-packager . --all && cd -
-  - cd server && bundle install && cd -
+  - cd client && npm install && electron-packager . --all; cd -
+  - cd server && bundle install; cd -
