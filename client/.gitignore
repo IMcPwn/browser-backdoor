@@ -1,8 +1,8 @@
 node_modules/
-beef-desktop-win32-x64/
-beef-desktop-win32-ia32/
-beef-desktop-linux-x64/
-beef-desktop-linux-ia32/
+BrowserBackdoor-win32-x64/
+BrowserBackdoor-win32-ia32/
+BrowserBackdoor-linux-x64/
+BrowserBackdoor-linux-ia32/
 *.png
 *.ico
 *.exe
