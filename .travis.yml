@@ -8,6 +8,7 @@ addons:
     - xvfb
 cache:
 - apt: true
+- "$HOME/.npm"
 - "$HOME/.electron"
 - "$HOME/.rvm"
 - "client/node_modules"
@@ -15,6 +16,7 @@ gemfile: server/Gemfile
 install:
   - export DISPLAY=':99.0'
   - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+  - npm install electron-packager -g
 script:
-  - cd client && npm install && cd -
+  - cd client && npm install && electron-packager . --all && cd -
   - cd server && bundle install && cd -
