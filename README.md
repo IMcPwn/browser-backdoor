@@ -1,10 +1,9 @@
 BrowserBackdoor [![Build Status](https://travis-ci.org/IMcPwn/browser-backdoor.svg?branch=master)](https://travis-ci.org/IMcPwn/browser-backdoor) [![Code Climate](https://codeclimate.com/github/IMcPwn/browser-backdoor/badges/gpa.svg)](https://codeclimate.com/github/IMcPwn/browser-backdoor)
 ===================
-BrowserBackdoor is an electron application that uses a simple JavaScript backdoor to connect to the listener.
+BrowserBackdoor is an [Electron](https://github.com/electron/electron) application that uses a JavaScript WebSocket Backdoor to connect to the listener.
 
-
-BrowserBackdoorServer is a WebSocket server that listens for connections from BrowserBackdoor
-and creates an command line interface for executing commands on the remote system(s).
+BrowserBackdoorServer is a [WebSocket](https://en.wikipedia.org/wiki/WebSocket) server that listens for incoming WebSocket connections
+and creates a command-line interface for sending commands to the remote system.
 
 The JavaScript backdoor in BrowserBackdoor can be used on all browsers that support WebSockets.
 It will not have access to the Electron API of the host computer unless the BrowserBackdoor Client application is used.
