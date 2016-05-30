@@ -78,7 +78,7 @@ WELCOME_MESSAGE = ""\
 def cmdLine()
     puts WELCOME_MESSAGE
     print "Enter help for help."
-    while true
+    loop do
         print "\n> "
         cmdIn = gets.chomp.split()
         case cmdIn[0]
@@ -131,7 +131,7 @@ def cmdLine()
                 next
             end
             if cmdIn.length < 2
-                while true
+                loop do
                     print "Enter the command to send. (exit when done)\nCMD-#{$selected}> "
                     cmdSend = gets.split.join(' ')
                     break if cmdSend == "exit"
