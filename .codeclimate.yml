@@ -13,5 +13,3 @@ engines:
       languages:
       - ruby
       - javascript
-  nodesecurity:
-    enabled: true
