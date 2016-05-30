@@ -13,3 +13,7 @@ engines:
       languages:
       - ruby
       - javascript
+ratings:
+  paths:
+  - server/**
+  - client/**
