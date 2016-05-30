@@ -82,7 +82,7 @@ def infoCommand()
             sendCommand(cmd, $wsList[$selected])
         rescue
              print_error("Error sending command. Selected session may no longer exist.")
-             return
+             break
         end
     }
 end
@@ -125,14 +125,14 @@ def useCommand(cmdIn)
     if cmdIn.length < 2
         print_error("Invalid usage. Try help for help.")
         return
-     end
-     selectIn = cmdIn[1].to_i
-     if selectIn > $wsList.length - 1
-         print_error("Session does not exist.")
-         return
-     end
-     $selected = selectIn
-     print_notice("Selected session is now " + $selected.to_s + ".")
+    end
+    selectIn = cmdIn[1].to_i
+    if selectIn > $wsList.length - 1
+        print_error("Session does not exist.")
+        return
+    end
+    $selected = selectIn
+    print_notice("Selected session is now " + $selected.to_s + ".")
 end
 
 def cmdLine()
@@ -179,8 +179,11 @@ def cmdLine()
 end
 
 def validSession?(selected)
-    if selected == -1 # || TODO: Check if session no longer exists
+    if selected == -1
         print_error("No session selected. Try use SESSION_ID first.")
+        return false
+    elsif $wsList.length < $selected
+        print_error("Session no longer exists.")
         return false
     end
     return true
@@ -208,6 +211,8 @@ def startEM(host, port, secure, priv_key, cert_chain)
             ws.onclose {
                 print_error("Connection closed")
                 $wsList.delete(ws)
+                # TODO: Fix this. Reset selected error so the wrong session is not used.
+                $selected = -1
             }
             ws.onmessage { |msg|
                 print_notice("Response received: " + msg)
@@ -215,6 +220,8 @@ def startEM(host, port, secure, priv_key, cert_chain)
             ws.onerror { |e|
                 print_error(e.message)
                 $wsList.delete(ws)
+                # Reset selected variable after error
+                $selected = -1
             }
         end
     }
