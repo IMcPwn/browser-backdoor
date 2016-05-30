@@ -137,9 +137,9 @@ end
 
 def cmdLine()
     puts WELCOME_MESSAGE
-    print "\nWebSocket listener is now running...\nEnter help for help."
+    puts "\nWebSocket listener is now running...\nEnter help for help."
     loop do
-        print "\n> "
+        print "\nbbf > "
         cmdIn = gets.chomp.split()
         case cmdIn[0]
         when "help"
