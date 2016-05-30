@@ -1,6 +1,3 @@
-languages:
-   Ruby: true
-   JavaScript: true
 engines:
   rubocop:
     enabled: true
@@ -12,5 +9,9 @@ engines:
     enabled: true
   duplication:
     enabled: true
+    config:
+      languages:
+      - ruby
+      - javascript
   nodesecurity:
     enabled: true
