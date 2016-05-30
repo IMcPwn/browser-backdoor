@@ -1,5 +1,9 @@
 # Certificate files
 *.pem
+# Certbot
+certbot-auto
+# Logs
+*.log
 
 *.gem
 *.rbc

