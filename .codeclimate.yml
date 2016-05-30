@@ -15,5 +15,6 @@ engines:
       - javascript
 ratings:
   paths:
-  - server/**
-  - client/**
+  - "**.rb"
+  - "**.js"
+  - "**.sh"
