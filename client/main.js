@@ -50,14 +50,15 @@ function manageStartup(enable) {
             if(enabled) return;
             return appLauncher.enable();
         }).then(function(err){
-            // TODO: Deal with error
+            // If you want to remove all console output, remove lines that contain "console.error(err)"
+            if (err !== undefined) console.error(err);
         });
     } else {
         appLauncher.isEnabled().then(function(enabled){
             if(!enabled) return;
             return appLauncher.disable();
         }).then(function(err){
-            // TODO: Deal with error
+            if (err !== undefined) console.error(err);
         }); 
     }
 }
@@ -121,9 +122,8 @@ if (process.platform === 'darwin') {
 }
 
 // Catch uncaughtExceptions so no popups appear on errors.
-process.on('uncaughtException', function ( err ) {
-    // TODO: Restart application or print error message
-    console.error('An uncaughtException was found, the program will end.');
+process.on('uncaughtException', function (err) {
+    console.error(err);
     process.exit(1);
 });
 
