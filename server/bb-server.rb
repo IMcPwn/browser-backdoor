@@ -155,7 +155,7 @@ end
 
 def cmdLine(host, port, secure)
     puts WELCOME_MESSAGE
-    puts "\nServer is listening on #{host.to_s}:#{port.to_s}" + ((secure == true) ? " securely" : "") + "..."
+    puts "\nServer is listening on #{host}:#{port}" + ((secure == true) ? " securely" : "") + "..."
     puts "Enter help for help."
     loop do
         print "\nbbf > "
