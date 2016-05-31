@@ -30,18 +30,24 @@ Some things you can do if you have access to the Electron API:
 Installing
 ===================
 
-NodeJS and NPM are required for the client.
+NodeJS and NPM are required for BrowserBackdoor.
 
-Ruby 2.1+ is required for the server.
+Ruby 2.1+ is required for BrowserBackdoorServer.
 
-First, clone the repository. All the rest of the commands shown assume you are in the root of the repository.
+BrowserBackdoor is supported on all devices supported by Electron. 
+Currently that is [Windows 32/64, OS X 64, and Linux 32/64](https://github.com/electron-userland/electron-packager#supported-platforms).
+
+BrowserBackdoorServer is officially supported on Ubuntu 14.04 at the moment.
+It has not been tested on any other platforms. The goal is to work on Windows and Linux.
+
+To install anything, first, clone the repository. All the rest of the commands shown assume you are in the root of the repository.
 
 ```sh
 git clone https://github.com/IMcPwn/browser-backdoor
 cd browser-backdoor
 ```
 
-How to install and run the BrowserBackdoor electron application.
+How to install and run the BrowserBackdoor Electron application.
 
 ```sh
 cd client
@@ -57,7 +63,7 @@ npm install electron-packager -g
 electron-packager . --all
 ```
 
-How to install and run the BrowserBackdoorServer.
+How to install and run BrowserBackdoorServer.
 ```sh
 cd server
 gem install bundler
@@ -69,7 +75,7 @@ ruby bb-server.rb
 Usage
 ===================
 The client application will run in the background and provide no user interface while running. 
-To check that it's running, quit it, or enable/disable system startup press Command (OS X) OR Control (Windows/Linux) + Alt + \ or whatever you configured the shortcut as in main.js.
+To check that it's running, quit it, or enable/disable system startup press Command (OS X) OR Control (Windows/Linux) + Alt + \ or whatever you configured the shortcut as in client/main.js.
 
 The server application's usage can be accessed by typing help in the command line.
 
