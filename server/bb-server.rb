@@ -101,14 +101,18 @@ end
 def execCommand(cmdIn)
     if cmdIn.length < 2
         loop do
-            print "Enter the command to send. (exit when done)\nCMD-#{$selected}> "
-            cmdSend = gets.split.join(' ')
-            break if cmdSend == "exit"
-            next if cmdSend == ""
-            begin
-                sendCommand(cmdSend, $wsList[$selected])
-            rescue
-                print_error("Error sending command. Selected session may no longer exist.")
+            if validSession?($selected)
+                print "Enter the command to send. (exit when done)\nCMD-#{$selected}> "
+                cmdSend = gets.split.join(' ')
+                break if cmdSend == "exit"
+                next if cmdSend == ""
+                begin
+                    sendCommand(cmdSend, $wsList[$selected])
+                rescue
+                    print_error("Error sending command. Selected session may no longer exist.")
+                end
+            else
+                break
             end
         end
     else
