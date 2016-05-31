@@ -98,23 +98,26 @@ def sessionsCommand()
     }
 end
 
+def execCommandLoop()
+    loop do
+        if !validSession?($selected)
+            return
+        end
+        print "Enter the command to send. (exit when done)\nCMD-##{$selected}> "
+        cmdSend = gets.split.join(' ')
+        break if cmdSend == "exit"
+        next if cmdSend == ""
+        begin
+            sendCommand(cmdSend, $wsList[$selected])
+        rescue
+            print_error("Error sending command. Selected session may no longer exist.")
+        end
+    end
+end
+
 def execCommand(cmdIn)
     if cmdIn.length < 2
-        loop do
-            if validSession?($selected)
-                print "Enter the command to send. (exit when done)\nCMD-#{$selected}> "
-                cmdSend = gets.split.join(' ')
-                break if cmdSend == "exit"
-                next if cmdSend == ""
-                begin
-                    sendCommand(cmdSend, $wsList[$selected])
-                rescue
-                    print_error("Error sending command. Selected session may no longer exist.")
-                end
-            else
-                break
-            end
-        end
+        execCommandLoop()
     else
         # TODO: Support space
         begin
@@ -139,6 +142,14 @@ def useCommand(cmdIn)
     print_notice("Selected session is now " + $selected.to_s + ".")
 end
 
+def printHelp()
+    COMMANDS.each do |key, array|
+        print key
+        print " --> "
+        puts array
+    end
+end
+
 def cmdLine()
     puts WELCOME_MESSAGE
     puts "\nWebSocket listener is now running...\nEnter help for help."
@@ -147,11 +158,7 @@ def cmdLine()
         cmdIn = gets.chomp.split()
         case cmdIn[0]
         when "help"
-            COMMANDS.each do |key, array|
-                print key
-                print " --> "
-                puts array
-            end
+            printHelp()
         when "exit"
             break
         when "sessions"
@@ -215,7 +222,7 @@ def startEM(host, port, secure, priv_key, cert_chain)
             ws.onclose {
                 print_error("Connection closed")
                 $wsList.delete(ws)
-                # TODO: Fix this. Reset selected error so the wrong session is not used.
+                # TODO: Change this. Reset selected error so the wrong session is not used.
                 $selected = -1
             }
             ws.onmessage { |msg|
