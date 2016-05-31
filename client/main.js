@@ -139,12 +139,12 @@ app.on('before-quit', function() {
 });
 
 app.on('will-quit', function() {
-    globalShortcut.unregisterAll()
+    globalShortcut.unregisterAll();
 });
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
-app.on('ready', createWindow)
+app.on('ready', createWindow);
 
 // Re-open if all windows are closed.
 app.on('window-all-closed', function() {
