@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # BrowserBackdoorServer - https://github.com/IMcPwn/browser-backdoor
 
-# BrowserBackdoorServer is a WebSocket server that listens for connections 
+# BrowserBackdoorServer (BBS) is a WebSocket server that listens for connections 
 # from BrowserBackdoor and creates an command-line interface for 
 # executing commands on the remote system(s).
 # For more information visit: http://imcpwn.com
@@ -158,7 +158,7 @@ def cmdLine(host, port, secure)
     puts "\nServer is listening on #{host}:#{port}" + ((secure == true) ? " securely" : "") + "..."
     puts "Enter help for help."
     loop do
-        print "\nbbf > "
+        print "\nbbs > "
         cmdIn = gets.chomp.split()
         case cmdIn[0]
         when "help"
