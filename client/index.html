@@ -14,7 +14,7 @@
             // the WebSocket server.
             // Also change ws:// to wss:// if secure is enabled on the
             // server.
-            var ws = new WebSocket("ws://your-server-here:1234");
+            ws = new WebSocket("ws://your-server-here:1234");
             ws.onmessage = function(evt)
             {
                 if (ws.readyState === 1) {
@@ -24,8 +24,8 @@
             };
             ws.onclose = function()
             {
-                // Reconnect after 5 seconds.
-                setTimeout(connect, 5000);
+                // Reconnect after 10 seconds.
+                setTimeout(connect, 10000);
             };
        }
     })();
