@@ -69,8 +69,8 @@ def main()
         configfile = YAML.load_file("config.yml")
         Thread.new{startEM(configfile['host'], configfile['port'], configfile['secure'], configfile['priv_key'], configfile['cert_chain'])}
         comp = proc { |s| COMMANDS.map{|cmd, _desc| cmd}.flatten.grep(/^#{Regexp.escape(s)}/) }
-        Readline.completion_append_character = " "
-        Readline.completion_proc = comp
+        Readline::completion_append_character = " "
+        Readline::completion_proc = comp
         cmdLine(configfile['host'], configfile['port'], configfile['secure'])
     rescue => e
         puts e.message
@@ -171,7 +171,7 @@ def cmdLine(host, port, secure)
     puts WELCOME_MESSAGE
     puts "\nServer is listening on #{host}:#{port}" + ((secure == true) ? " securely" : "") + "..."
     puts "Enter help for help."
-    while cmdIn = Readline.readline("\nbbs > ", true)
+    while cmdIn = Readline::readline("\nbbs > ", true)
         case cmdIn.split()[0]
         when "help"
             helpCommand()
