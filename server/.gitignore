@@ -5,6 +5,8 @@ certbot-auto
 # Logs
 *.log
 
+Gemfile.lock
+
 *.gem
 *.rbc
 /.config
