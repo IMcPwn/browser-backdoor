@@ -71,7 +71,8 @@ def main()
         comp = proc { |s| COMMANDS.map{|cmd, _desc| cmd}.flatten.grep(/^#{Regexp.escape(s)}/) }
         Readline::completion_append_character = " "
         Readline::completion_proc = comp
-        cmdLine(configfile['host'], configfile['port'], configfile['secure'])
+        printWelcome(configfile['host'], configfile['port'], configfile['secure'])
+        cmdLine()
     rescue => e
         puts e.message
         puts e.backtrace
@@ -122,8 +123,8 @@ def execCommandLoop()
         next if cmdSend == "" || cmdSend == nil
         begin
             sendCommand(cmdSend, $wsList[$selected])
-        rescue
-            print_error("Error sending command. Selected session may no longer exist.")
+        rescue => e
+            print_error("Error sending command: " + e.message)
         end
     end
 end
@@ -136,11 +137,10 @@ def execCommand(cmdIn)
             file = File.open(cmdIn[1], "r")
             cmdSend = file.read
             file.close
-            sendCommand(cmdSend, $wsList[$selected])
         rescue => e
-            print_error("Error sending command. Selected session may no longer exist.")
-            puts e.message
+            print_error("Error sending command: " + e.message)
         end
+        sendCommand(cmdSend, $wsList[$selected])
     end
 end
 
@@ -167,45 +167,56 @@ def helpCommand()
     end
 end
 
-def cmdLine(host, port, secure)
+def printWelcome(host, port, secure)
     puts WELCOME_MESSAGE
     puts "\nServer is listening on #{host}:#{port}" + ((secure == true) ? " securely" : "") + "..."
     puts "Enter help for help."
-    while cmdIn = Readline::readline("\nbbs > ", true)
-        case cmdIn.split()[0]
-        when "help"
-            helpCommand()
-        when "exit"
-            break
-        when "sessions"
-            sessionsCommand()        
-        when "use"
-            useCommand(cmdIn.split())
-        when "info"
-            if validSession?($selected)
-                infoCommand()
-            else
+end
+
+def cmdLine()
+    begin
+        while cmdIn = Readline::readline("\nbbs > ", true)
+            case cmdIn.split()[0]
+            when "help"
+                helpCommand()
+            when "exit"
+                break
+            when "sessions"
+                sessionsCommand()
+            when "use"
+                useCommand(cmdIn.split())
+            when "info"
+                if validSession?($selected)
+                    infoCommand()
+                else
+                    next
+                end
+            when "exec"
+               if validSession?($selected)
+                   execCommand(cmdIn.split())
+               else
+                   next
+               end
+            when "get_cert"
+                if File.file?("getCert.sh")
+                    system("./getCert.sh")
+                else
+                    print_error("getCert.sh does not exist")
+                end
+            when "pry"
+                binding.pry
+            when nil
                 next
+            else
+                print_error("Invalid command. Try help for help.")
             end
-        when "exec"
-           if validSession?($selected)
-               execCommand(cmdIn.split())
-           else
-               next
-           end
-       when "get_cert"
-           if File.file?("getCert.sh")
-               system("./getCert.sh")
-           else
-               print_error("getCert.sh does not exist")
-           end
-       when "pry"
-           binding.pry
-       when nil
-           next
-       else
-           print_error("Invalid command. Try help for help.")
         end
+    rescue Interrupt
+        print_error("Caught interrupt (in the future use exit). Quitting...")
+        return
+    rescue => e
+        print_error(e.message)
+        return
     end
 end
 
