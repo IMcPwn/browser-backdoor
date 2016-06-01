@@ -30,6 +30,7 @@
 
 require 'em-websocket'
 require 'yaml'
+require 'pry'
 
 $wsList = Array.new
 $selected = -1
@@ -41,6 +42,7 @@ COMMANDS = {
     "info" => "Get session information (IP, User Agent, Operating System, Language)",
     "exec" => "Execute commands on the targeted session interactively. Provide an argument to execute a file's contents.",
     "get_cert" => "Get a free TLS certificate from LetsEncrypt",
+    "pry" => "Drop into a PRY session",
     "load" => "Load a module (not implemented yet)"
 }
 INFO_COMMANDS = {
@@ -112,7 +114,7 @@ def execCommandLoop()
         print "\nCMD-##{$selected}> "
         cmdSend = gets.split.join(' ')
         break if cmdSend == "exit"
-        next if cmdSend == ""
+        next if cmdSend == "" || cmdSend == nil
         begin
             sendCommand(cmdSend, $wsList[$selected])
         rescue
@@ -194,6 +196,8 @@ def cmdLine(host, port, secure)
            else
                print_error("getCert.sh does not exist")
            end
+       when "pry"
+           binding.pry
        when nil
            next
        else
