@@ -44,7 +44,7 @@ COMMANDS = {
     "info" => "Get session information (IP, User Agent, Operating System, Language)",
     "exec" => "Execute commands on the targeted session interactively. Provide an argument to execute a file's contents.",
     "get_cert" => "Get a free TLS certificate from LetsEncrypt",
-    "pry" => "Drop into a PRY session",
+    "pry" => "Drop into a Pry session",
     "load" => "Load a module (not implemented yet)"
 }.sort
 INFO_COMMANDS = {
@@ -69,9 +69,7 @@ def main()
     begin
         configfile = YAML.load_file("config.yml")
         Thread.new{startEM(configfile['host'], configfile['port'], configfile['secure'], configfile['priv_key'], configfile['cert_chain'])}
-        comp = proc { |s| COMMANDS.map{|cmd, _desc| cmd}.flatten.grep(/^#{Regexp.escape(s)}/) }
-        Readline::completion_append_character = " "
-        Readline::completion_proc = comp
+        setupAutocomplete()
         printWelcome(configfile['host'], configfile['port'], configfile['secure'])
         cmdLine()
     rescue => e
@@ -182,6 +180,12 @@ def printWelcome(host, port, secure)
     puts "Enter help for help."
 end
 
+def setupAutocomplete()
+    comp = proc { |s| COMMANDS.map{|cmd, _desc| cmd}.flatten.grep(/^#{Regexp.escape(s)}/) }
+    Readline::completion_append_character = " "
+    Readline::completion_proc = comp
+end
+
 def cmdLine()
     begin
         while cmdIn = Readline::readline("\nbbs > ".colorize(:cyan), true)
@@ -210,6 +214,7 @@ def cmdLine()
                 getCertCommand()
             when "pry"
                 binding.pry
+                setupAutocomplete()
             when nil
                 next
             else
