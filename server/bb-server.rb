@@ -138,6 +138,7 @@ def execCommand(cmdIn)
             file.close
         rescue => e
             print_error("Error sending command: " + e.message)
+            return
         end
         sendCommand(cmdSend, $wsList[$selected])
     end
