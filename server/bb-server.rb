@@ -32,6 +32,7 @@ require 'em-websocket'
 require 'yaml'
 require 'pry'
 require 'readline'
+require 'colorize'
 
 $wsList = Array.new
 $selected = -1
@@ -82,11 +83,11 @@ def main()
 end
 
 def print_error(message)
-    puts "[X] " + message
+    puts "[X] ".colorize(:red) + message
 end
 
 def print_notice(message)
-    puts "[*] " + message
+    puts "[*] ".colorize(:green) + message
 end
 
 def infoCommand()
@@ -177,13 +178,13 @@ end
 
 def printWelcome(host, port, secure)
     puts WELCOME_MESSAGE
-    puts "\nServer is listening on #{host}:#{port}" + ((secure == true) ? " securely" : "") + "..."
+    puts ("\nServer is listening on #{host}:#{port}" + ((secure == true) ? " securely" : "") + "...").colorize(:green)
     puts "Enter help for help."
 end
 
 def cmdLine()
     begin
-        while cmdIn = Readline::readline("\nbbs > ", true)
+        while cmdIn = Readline::readline("\nbbs > ".colorize(:cyan), true)
             case cmdIn.split()[0]
             when "help"
                 helpCommand()
