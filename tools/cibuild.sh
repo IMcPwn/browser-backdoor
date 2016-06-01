@@ -21,6 +21,6 @@ cd server
 echo "Installing ruby dependencies"
 bundle install
 echo "Checking ruby syntax"
-ruby -c *.rb
+ruby -c ./*.rb
 echo "Returning to root of project"
 cd -
