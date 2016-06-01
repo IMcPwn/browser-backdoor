@@ -31,6 +31,7 @@
 require 'em-websocket'
 require 'yaml'
 require 'pry'
+require 'readline'
 
 $wsList = Array.new
 $selected = -1
@@ -44,7 +45,7 @@ COMMANDS = {
     "get_cert" => "Get a free TLS certificate from LetsEncrypt",
     "pry" => "Drop into a PRY session",
     "load" => "Load a module (not implemented yet)"
-}
+}.sort
 INFO_COMMANDS = {
     "IP" => "var xhttp = new XMLHttpRequest();xhttp.onreadystatechange = function() 
     { if (xhttp.readyState == 4 && xhttp.status == 200) { ws.send(\"IP Address: \" + xhttp.responseText); }};
@@ -62,15 +63,19 @@ WELCOME_MESSAGE = ""\
 "|____/|_|  \___/ \_/\_/ |___/\___|_|  |____/ \__,_|\___|_|\_\__,_|\___/ \___/|_| by IMcPwn\n"\
 "Visit http://imcpwn.com for more information.\n"
 
+
 def main()
     begin
         configfile = YAML.load_file("config.yml")
         Thread.new{startEM(configfile['host'], configfile['port'], configfile['secure'], configfile['priv_key'], configfile['cert_chain'])}
+        comp = proc { |s| COMMANDS.map{|cmd, _desc| cmd}.flatten.grep(/^#{Regexp.escape(s)}/) }
+        Readline.completion_append_character = " "
+        Readline.completion_proc = comp
         cmdLine(configfile['host'], configfile['port'], configfile['secure'])
     rescue => e
-        puts 'Error loading configuration'
         puts e.message
         puts e.backtrace
+        print_error("Quitting...")
         return
     end
 end
@@ -106,7 +111,7 @@ def sessionsCommand()
 end
 
 def execCommandLoop()
-    puts "Enter the command to send. (exit when done)"
+    puts "Enter the command to send (exit when done)."
     loop do
         if !validSession?($selected)
             return
@@ -166,10 +171,8 @@ def cmdLine(host, port, secure)
     puts WELCOME_MESSAGE
     puts "\nServer is listening on #{host}:#{port}" + ((secure == true) ? " securely" : "") + "..."
     puts "Enter help for help."
-    loop do
-        print "\nbbs > "
-        cmdIn = gets.chomp.split()
-        case cmdIn[0]
+    while cmdIn = Readline.readline("\nbbs > ", true)
+        case cmdIn.split()[0]
         when "help"
             helpCommand()
         when "exit"
@@ -177,7 +180,7 @@ def cmdLine(host, port, secure)
         when "sessions"
             sessionsCommand()        
         when "use"
-            useCommand(cmdIn)
+            useCommand(cmdIn.split())
         when "info"
             if validSession?($selected)
                 infoCommand()
@@ -186,7 +189,7 @@ def cmdLine(host, port, secure)
             end
         when "exec"
            if validSession?($selected)
-               execCommand(cmdIn)
+               execCommand(cmdIn.split())
            else
                next
            end
