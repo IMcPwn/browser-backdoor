@@ -104,11 +104,12 @@ def sessionsCommand()
 end
 
 def execCommandLoop()
+    puts "Enter the command to send. (exit when done)"
     loop do
         if !validSession?($selected)
             return
         end
-        print "Enter the command to send. (exit when done)\nCMD-##{$selected}> "
+        print "\nCMD-##{$selected}> "
         cmdSend = gets.split.join(' ')
         break if cmdSend == "exit"
         next if cmdSend == ""
