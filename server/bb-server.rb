@@ -90,7 +90,7 @@ def print_notice(message)
 end
 
 def infoCommand()
-    INFO_COMMANDS.each {|key, cmd|
+    INFO_COMMANDS.each {|_key, cmd|
         begin
             sendCommand(cmd, $wsList[$selected])
         rescue
@@ -167,6 +167,14 @@ def helpCommand()
     end
 end
 
+def getCertCommand()
+    if File.file?("getCert.sh")
+        system("./getCert.sh")
+    else
+        print_error("getCert.sh does not exist")
+    end
+end
+
 def printWelcome(host, port, secure)
     puts WELCOME_MESSAGE
     puts "\nServer is listening on #{host}:#{port}" + ((secure == true) ? " securely" : "") + "..."
@@ -198,11 +206,7 @@ def cmdLine()
                    next
                end
             when "get_cert"
-                if File.file?("getCert.sh")
-                    system("./getCert.sh")
-                else
-                    print_error("getCert.sh does not exist")
-                end
+                getCertCommand()
             when "pry"
                 binding.pry
             when nil
