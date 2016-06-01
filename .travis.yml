@@ -22,5 +22,11 @@ install:
   - npm install electron-packager -g
 
 script:
-  - cd client && npm install && electron-packager . --all; cd -
-  - cd server && bundle install && ruby -c *.rb; cd -
+  - cd client
+  - npm install
+  - electron-packager . --all
+  - cd -
+  - cd server
+  - bundle install
+  - ruby -c *.rb
+  - cd -
