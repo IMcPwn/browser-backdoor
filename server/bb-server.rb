@@ -118,7 +118,7 @@ def execCommandLoop()
         if !validSession?($selected)
             return
         end
-        print "\nCMD-##{$selected}> "
+        print "\ncmd ##{$selected} > ".colorize(:magenta)
         cmdSend = gets.split.join(' ')
         break if cmdSend == "exit"
         next if cmdSend == "" || cmdSend == nil
