@@ -99,6 +99,7 @@ module Command
     def Command.getCertCommand()
         if File.file?("./getCert.sh")
             system("./getCert.sh")
+            return
         end
         print "Enter the location of getCert.sh: "
         path = gets.chomp
