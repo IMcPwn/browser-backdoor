@@ -92,11 +92,15 @@ module Command
     end
 
     def Command.getCertCommand()
-        if File.file?("getCert.sh")
-            # TODO: Let user set location of getCert.sh
-            system("../getCert.sh")
+        if File.file?("./getCert.sh")
+            system("./getCert.sh")
+        end
+        print "Enter the location of getCert.sh: "
+        path = gets.chomp
+        if File.file?(path)
+            system("./" + path)
         else
-            Bbs::PrintColor.print_error("getCert.sh does not exist")
+            Bbs::PrintColor.print_error(path + " does not exist")
         end
     end
 end
