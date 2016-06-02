@@ -83,7 +83,11 @@ module Command
             Bbs::PrintColor.print_error("Session does not exist.")
             return
         end
-        wss.setSelected(selectIn)
+        if Bbs::WebSocket::validSession?(selectIn, wss.getWsList())
+            wss.setSelected(selectIn)
+        else
+            return
+        end
         Bbs::PrintColor.print_notice("Selected session is now " + wss.getSelected().to_s + ".")
     end
 
