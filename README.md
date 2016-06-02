@@ -1,4 +1,4 @@
-BrowserBackdoor [![Build Status](https://travis-ci.org/IMcPwn/browser-backdoor.svg?branch=master)](https://travis-ci.org/IMcPwn/browser-backdoor) [![Code Climate](https://codeclimate.com/github/IMcPwn/browser-backdoor/badges/gpa.svg)](https://codeclimate.com/github/IMcPwn/browser-backdoor)
+BrowserBackdoor [![Build Status](https://travis-ci.org/IMcPwn/browser-backdoor.svg?branch=master)](https://travis-ci.org/IMcPwn/browser-backdoor) [![Code Climate](https://codeclimate.com/github/IMcPwn/browser-backdoor/badges/gpa.svg)](https://codeclimate.com/github/IMcPwn/browser-backdoor) [![License](https://img.shields.io/badge/license-MIT-orange.svg)](https://github.com/IMcPwn/browser-backdoor/blob/master/LICENSE)
 ===================
 BrowserBackdoor is an [Electron](https://github.com/electron/electron) application that uses a JavaScript WebSocket Backdoor to connect to the listener.
 
