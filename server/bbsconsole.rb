@@ -116,7 +116,7 @@ def validSession?(selected, wsList)
     if selected == -1
         Bbs::PrintColor.print_error("No session selected. Try use SESSION_ID first.")
         return false
-    elsif wsList.length < selected
+    elsif wsList.length <= selected
         Bbs::PrintColor.print_error("Session no longer exists.")
         return false
     end
