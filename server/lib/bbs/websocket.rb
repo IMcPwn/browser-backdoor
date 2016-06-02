@@ -63,7 +63,10 @@ class WebSocket
     end
 
     def self.validSession?(selected, wsList)
-        if selected == -1
+        if selected < 0
+            Bbs::PrintColor.print_error("Sessions will never be negative.")
+            return false
+        elsif selected == -1
             Bbs::PrintColor.print_error("No session selected. Try use SESSION_ID first.")
             return false
         elsif wsList.length <= selected
