@@ -22,15 +22,20 @@ module Command
         }
     end
 
-    # TODO: Show which session is selected
     def Command.sessionsCommand(selected, wsList)
         if wsList.length < 1
             puts "No sessions"
             return
         end
-        puts "ID: Connection"
+        puts "The session ID with astericks is the currently targeted session."
+        puts "ID : Identifier"
         wsList.each_with_index {|val, index|
-            puts index.to_s + " : " + val.to_s
+            if index == selected
+                current = "*" + index.to_s + "*" + " : " + val.to_s
+            else
+                current = index.to_s + " : " + val.to_s
+            end
+            puts current
         }
     end
 
@@ -70,7 +75,7 @@ module Command
 
     def Command.useCommand(wss, cmdIn)
         if cmdIn.length < 2
-            Bbs::PrintColor.print_error("Invalid usage. Try help for help.")
+            Bbs::PrintColor.print_error("Usage is use SESSION_ID. Type help for help.")
             return
         end
         selectIn = cmdIn[1].to_i
