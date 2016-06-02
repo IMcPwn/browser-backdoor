@@ -69,7 +69,7 @@ cd server
 gem install bundler
 bundle install
 # Configure config.yml before the next command
-ruby bb-server.rb
+ruby bbsconsole.rb
 ```
 
 Usage
