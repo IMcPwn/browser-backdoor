@@ -28,10 +28,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-require_relative 'bbs/printcolor'
-require_relative 'bbs/constants'
-require_relative 'bbs/commands'
-require_relative 'bbs/websocket'
+require_relative 'lib/bbs/printcolor'
+require_relative 'lib/bbs/constants'
+require_relative 'lib/bbs/commands'
+require_relative 'lib/bbs/websocket'
 require 'yaml'
 require 'pry'
 require 'readline'
