@@ -42,7 +42,6 @@ class WebSocket
                 ws.onclose {
                     PrintColor::print_error("Connection closed")
                     @@wsList.delete(ws)
-                   # TODO: Change this.
                     # Reset selected error so the wrong session is not used.
                     @@selected = -1
                 }
@@ -62,6 +61,16 @@ class WebSocket
     def self.sendCommand(cmd, ws)
         ws.send(cmd)
     end
-end
 
+    def self.validSession?(selected, wsList)
+        if selected == -1
+            Bbs::PrintColor.print_error("No session selected. Try use SESSION_ID first.")
+            return false
+        elsif wsList.length <= selected
+            Bbs::PrintColor.print_error("Session no longer exists.")
+            return false
+        end
+        return true
+    end
+end
 end

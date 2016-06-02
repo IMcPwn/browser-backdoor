@@ -42,7 +42,7 @@ module Command
     def Command.execCommandLoop(selected, wsList)
         puts "Enter the command to send (exit when done)."
         loop do
-            if !validSession?(selected, wsList)
+            if !Bbs::WebSocket.validSession?(selected, wsList)
                 return
             end
             print "\ncmd ##{selected} > ".colorize(:magenta)

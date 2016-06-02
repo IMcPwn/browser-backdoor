@@ -81,13 +81,13 @@ def cmdLine(wss, commands, infoCommands)
             when "use"
                 Bbs::Command.useCommand(wss, cmdIn.split())
             when "info"
-                if validSession?(wss.getSelected(), wss.getWsList())
+                if Bbs::WebSocket.validSession?(wss.getSelected(), wss.getWsList())
                     Bbs::Command.infoCommand(infoCommands, wss.getSelected(), wss.getWsList())
                 else
                     next
                 end
             when "exec"
-               if validSession?(wss.getSelected(), wss.getWsList())
+               if Bbs::WebSocket.validSession?(wss.getSelected(), wss.getWsList())
                    Bbs::Command.execCommand(wss.getSelected(), wss.getWsList(), cmdIn.split())
                else
                    next
@@ -110,17 +110,6 @@ def cmdLine(wss, commands, infoCommands)
         Bbs::PrintColor.print_error(e.message)
         return
     end
-end
-
-def validSession?(selected, wsList)
-    if selected == -1
-        Bbs::PrintColor.print_error("No session selected. Try use SESSION_ID first.")
-        return false
-    elsif wsList.length <= selected
-        Bbs::PrintColor.print_error("Session no longer exists.")
-        return false
-    end
-    return true
 end
 
 main()
