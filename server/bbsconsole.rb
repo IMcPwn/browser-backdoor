@@ -93,11 +93,11 @@ def cmdLine(wss, commands, infoCommands)
                     next
                 end
             when "exec"
-               if Bbs::WebSocket.validSession?(wss.getSelected(), wss.getWsList())
-                   Bbs::Command.execCommand(wss.getSelected(), wss.getWsList(), cmdIn.split())
-               else
-                   next
-               end
+                if Bbs::WebSocket.validSession?(wss.getSelected(), wss.getWsList())
+                    Bbs::Command.execCommand(wss.getSelected(), wss.getWsList(), cmdIn.split())
+                else
+                    next
+                end
             when "get_cert"
                 Bbs::Command.getCertCommand()
             when "pry"
