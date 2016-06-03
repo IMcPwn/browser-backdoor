@@ -44,12 +44,17 @@ def main()
         commands = Bbs::Constants.getCommands()
         infoCommands = Bbs::Constants.getInfoCommands()
         welcomeMessage = Bbs::Constants.getWelcomeMessage()
-        Thread.new{wss.startEM(configfile['host'], configfile['port'], configfile['secure'], configfile['priv_key'], configfile['cert_chain'])}
+
+        # Begin WebSocket listener
+        Thread.new{wss.startEM(configfile['host'], configfile['port'], 
+        configfile['secure'], configfile['priv_key'], configfile['cert_chain'])}
+        
         setupAutocomplete(commands)
         printWelcome(welcomeMessage, configfile['host'], configfile['port'], configfile['secure'])
+        
+        # Start command line
         cmdLine(wss, commands, infoCommands)
     rescue => e
-        puts e.message
         puts e.backtrace
         Bbs::PrintColor.print_error("Quitting...")
         return
@@ -62,6 +67,7 @@ def printWelcome(msg, host, port, secure)
     puts "Enter help for help."
 end
 
+# Autocomplete is all of the "help" commands
 def setupAutocomplete(commands)
     comp = proc { |s| commands.map{|cmd, _desc| cmd}.flatten.grep(/^#{Regexp.escape(s)}/) }
     Readline::completion_append_character = " "
