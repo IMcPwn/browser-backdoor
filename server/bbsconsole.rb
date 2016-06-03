@@ -46,9 +46,9 @@ def main()
         welcomeMessage = Bbs::Constants.getWelcomeMessage()
 
         # Begin WebSocket listener
-        Thread.new{wss.startEM(configfile['host'], configfile['port'], 
+        Thread.new{wss.startEM(configfile['host'], configfile['port'],
         configfile['secure'], configfile['priv_key'], configfile['cert_chain'])}
-        
+
         setupAutocomplete(commands)
         printWelcome(welcomeMessage, configfile['host'], configfile['port'], configfile['secure'])
         

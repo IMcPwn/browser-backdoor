@@ -59,15 +59,25 @@ class WebSocket
     end
     
     def self.sendCommand(cmd, ws)
-        ws.send(cmd)
+        command = ""\
+            "(function() {"\
+            "try {"\
+            "#{cmd}"\
+            "}"\
+            "catch(err) {"\
+            "return err.message;"\
+            "}"\
+            "}"\
+            ")();"
+        ws.send(command)
     end
 
     def self.validSession?(selected, wsList)
-        if selected < 0
-            Bbs::PrintColor.print_error("Sessions will never be negative.")
-            return false
-        elsif selected == -1
+        if selected == -1
             Bbs::PrintColor.print_error("No session selected. Try use SESSION_ID first.")
+            return false
+        elsif selected < 0
+            Bbs::PrintColor.print_error("Valid sessions will never be negative.")
             return false
         elsif wsList.length <= selected
             Bbs::PrintColor.print_error("Session no longer exists.")
@@ -75,5 +85,8 @@ class WebSocket
         end
         return true
     end
+
 end
+
 end
+
