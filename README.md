@@ -11,16 +11,16 @@ It will not have access to the Electron API of the host computer unless the Brow
 Some things you can do if you have access to the Electron API:
 
 1. [Open new browser windows that can point to any website.]
-(https://github.com/electron/electron/blob/master/docs/api/browser-window.md#new-browserwindowoptions)
+(http://electron.atom.io/docs/api/browser-window/#new-browserwindowoptions)
 
 2. [Change and read the clipboard.]
-(https://github.com/electron/electron/blob/master/docs/api/clipboard.md#clipboard) (partially built-in. See: [server/modules/readClipboard.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/readClipboard.js)).
+(http://electron.atom.io/docs/api/clipboard/#clipboard) (partially built-in. See: [server/modules/readClipboard.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/readClipboard.js)).
 
 3. [Access cross-platform Operating System notifications and the tray on OS X and Windows.]
-(https://github.com/electron/electron/blob/master/docs/api/tray.md#tray)
+(http://electron.atom.io/docs/api/tray/#tray)
 
 4. [Take screenshots.]
-(https://github.com/electron/electron-api-demos) (already built-in. See: [server/modules/screenshot.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/screenshot.js)).
+(http://electron.atom.io/docs/api/desktop-capturer/#desktopcapturer) (already built-in. See: [server/modules/screenshot.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/screenshot.js)).
 
 5. [Execute arbitrary system commands.]
 (http://stackoverflow.com/a/28394895)
