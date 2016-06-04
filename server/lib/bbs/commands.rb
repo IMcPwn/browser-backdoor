@@ -64,7 +64,7 @@ module Command
                 cmdSend = file.read
                 file.close
             rescue => e
-                Bbs::PrintColor.print_error("Error sending command: " + e.message)
+                Bbs::PrintColor.print_error("Error opening file to execute: " + e.message)
                 return
             end
             Bbs::WebSocket.sendCommand(cmdSend, wsList[selected])
