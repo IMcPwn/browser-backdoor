@@ -13,19 +13,30 @@ Some things you can do if you have access to the Electron API:
 1. [Open new browser windows that can point to any website.]
 (https://github.com/electron/electron/blob/master/docs/api/browser-window.md#new-browserwindowoptions)
 
-2. [Change and view the clipboard.]
-(https://github.com/electron/electron/blob/master/docs/api/clipboard.md#clipboard)
+2. [Change and read the clipboard.]
+(https://github.com/electron/electron/blob/master/docs/api/clipboard.md#clipboard) (partially built-in. See: [server/modules/readClipboard.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/readClipboard.js)).
 
 3. [Access cross-platform Operating System notifications and the tray on OS X and Windows.]
 (https://github.com/electron/electron/blob/master/docs/api/tray.md#tray)
 
 4. [Take screenshots.]
-(https://github.com/electron/electron-api-demos)
+(https://github.com/electron/electron-api-demos) (already built-in. See: [server/modules/screenshot.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/screenshot.js)).
 
 5. [Execute arbitrary system commands.]
 (http://stackoverflow.com/a/28394895)
 
 6. [Run at startup.](https://www.npmjs.com/package/auto-launch) (already built-in. See: [client/main.js](https://github.com/IMcPwn/browser-backdoor/blob/master/client/main.js)).
+
+Usage
+===================
+The client application will run in the background and provide no user interface while running. 
+To check that it's running, quit it, or enable/disable system startup press Command (OS X) OR Control (Windows/Linux) + Alt + \ or whatever you configured the shortcut as in client/main.js.
+
+The server application's usage can be accessed by typing help in the command line.
+To execute modules use the below format in the command line after targeting a session.
+```
+exec modules/MODULE_NAME.js
+```
 
 Installing
 ===================
@@ -72,16 +83,9 @@ bundle install
 ruby bbsconsole.rb
 ```
 
-Usage
-===================
-The client application will run in the background and provide no user interface while running. 
-To check that it's running, quit it, or enable/disable system startup press Command (OS X) OR Control (Windows/Linux) + Alt + \ or whatever you configured the shortcut as in client/main.js.
-
-The server application's usage can be accessed by typing help in the command line.
-
 License
 ===================
-MIT
+MIT License
 
 
 Contact
