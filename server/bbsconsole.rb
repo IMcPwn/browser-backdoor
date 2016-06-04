@@ -51,7 +51,7 @@ def main()
 
         setupAutocomplete(commands)
         printWelcome(welcomeMessage, configfile['host'], configfile['port'], configfile['secure'])
-        
+
         # Start command line
         cmdLine(wss, commands, infoCommands)
     rescue => e
@@ -69,9 +69,9 @@ end
 
 # Autocomplete is all of the "help" commands
 def setupAutocomplete(commands)
-    comp = proc { |s| commands.map{|cmd, _desc| cmd}.flatten.grep(/^#{Regexp.escape(s)}/) }
+    cmdAuto = proc { |s| commands.map{|cmd, _desc| cmd}.flatten.grep(/^#{Regexp.escape(s)}/) }
     Readline::completion_append_character = " "
-    Readline::completion_proc = comp
+    Readline::completion_proc = cmdAuto
 end
 
 def cmdLine(wss, commands, infoCommands)

@@ -37,19 +37,31 @@ class WebSocket
             }) do |ws|
                 @@wsList.push(ws)
                 ws.onopen { |handshake|
-                    PrintColor::print_notice("WebSocket connection open: " + handshake.to_s)
+                    Bbs::PrintColor::print_notice("WebSocket connection open: " + handshake.to_s)
                 }
                 ws.onclose {
-                    PrintColor::print_error("Connection closed")
+                    Bbs::PrintColor::print_error("Connection closed")
                     @@wsList.delete(ws)
                     # Reset selected error so the wrong session is not used.
                     @@selected = -1
                 }
                 ws.onmessage { |msg|
-                    PrintColor::print_notice("Response received: " + msg)
+                    if (msg.length > 500)
+                        begin
+                            file = File.open("./bb-result-#{Time.now.to_f}.txt", "w")
+                            file.write(msg)
+                            Bbs::PrintColor::print_notice("Response received but is too large to display. Saved to #{file.path}")
+                            file.close
+                        rescue => e
+                            Bbs::PrintColor::print_error("Error saving response to file: " + e.message)
+                            Bbs::PrintColor::print_notice("Response received, displaying anyway: " + msg)
+                        end
+                    else
+                        Bbs::PrintColor::print_notice("Response received: " + msg)
+                    end
                 }
                 ws.onerror { |e|
-                    PrintColor::print_error(e.message)
+                    Bbs::PrintColor::print_error(e.message)
                     @@wsList.delete(ws)
                     # Reset selected variable after error.
                     @@selected = -1

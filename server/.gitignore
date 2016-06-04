@@ -5,6 +5,9 @@ certbot-auto
 # Logs
 *.log
 
+# Result files
+bb-result*.txt
+
 Gemfile.lock
 
 *.gem
