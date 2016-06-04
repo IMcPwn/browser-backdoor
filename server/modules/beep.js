@@ -3,11 +3,12 @@
  * BrowserBackdoorServer by IMcPwn.
  * See the file 'LICENSE' for copying permission
  *
- * Info: Gets current clipboard text.
+ * Info: Plays the system beep.
  * Parameters: None
- * Returns: Text in clipboard
+ * Returns: None
  * Author: IMcPwn
  */
 
 if (typeof electron == 'undefined') electron = require('electron');
-return electron.clipboard.readText();
+
+electron.shell.beep();

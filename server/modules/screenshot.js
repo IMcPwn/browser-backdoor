@@ -3,6 +3,7 @@
  * BrowserBackdoorServer by IMcPwn.
  * See the file 'LICENSE' for copying permission
  *
+ * Info: Takes a screenshot of the main screen.
  * Parameters: None
  * Returns: Data URL of screenshot
  * Author: IMcPwn
