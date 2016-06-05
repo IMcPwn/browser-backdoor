@@ -21,8 +21,8 @@ cd server
 echo "Installing ruby dependencies"
 bundle install
 echo "Checking server/ ruby files' syntax"
-for i in $(echo ./*.rb); do echo $i; ruby -c $i; done
+for i in $(echo ./*.rb); do echo "$i"; ruby -c "$i"; done
 echo "Checking server/lib/bbs ruby files' syntax"
-for i in $(echo ./lib/*/*.rb); do echo $i; ruby -c $i; done
+for i in $(echo ./lib/*/*.rb); do echo "$i"; ruby -c "$i"; done
 echo "Returning to root of project"
 cd -
