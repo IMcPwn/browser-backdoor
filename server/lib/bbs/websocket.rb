@@ -50,11 +50,11 @@ class WebSocket
                         begin
                             file = File.open("./bb-result-#{Time.now.to_f}.txt", "w")
                             file.write(msg)
-                            Bbs::PrintColor::print_notice("Response received but is too large to display (> 500 characters). Saved to #{file.path}")
+                            Bbs::PrintColor::print_notice("Response received but is too large to display (#{msg.length} characters). Saved to #{file.path}")
                             file.close
                         rescue => e
                             Bbs::PrintColor::print_error("Error saving response to file: " + e.message)
-                            Bbs::PrintColor::print_notice("Large response received but could not save to file, displaying anyway: " + msg)
+                            Bbs::PrintColor::print_notice("Large response received (#{msg.length} characters) but could not save to file, displaying anyway: " + msg)
                         end
                     else
                         Bbs::PrintColor::print_notice("Response received: " + msg)
