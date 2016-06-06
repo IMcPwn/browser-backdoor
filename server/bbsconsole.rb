@@ -64,7 +64,8 @@ end
 def printWelcome(msg, host, port, secure)
     puts msg
     puts ("\nServer is listening on #{host}:#{port}" + ((secure == true) ? " securely" : "") + "...").colorize(:green)
-    puts "Enter help for help."
+    puts "By default, session -1 is selected which stands for all available sessions."
+    puts "Enter help for command usage."
 end
 
 # Autocomplete is all of the "help" commands
