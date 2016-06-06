@@ -72,9 +72,9 @@ module Command
         end
     end
 
-    def Command.useCommand(wss, cmdIn)
+    def Command.selectCommand(wss, cmdIn)
         if cmdIn.length < 2
-            Bbs::PrintColor.print_error("Usage is use SESSION_ID. Type help for help.")
+            Bbs::PrintColor.print_error("Usage is select SESSION_ID. Type help for help.")
             return
         end
         selectIn = cmdIn[1].to_i
