@@ -28,6 +28,7 @@ module Command
             return
         end
         puts "The session ID with astericks is the currently targeted session."
+        puts "If no target is selected (ID -1), all sessions are targeted."
         puts "ID : Identifier"
         wsList.each_with_index {|val, index|
             if index == selected
@@ -49,7 +50,13 @@ module Command
             break if cmdSend == "exit"
             next if cmdSend == "" || cmdSend == nil
             begin
-                Bbs::WebSocket.sendCommand(cmdSend, wsList[selected])
+                if selected != -1
+                    Bbs::WebSocket.sendCommand(cmdSend, wsList[selected])
+                else
+                    wsList.each_with_index{|_item, index|
+                        Bbs::WebSocket.sendCommand(cmdSend, wsList[index])
+                    }
+                end
             rescue => e
                 Bbs::PrintColor.print_error("Error sending command: " + e.message)
             end
@@ -68,7 +75,13 @@ module Command
                 Bbs::PrintColor.print_error("Error opening file to execute: " + e.message)
                 return
             end
-            Bbs::WebSocket.sendCommand(cmdSend, wsList[selected])
+            if selected != -1
+                Bbs::WebSocket.sendCommand(cmdSend, wsList[selected])
+                return
+           end
+               wsList.each_with_index {|_item, index|
+                   Bbs::WebSocket.sendCommand(cmdSend, wsList[index])
+               }
         end
     end
 
