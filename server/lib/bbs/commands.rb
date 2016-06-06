@@ -14,10 +14,10 @@ module Command
         info_commands.each {|_key, cmd|
             begin
                 if selected != -1
-                    Bbs::WebSocket.sendCommand(cmdSend, wsList[selected])
+                    Bbs::WebSocket.sendCommand(cmd, wsList[selected])
                 else
                     wsList.each_with_index {|_item, index|
-                        Bbs::WebSocket.sendCommand(cmdSend, wsList[index])
+                        Bbs::WebSocket.sendCommand(cmd, wsList[index])
                     }
                 end
             rescue => e

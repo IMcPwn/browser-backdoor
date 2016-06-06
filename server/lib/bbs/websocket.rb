@@ -91,6 +91,8 @@ class WebSocket
         elsif wsList.length <= selected
             Bbs::PrintColor.print_error("Session does not exist.")
             return false
+        elsif wsList.length < 1
+            Bbs::PrintColor.print_error("No sessions open")
         end
         return true
     end
