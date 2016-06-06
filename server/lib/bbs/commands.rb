@@ -13,11 +13,17 @@ module Command
     def Command.infoCommand(info_commands, selected, wsList)
         info_commands.each {|_key, cmd|
             begin
-                Bbs::WebSocket.sendCommand(cmd, wsList[selected])
+                if selected != -1
+                    Bbs::WebSocket.sendCommand(cmdSend, wsList[selected])
+                else
+                    wsList.each_with_index {|_item, index|
+                        Bbs::WebSocket.sendCommand(cmdSend, wsList[index])
+                    }
+                end
             rescue => e
-                 puts e.message
-                 Bbs::PrintColor.print_error("Error sending command. Selected session may no longer exist.")
-                 break
+                puts e.message
+                Bbs::PrintColor.print_error("Error sending command. Selected session may no longer exist.")
+                break
             end
         }
     end
@@ -78,7 +84,7 @@ module Command
             if selected != -1
                 Bbs::WebSocket.sendCommand(cmdSend, wsList[selected])
                 return
-           end
+            end
                wsList.each_with_index {|_item, index|
                    Bbs::WebSocket.sendCommand(cmdSend, wsList[index])
                }
