@@ -19,7 +19,7 @@ module Constants
         "help" => "Help menu",
         "exit" => "Quit the application",
         "sessions" => "List active sessions",
-        "use" => "Select targeted session",
+        "select" => "Select targeted session",
         "info" => "Get session information (IP, User Agent, Operating System, Language)",
         "exec" => "Execute commands on the targeted session interactively. Provide an argument to execute a file's contents.",
         "get_cert" => "Get a free TLS certificate from LetsEncrypt",

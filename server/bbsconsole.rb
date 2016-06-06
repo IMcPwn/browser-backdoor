@@ -84,8 +84,8 @@ def cmdLine(wss, commands, infoCommands)
                 break
             when "sessions"
                 Bbs::Command.sessionsCommand(wss.getSelected(), wss.getWsList())
-            when "use"
-                Bbs::Command.useCommand(wss, cmdIn.split())
+            when "select"
+                Bbs::Command.selectCommand(wss, cmdIn.split())
             when "info"
                 if Bbs::WebSocket.validSession?(wss.getSelected(), wss.getWsList())
                     Bbs::Command.infoCommand(infoCommands, wss.getSelected(), wss.getWsList())
