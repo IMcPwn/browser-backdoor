@@ -10,15 +10,19 @@ require_relative 'websocket'
 module Bbs
 
 module Command
+    def Command.sendAllSessions(cmd, wsList)
+        wsList.each_with_index {|_item, index|
+            Bbs::WebSocket.sendCommand(cmd, wsList[index])
+        }
+    end
+
     def Command.infoCommand(info_commands, selected, wsList)
         info_commands.each {|_key, cmd|
             begin
                 if selected != -1
                     Bbs::WebSocket.sendCommand(cmd, wsList[selected])
                 else
-                    wsList.each_with_index {|_item, index|
-                        Bbs::WebSocket.sendCommand(cmd, wsList[index])
-                    }
+                    sendAllSessions(cmd, wsList)
                 end
             rescue => e
                 puts e.message
@@ -59,9 +63,7 @@ module Command
                 if selected != -1
                     Bbs::WebSocket.sendCommand(cmdSend, wsList[selected])
                 else
-                    wsList.each_with_index{|_item, index|
-                        Bbs::WebSocket.sendCommand(cmdSend, wsList[index])
-                    }
+                    sendAllSessions(cmdSend, wsList)
                 end
             rescue => e
                 Bbs::PrintColor.print_error("Error sending command: " + e.message)
