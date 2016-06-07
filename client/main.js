@@ -27,7 +27,7 @@
  * SOFTWARE.
  */
 
-const electron = require('electron')
+const electron = require('electron');
 const AutoLaunch = require('auto-launch');
 const app = electron.app;
 const dialog = electron.dialog;
