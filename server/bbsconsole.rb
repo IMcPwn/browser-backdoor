@@ -106,6 +106,8 @@ def cmdLine(wss, commands, infoCommands)
                 setupAutocomplete(commands)
             when "clear"
                 Bbs::Command.clearCommand()
+            when "ls"
+                Bbs::Command.lsCommand(cmdIn.split())
             when nil
                 next
             else

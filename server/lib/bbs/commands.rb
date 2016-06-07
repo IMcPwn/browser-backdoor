@@ -138,6 +138,14 @@ module Command
     def Command.clearCommand()
         puts "\e[H\e[2J"
     end
+
+    def Command.lsCommand(cmdIn)
+        if cmdIn.length < 2
+            puts Dir["*"]
+        else
+            puts Dir[cmdIn[1] + "/*"]
+        end
+    end
 end
 
 end
