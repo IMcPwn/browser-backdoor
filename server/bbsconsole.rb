@@ -104,6 +104,8 @@ def cmdLine(wss, commands, infoCommands)
             when "pry"
                 binding.pry
                 setupAutocomplete(commands)
+            when "clear"
+                Bbs::Command.clearCommand()
             when nil
                 next
             else

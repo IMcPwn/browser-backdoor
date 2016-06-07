@@ -134,6 +134,10 @@ module Command
             Bbs::PrintColor.print_error(path + " does not exist")
         end
     end
+
+    def Command.clearCommand()
+        puts "\e[H\e[2J"
+    end
 end
 
 end

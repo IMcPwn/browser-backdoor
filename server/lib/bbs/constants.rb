@@ -24,7 +24,8 @@ module Constants
         "exec" => "Execute commands on the targeted session interactively. Provide an argument to execute a file's contents.",
         "get_cert" => "Get a free TLS certificate from LetsEncrypt",
         "pry" => "Drop into a Pry session",
-        "load" => "Load a module (not implemented yet)"
+        "load" => "Load a module (not implemented yet)",
+        "clear" => "Clear the console screen"
     }.sort
     @infoCommands = {
         "IP" => "var xhttp = new XMLHttpRequest();xhttp.onreadystatechange = function() 
