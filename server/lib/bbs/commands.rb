@@ -85,11 +85,12 @@ module Command
             end
             if selected != -1
                 Bbs::WebSocket.sendCommand(cmdSend, wsList[selected])
-                return
+            else
+                sendAllSessions(cmdSend, wsList)
             end
-               wsList.each_with_index {|_item, index|
-                   Bbs::WebSocket.sendCommand(cmdSend, wsList[index])
-               }
+            if cmdSend.lines.first.chomp == "// INTERACTIVE"
+                execCommandLoop(selected, wsList)
+            end
         end
     end
 
