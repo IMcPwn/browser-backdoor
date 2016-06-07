@@ -27,6 +27,13 @@ Some things you can do if you have access to the Electron API:
 
 6. [Run at startup.](https://www.npmjs.com/package/auto-launch) (already built-in. See: [client/main.js](https://github.com/IMcPwn/browser-backdoor/blob/master/client/main.js)).
 
+Wiki
+===================
+Screenshots are avaliable on the Wiki!
+https://github.com/IMcPwn/browser-backdoor/wiki/Screenshots
+
+More information will be added to it soon.
+
 Usage
 ===================
 The client application will run in the background and provide no user interface while running. 
