@@ -25,7 +25,7 @@ Some things you can do if you have access to the Electron API:
 5. [Execute arbitrary system commands.]
 (http://stackoverflow.com/a/28394895)
 
-6. [Run at startup.](https://www.npmjs.com/package/auto-launch) (already built-in. See: [client/main.js](https://github.com/IMcPwn/browser-backdoor/blob/master/client/main.js)).
+6. [Run at startup.](https://www.npmjs.com/package/auto-launch) (already built-in. See: [client/main.js](https://github.com/IMcPwn/browser-backdoor/blob/master/client/main.js) and [server/modules/enableStartup.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/enableStartup.js)).
 
 Disclaimer
 ===================
