@@ -43,7 +43,7 @@ class WebSocket
                     Bbs::PrintColor::print_error("Connection closed")
                     @@wsList.delete(ws)
                     # Reset selected error so the wrong session is not used.
-                    @@selected = -1
+                    @@selected = -2
                 }
                 ws.onmessage { |msg|
                     if (msg.length > 500)
@@ -64,7 +64,7 @@ class WebSocket
                     Bbs::PrintColor::print_error(e.message)
                     @@wsList.delete(ws)
                     # Reset selected variable after error.
-                    @@selected = -1
+                    @@selected = -2
                 }
             end
         }

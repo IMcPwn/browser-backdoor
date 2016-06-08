@@ -95,7 +95,7 @@ def cmdLine(wss, commands, infoCommands)
                 end
             when "exec"
                 if Bbs::WebSocket.validSession?(wss.getSelected(), wss.getWsList())
-                    Bbs::Command.execCommand(wss.getSelected(), wss.getWsList(), cmdIn.split())
+                    Bbs::Command.execCommand(wss, cmdIn.split())
                 else
                     next
                 end
