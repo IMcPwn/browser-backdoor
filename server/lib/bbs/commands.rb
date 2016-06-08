@@ -50,15 +50,17 @@ module Command
         }
     end
 
-    def Command.execCommandLoop(selected, wsList)
+    def Command.execCommandLoop(wss)
         puts "Commands are sent in an an anonymous function and the eval'd result is returned."
         puts "Enter the command to send (exit when done)."
-        while cmdSend = Readline::readline("\ncmd ##{selected} > ".colorize(:magenta), true)
-            if !Bbs::WebSocket.validSession?(selected, wsList)
-                return
+        while cmdSend = Readline::readline("\ncmd ##{wss.getSelected()} > ".colorize(:magenta), true)
+            if !Bbs::WebSocket.validSession?(wss.getSelected(), wss.getWsList()) || wss.getSelected == -1
+                break
             end
             break if cmdSend == "exit"
             next if cmdSend == "" || cmdSend == nil
+            selected = wss.getSelected()
+            wsList = wss.getWsList()
             begin
                 if selected != -1
                     Bbs::WebSocket.sendCommand(cmdSend, wsList[selected])
@@ -71,9 +73,11 @@ module Command
         end
     end
 
-    def Command.execCommand(selected, wsList, cmdIn)
+    def Command.execCommand(wss, cmdIn)
+        selected = wss.getSelected()
+        wsList = wss.getWsList()
         if cmdIn.length < 2
-            execCommandLoop(selected, wsList)
+            execCommandLoop(wss)
         else
             begin
                 file = File.open(cmdIn[1], "r")
@@ -89,7 +93,7 @@ module Command
                 sendAllSessions(cmdSend, wsList)
             end
             if cmdSend.lines.first.chomp == "// INTERACTIVE"
-                execCommandLoop(selected, wsList)
+                execCommandLoop(wss)
             end
         end
     end
