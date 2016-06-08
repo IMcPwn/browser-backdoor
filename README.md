@@ -58,13 +58,13 @@ Installing
 
 NodeJS and NPM are required for BrowserBackdoor.
 
-Ruby 2.1+ is required for BrowserBackdoorServer.
+Ruby 2.1+ and the gems in the Gemfile are required for BrowserBackdoorServer.
 
 BrowserBackdoor is supported on all devices supported by Electron. 
 Currently that is [Windows 32/64, OS X 64, and Linux 32/64](https://github.com/electron-userland/electron-packager#supported-platforms).
 
-BrowserBackdoorServer is officially supported on Ubuntu 14.04 at the moment.
-It has not been tested on any other platforms. The goal is to work on Windows and Linux.
+BrowserBackdoorServer has been tested on Ubuntu 14.04, Debian 8, and Kali Linux. 
+It should work on any similar Linux operating system.
 
 To install anything, first, clone the repository. All the rest of the commands shown assume you are in the root of the repository.
 
