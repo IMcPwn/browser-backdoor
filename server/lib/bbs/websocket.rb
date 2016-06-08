@@ -85,14 +85,15 @@ class WebSocket
     end
 
     def self.validSession?(selected, wsList)
-        if selected < -1
+        if selected == -2
+            Bbs::PrintColor.print_error("That session has been closed.")
+            return false
+        elsif selected < -1
             Bbs::PrintColor.print_error("Valid sessions will never be less than -1.")
             return false
         elsif wsList.length <= selected
             Bbs::PrintColor.print_error("Session does not exist.")
             return false
-        elsif wsList.length < 1
-            Bbs::PrintColor.print_error("No sessions open")
         end
         return true
     end
