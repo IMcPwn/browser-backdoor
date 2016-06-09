@@ -1,4 +1,4 @@
-BrowserBackdoor [![Build Status](https://travis-ci.org/IMcPwn/browser-backdoor.svg?branch=master)](https://travis-ci.org/IMcPwn/browser-backdoor) [![Code Climate](https://codeclimate.com/github/IMcPwn/browser-backdoor/badges/gpa.svg)](https://codeclimate.com/github/IMcPwn/browser-backdoor) [![License](https://img.shields.io/badge/license-MIT-orange.svg)](https://github.com/IMcPwn/browser-backdoor/blob/master/LICENSE)
+BrowserBackdoor [![Build Status](https://travis-ci.org/IMcPwn/browser-backdoor.svg?branch=master)](https://travis-ci.org/IMcPwn/browser-backdoor) [![Code Climate](https://codeclimate.com/github/IMcPwn/browser-backdoor/badges/gpa.svg)](https://codeclimate.com/github/IMcPwn/browser-backdoor) [![License](https://img.shields.io/badge/license-MIT-orange.svg)](https://github.com/IMcPwn/browser-backdoor/blob/master/LICENSE) [![Discord](https://img.shields.io/badge/Discord-%23BrowserBackdoor-blue.svg)](https://discord.gg/013wk2VPnnuw9iLmU)
 ===================
 
  [![Screenshots](https://github.com/IMcPwn/browser-backdoor/wiki/screenshots/BbsConsole.png)](https://github.com/IMcPwn/browser-backdoor/wiki/Screenshots)
@@ -34,6 +34,13 @@ Disclaimer
 ===================
 This is a personal development project, please do not use it for nefarious purposes.
 The author bears no responsibility for any misuse of the program.
+
+Support
+===================
+
+If you find an issue with the program please use the issue tracker: https://github.com/IMcPwn/browser-backdoor/issues
+
+For general help/support join the Discord server: [![Discord](https://img.shields.io/badge/Discord-%23BrowserBackdoor-blue.svg)](https://discord.gg/013wk2VPnnuw9iLmU)
 
 Wiki
 ===================
