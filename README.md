@@ -30,11 +30,6 @@ Some things you can do if you have access to the Electron API:
 
 6. [Run at startup.](https://www.npmjs.com/package/auto-launch) (already built-in. See: [client/main.js](https://github.com/IMcPwn/browser-backdoor/blob/master/client/main.js) and [server/modules/enableStartup.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/enableStartup.js)).
 
-Disclaimer
-===================
-This is a personal development project, please do not use it for nefarious purposes.
-The author bears no responsibility for any misuse of the program.
-
 Support
 ===================
 
@@ -109,6 +104,10 @@ License
 ===================
 MIT License
 
+Disclaimer
+===================
+This is a personal development project, please do not use it for nefarious purposes.
+The author bears no responsibility for any misuse of the program.
 
 Contact
 ===================
