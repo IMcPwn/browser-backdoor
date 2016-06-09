@@ -6,6 +6,7 @@
 
 require_relative 'printcolor'
 require_relative 'websocket'
+require 'colorize'
 
 module Bbs
 
@@ -145,9 +146,11 @@ module Command
 
     def Command.lsCommand(cmdIn)
         if cmdIn.length < 2
-            puts Dir["*"]
+            puts Dir.glob('*').select{ |e| File.file? e }.join(' ')
+            puts Dir.glob('*').select{ |e| File.directory? e }.join(' ').colorize(:blue)
         else
-            puts Dir[cmdIn[1] + "/*"]
+            puts Dir.glob(cmdIn[1] + "/*").select{ |e| File.file? e }.join(' ')
+            puts Dir.glob(cmdIn[1] + "/*").select{ |e| File.directory? e }.join(' ').colorize(:blue)
         end
     end
 end
