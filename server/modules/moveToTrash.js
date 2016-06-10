@@ -11,10 +11,9 @@
  */
 
 if (typeof electron == 'undefined') electron = require('electron');
-if (typeof shell == 'undefined') shell = electron.shell;
 
 moveToTrash = function (fullPath) {
-    shell.moveItemToTrash(fullPath);
+    electron.shell.moveItemToTrash(fullPath);
 }
 
 return "Usage: moveToTrash(fullPath)";

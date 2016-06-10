@@ -11,10 +11,9 @@
  */
 
 if (typeof electron == 'undefined') electron = require('electron');
-if (typeof shell == 'undefined') shell = electron.shell;
 
 openURL = function (url) {
-    shell.openExternal(url);
+    electron.shell.openExternal(url);
 }
 
 return "Usage: openURL(url)";
