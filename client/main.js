@@ -124,7 +124,6 @@ if (process.platform === 'darwin') {
 // Catch uncaughtExceptions so no popups appear on errors.
 process.on('uncaughtException', function (err) {
     console.error(err);
-    process.exit(1);
 });
 
 // Accept --startup as command line argument to enable on startup.
