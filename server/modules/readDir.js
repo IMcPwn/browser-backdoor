@@ -10,7 +10,7 @@
  * Author: IMcPwn
  */
 
-if (typeof fs === typeof undefined) fs = require('fs');
+fs = require('fs');
 
 readDir = function (fullPath) {
     fs.readdir(fullPath, 'utf8', function (err, data) {

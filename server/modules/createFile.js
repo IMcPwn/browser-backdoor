@@ -10,7 +10,7 @@
  * Author: IMcPwn
  */
 
-if (typeof fs === typeof undefined) fs = require('fs');
+fs = require('fs');
 
 createFile = function (fullPath, data) {
     fs.writeFile(fullPath, data, function(err) {

@@ -10,7 +10,7 @@
  * Author: IMcPwn
  */
 
-if (typeof electron === typeof undefined) electron = require('electron');
+electron = require('electron');
 
 moveToTrash = function (fullPath) {
     electron.shell.moveItemToTrash(fullPath);
