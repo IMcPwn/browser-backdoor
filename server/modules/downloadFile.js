@@ -16,7 +16,7 @@ downloadFile = function (fullPath, encoding) {
     fs.readFile(fullPath, encoding, function (err, data) {
         if (err) ws.send(err);
         ws.send(data);
-   });
+    });
 }
 
 return "Usage: downloadFile(fullPath, encoding)";
