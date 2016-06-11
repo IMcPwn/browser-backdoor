@@ -9,17 +9,17 @@
  * Author: IMcPwn
  */
 
-if (typeof electron == 'undefined') electron = require('electron');
-if (typeof desktopCapturer == 'undefined') desktopCapturer = electron.desktopCapturer;
-if (typeof electronScreen == 'undefined') electronScreen = electron.screen;
-if (typeof shell == 'undefined') shell = electron.shell;
+if (typeof electron === typeof undefined) electron = require('electron');
+if (typeof desktopCapturer === typeof undefined) desktopCapturer = electron.desktopCapturer;
+if (typeof electronScreen === typeof undefined) electronScreen = electron.screen;
+if (typeof shell === typeof undefined) shell = electron.shell;
 
-if (typeof fs == 'undefined') fs = require('fs');
-if (typeof os == 'undefined') os = require('os');
-if (typeof path == 'undefined') path = require('path');
+if (typeof fs === typeof undefined) fs = require('fs');
+if (typeof os === typeof undefined) os = require('os');
+if (typeof path === typeof undefined) path = require('path');
 
-if (typeof thumbSize == 'undefined') thumbSize = determineScreenShotSize();
-if (typeof options == 'undefined') options = { types: ['screen'], thumbnailSize: thumbSize };
+if (typeof thumbSize === typeof undefined) thumbSize = determineScreenShotSize();
+if (typeof options === typeof undefined) options = { types: ['screen'], thumbnailSize: thumbSize };
 
 desktopCapturer.getSources(options, function (error, sources) {
     if (error) ws.send(error)

@@ -9,6 +9,6 @@
  * Author: IMcPwn
  */
 
-if (typeof electron == 'undefined') electron = require('electron');
+if (typeof electron === typeof undefined) electron = require('electron');
 
 return electron.shell.beep();
