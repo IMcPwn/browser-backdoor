@@ -47,7 +47,7 @@ def main()
 
         # Begin WebSocket listener
         Thread.new{wss.startEM(configfile['host'], configfile['port'],
-        configfile['secure'], configfile['priv_key'], configfile['cert_chain'])}
+        configfile['secure'], configfile['priv_key'], configfile['cert_chain'], configfile['response_limit'])}
 
         setupAutocomplete(commands)
         printWelcome(welcomeMessage, configfile['host'], configfile['port'], configfile['secure'])
