@@ -17,7 +17,7 @@ Some things you can do if you have access to the Electron API:
 (http://electron.atom.io/docs/api/browser-window/#new-browserwindowoptions)
 
 2. [Change and read the clipboard.]
-(http://electron.atom.io/docs/api/clipboard/#clipboard) (partially built-in. See: [server/modules/readClipboard.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/readClipboard.js)).
+(http://electron.atom.io/docs/api/clipboard/#clipboard) (already built-in. See: [server/modules/readClipboard.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/readClipboard.js) and [server/modules/writeClipboard.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/writeClipboard.js)).
 
 3. [Access cross-platform Operating System notifications and the tray on OS X and Windows.]
 (http://electron.atom.io/docs/api/tray/#tray)
