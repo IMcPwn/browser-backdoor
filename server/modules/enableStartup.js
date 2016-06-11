@@ -9,9 +9,9 @@
  * Author: IMcPwn
  */
 
-if (typeof electron == 'undefined') electron = require('electron');
+if (typeof electron === typeof undefined) electron = require('electron');
 
-if (typeof AutoLaunch == 'undefined') AutoLaunch = require('auto-launch');
+if (typeof AutoLaunch === typeof undefined) AutoLaunch = require('auto-launch');
 
 appLauncher = new AutoLaunch({
     // Change this to the name of the application or what
