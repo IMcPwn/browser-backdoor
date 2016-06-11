@@ -9,6 +9,6 @@
  * Author: IMcPwn
  */
 
-if (typeof electron === typeof undefined) electron = require('electron');
+electron = require('electron');
 
 return electron.clipboard.readText();
