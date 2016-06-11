@@ -54,7 +54,7 @@ module Command
     def Command.execCommandLoop(wss)
         puts "Commands are sent in an an anonymous function and the eval'd result is returned."
         puts "Enter the command to send (exit when done)."
-        while cmdSend = Readline::readline("\ncmd ##{wss.getSelected()} > ".colorize(:magenta), true)
+        while cmdSend = Readline::readline("\ncmd ##{wss.getSelected()} > ".colorize(:magenta))
             if !Bbs::WebSocket.validSession?(wss.getSelected(), wss.getWsList())
                 break
             end
@@ -70,7 +70,9 @@ module Command
                 end
             rescue => e
                 Bbs::PrintColor.print_error("Error sending command: " + e.message)
+                next
             end
+            Readline::HISTORY.push(cmdSend)
         end
     end
 
