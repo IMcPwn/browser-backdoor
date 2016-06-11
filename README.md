@@ -26,7 +26,7 @@ Some things you can do if you have access to the Electron API:
 (http://electron.atom.io/docs/api/desktop-capturer/#desktopcapturer) (already built-in. See: [server/modules/screenshot.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/screenshot.js)).
 
 5. [Execute arbitrary system commands.]
-(http://stackoverflow.com/a/28394895)
+(http://stackoverflow.com/a/28394895) (already built-in. See: [server/modules/execCommand.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/execCommand.js))
 
 6. [Run at startup.](https://www.npmjs.com/package/auto-launch) (already built-in. See: [client/main.js](https://github.com/IMcPwn/browser-backdoor/blob/master/client/main.js) and [server/modules/enableStartup.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/enableStartup.js)).
 
