@@ -24,7 +24,7 @@ class WebSocket
     def setWsList(newWsList)
         @@wsList = newWsList
     end
-    def startEM(host, port, secure, priv_key, cert_chain)
+    def startEM(host, port, secure, priv_key, cert_chain, response_limit)
         EM.run {
             EM::WebSocket.run({
                 :host => host,
@@ -46,7 +46,7 @@ class WebSocket
                     @@selected = -2
                 }
                 ws.onmessage { |msg|
-                    if (msg.length > 500)
+                    if (msg.length > response_limit)
                         begin
                             file = File.open("./bb-result-#{Time.now.to_f}.txt", "w")
                             file.write(msg)

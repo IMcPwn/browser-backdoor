@@ -10,3 +10,7 @@ port: 1234
 secure: false
 priv_key: "privkey.pem"
 cert_chain: "cert.pem"
+
+# Maximum size response to display on screen.
+# Anything larger will be saved to bb-result-(TIME).txt
+response_limit: 500
