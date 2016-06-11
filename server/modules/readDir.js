@@ -19,4 +19,4 @@ readDir = function (fullPath) {
     });
 }
 
-return "Usage: readDir(fullPath)";
+return "\nUsage: readDir(fullPath)\n- fullPath is the properly escaped full path of the directory.";

@@ -19,4 +19,4 @@ downloadFile = function (fullPath, encoding) {
     });
 }
 
-return "Usage: downloadFile(fullPath, encoding)";
+return "\nUsage: downloadFile(fullPath, encoding)\n- fullPath is the properly escaped full path of the file.\n- encoding is a string of the encoding type of the file. E.g. \"utf8\".";

@@ -18,4 +18,4 @@ createFile = function (fullPath, data) {
     }); 
 }
 
-return "Usage: createFile(fullPath, data)";
+return "\nUsage: createFile(fullPath, data)\n- fullPath is the properly escaped full path of the file.\n- data is the text to write to the file.";

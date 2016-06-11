@@ -16,4 +16,4 @@ moveToTrash = function (fullPath) {
     electron.shell.moveItemToTrash(fullPath);
 }
 
-return "Usage: moveToTrash(fullPath)";
+return "\nUsage: moveToTrash(fullPath)\n- fullPath is the properly escaped full path of the file.";
