@@ -10,13 +10,13 @@
  * Author: IMcPwn
  */
 
-if (typeof fs == 'undefined') fs = require('fs');
+if (typeof fs === typeof undefined) fs = require('fs');
 
 readDir = function (fullPath) {
     fs.readdir(fullPath, 'utf8', function (err, data) {
         if (err) ws.send(err);
         ws.send(data);
-   });
+    });
 }
 
 return "Usage: readDir(fullPath)";
