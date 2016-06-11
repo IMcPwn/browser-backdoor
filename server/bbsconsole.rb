@@ -77,7 +77,7 @@ end
 
 def cmdLine(wss, commands, infoCommands)
     begin
-        while cmdIn = Readline::readline("\nbbs > ".colorize(:cyan), true)
+        while cmdIn = Readline::readline("\nbbs > ".colorize(:cyan))
             case cmdIn.split()[0]
             when "help"
                 Bbs::Command.helpCommand(commands)
@@ -90,14 +90,10 @@ def cmdLine(wss, commands, infoCommands)
             when "info"
                 if Bbs::WebSocket.validSession?(wss.getSelected(), wss.getWsList())
                     Bbs::Command.infoCommand(infoCommands, wss.getSelected(), wss.getWsList())
-                else
-                    next
                 end
             when "exec"
                 if Bbs::WebSocket.validSession?(wss.getSelected(), wss.getWsList())
                     Bbs::Command.execCommand(wss, cmdIn.split())
-                else
-                    next
                 end
             when "get_cert"
                 Bbs::Command.getCertCommand()
@@ -113,6 +109,7 @@ def cmdLine(wss, commands, infoCommands)
             else
                 Bbs::PrintColor.print_error("Invalid command. Try help for help.")
             end
+            Readline::HISTORY.push(cmdIn)
         end
     rescue Interrupt
         Bbs::PrintColor.print_error("Caught interrupt (in the future use exit). Quitting...")
