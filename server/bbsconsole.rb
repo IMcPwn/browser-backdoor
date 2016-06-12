@@ -40,6 +40,15 @@ require 'colorize'
 def main()
     begin
         configfile = YAML.load_file("config.yml")
+        if configfile['secure']
+           if !File.exist?(configfile['priv_key'])
+               Bbs::PrintColor.print_error(configfile['priv_key'] + " does not exist.")
+               return
+           elsif !File.exist?(configfile['cert_chain'])
+               Bbs::PrintColor.print_error(configfile['cert_chain'] + " does not exist.")
+               return
+           end
+        end
         wss = Bbs::WebSocket.new
         commands = Bbs::Constants.getCommands()
         infoCommands = Bbs::Constants.getInfoCommands()
