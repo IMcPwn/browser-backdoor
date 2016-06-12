@@ -35,9 +35,9 @@ class WebSocket
                             :cert_chain_file => cert_chain
             }
             }) do |ws|
-                @@wsList.push(ws)
                 ws.onopen { |handshake|
                     Bbs::PrintColor::print_notice("WebSocket connection open: " + handshake.to_s)
+                    @@wsList.push(ws)
                 }
                 ws.onclose {
                     Bbs::PrintColor::print_error("Connection closed")
