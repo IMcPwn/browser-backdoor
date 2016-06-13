@@ -14,7 +14,7 @@ It will not have access to the Electron API of the host computer unless the Brow
 Some things you can do if you have access to the Electron API:
 
 1. [Open new browser windows that can point to any website.]
-(http://electron.atom.io/docs/api/browser-window/#new-browserwindowoptions)
+(http://electron.atom.io/docs/api/browser-window/#new-browserwindowoptions) (already built-in. See: [server/modules/openURL.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/openURL.js)).
 
 2. [Change and read the clipboard.]
 (http://electron.atom.io/docs/api/clipboard/#clipboard) (already built-in. See: [server/modules/readClipboard.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/readClipboard.js) and [server/modules/writeClipboard.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/writeClipboard.js)).
@@ -50,10 +50,6 @@ The client application will run in the background and provide no user interface 
 To check that it's running, quit it, or enable/disable system startup press Command (OS X) OR Control (Windows/Linux) + Alt + \ or whatever you configured the shortcut as in client/main.js.
 
 The server application's usage can be accessed by typing help in the command line.
-To execute modules use the below format in the command line after targeting a session.
-```
-exec modules/MODULE_NAME.js
-```
 
 Installing
 ===================
