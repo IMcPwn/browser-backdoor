@@ -1,17 +1,20 @@
 // INTERACTIVE
-/*
- * Copyright (c) 2016 Carleton Stuberg - http://imcpwn.com
- * BrowserBackdoorServer by IMcPwn.
- * See the file 'LICENSE' for copying permission
- *
- * Info: Lists all files in a directory
- * Parameters: fullPath
- * Returns: undefined, error, files as string
- * Author: IMcPwn
+/**
+ * @file readDir Module
+ * @summary Lists all files in a directory on the client system.
+ * @author Carleton Stuberg
+ * @see https://github.com/IMcPwn/browser-backdoor
+ * @license MIT
+ * @version 0.1
  */
 
 fs = require('fs');
 
+/**
+ * @param {String} fullPath - The full path of the directory to read from.
+ * @return {String} |error|
+ * @return {String} Files in directory
+ */
 readDir = function (fullPath) {
     fs.readdir(fullPath, 'utf8', function (err, data) {
         if (err) {

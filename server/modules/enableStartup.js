@@ -1,12 +1,10 @@
-/*
- * Copyright (c) 2016 Carleton Stuberg - http://imcpwn.com
- * BrowserBackdoorServer by IMcPwn.
- * See the file 'LICENSE' for copying permission
- *
- * Info: Enables startup of client application
- * Parameters: None
- * Returns: undefined, error, "Enabled startup"
- * Author: IMcPwn
+/**
+ * @file enableStartup Module
+ * @summary Enables startup of client application.
+ * @author Carleton Stuberg
+ * @see https://github.com/IMcPwn/browser-backdoor
+ * @license MIT
+ * @version 0.1
  */
 
 electron = require('electron');

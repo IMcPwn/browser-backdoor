@@ -1,12 +1,10 @@
-/*
- * Copyright (c) 2016 Carleton Stuberg - http://imcpwn.com
- * BrowserBackdoorServer by IMcPwn.
- * See the file 'LICENSE' for copying permission
- *
- * Info: Plays the system beep.
- * Parameters: None
- * Returns: undefined, "Beep played"
- * Author: IMcPwn
+/**
+ * @file Beep Module
+ * @summary Play a beep on the client system.
+ * @author Carleton Stuberg
+ * @see https://github.com/IMcPwn/browser-backdoor
+ * @license MIT
+ * @version 0.1
  */
 
 electron = require('electron');
