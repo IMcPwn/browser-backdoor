@@ -24,7 +24,8 @@ module Constants
         "get_cert" => "Get a free TLS certificate from LetsEncrypt",
         "pry" => "Drop into a Pry session",
         "clear" => "Clear the console screen",
-        "ls" => "List directory contents"
+        "ls" => "List directory contents",
+        "cat" => "Read the contents of a file"
     }.sort
     @infoCommands = {
         "IP" => "var xhttp = new XMLHttpRequest();xhttp.onreadystatechange = function() 
