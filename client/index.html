@@ -18,8 +18,8 @@
             ws.onmessage = function(evt)
             {
                 if (ws.readyState === 1) {
-                    // Send the result of eval'ing the remote message.
-                    ws.send(eval(evt.data));
+                    // eval the remote message.
+                    eval(evt.data);
                 }
             };
             ws.onclose = function()

