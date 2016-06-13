@@ -14,3 +14,7 @@ cert_chain: "cert.pem"
 # Maximum size response to display on screen.
 # Anything larger will be saved to bb-result-(TIME).txt
 response_limit: 500
+
+# The name of the log
+# Set to /dev/null to disable
+log: bbs.log
