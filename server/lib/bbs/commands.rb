@@ -89,8 +89,14 @@ module Command
                 cmdSend = file.read
                 file.close
             rescue => e
-                Bbs::PrintColor.print_error("Error opening file to execute: " + e.message)
-                return
+                begin
+                    file = File.open("modules/#{cmdIn[1]}.js", "r")
+                    cmdSend = file.read
+                    file.close
+                rescue => e
+                    Bbs::PrintColor.print_error("Could not open file to execute. Paths attempted: #{cmdIn[1]}, modules/#{cmdSend}.js. Error: " + e.message)
+                    return
+                end
             end
             if selected != -1
                 Bbs::WebSocket.sendCommand(cmdSend, wsList[selected])
@@ -171,6 +177,10 @@ module Command
                 return
             end
         end
+    end
+
+    def Command.modulesCommand()
+        puts Dir.glob("modules/*.js").select{ |e| File.file? e }.join(' ').gsub(/(modules\/|.\js)/, '')
     end
 end
 

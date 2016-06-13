@@ -77,6 +77,7 @@ def printWelcome(msg, host, port, secure)
     puts msg
     puts ("\nServer is listening on #{host}:#{port}" + ((secure == true) ? " securely" : "") + "...").colorize(:green)
     puts "By default, session -1 is selected which stands for all available sessions."
+    puts "To execute a module, enter exec MODULE_NAME."
     puts "Enter help for command usage."
 end
 
@@ -118,6 +119,8 @@ def cmdLine(wss, commands, infoCommands)
                 Bbs::Command.lsCommand(cmdIn.split())
             when "cat"
                 Bbs::Command.catCommand(cmdIn.split())
+            when "modules"
+                Bbs::Command.modulesCommand()
             when nil
                 next
             else
