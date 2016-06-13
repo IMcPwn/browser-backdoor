@@ -1,17 +1,21 @@
 // INTERACTIVE
-/*
- * Copyright (c) 2016 IMcPwn  - http://imcpwn.com
- * BrowserBackdoorServer by IMcPwn.
- * See the file 'LICENSE' for copying permission
- *
- * Info: Creates a file
- * Parameters: fullPath, Data in file
- * Returns: undefined, error, "File created"
- * Author: IMcPwn
+/**
+ * @file createFile Module
+ * @summary Create a file with specific contents on the client system.
+ * @author IMcPwn 
+ * @see https://github.com/IMcPwn/browser-backdoor
+ * @license MIT
+ * @version 0.1
  */
 
 fs = require('fs');
 
+/**
+ * @param {String} fullPath - The full path of the file to create.
+ * @param {String} data - The data to write to the file.
+ * @return {String} |error|
+ * @return {String} "File created"
+ */
 createFile = function (fullPath, data) {
     fs.writeFile(fullPath, data, function(err) {
         if (err) {
