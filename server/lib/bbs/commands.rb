@@ -94,7 +94,7 @@ module Command
                     cmdSend = file.read
                     file.close
                 rescue => e
-                    Bbs::PrintColor.print_error("Could not open file to execute. Paths attempted: #{cmdIn[1]}, modules/#{cmdSend}.js. Error: " + e.message)
+                    Bbs::PrintColor.print_error("Could not open file to execute. Paths attempted: #{cmdIn[1]}, modules/#{cmdIn[1]}.js. Error: " + e.message)
                     return
                 end
             end
