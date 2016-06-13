@@ -113,6 +113,8 @@ def cmdLine(wss, commands, infoCommands)
                 Bbs::Command.clearCommand()
             when "ls"
                 Bbs::Command.lsCommand(cmdIn.split())
+            when "cat"
+                Bbs::Command.catCommand(cmdIn.split())
             when nil
                 next
             else

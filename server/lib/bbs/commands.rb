@@ -157,6 +157,21 @@ module Command
             puts Dir.glob(cmdIn[1] + "/*").select{ |e| File.directory? e }.join(' ').colorize(:blue)
         end
     end
+
+    def Command.catCommand(cmdIn)
+        if cmdIn.length < 2
+            Bbs::PrintColor.print_error("Usage is cat FILE_PATH. Type help for help.")
+        else
+            begin
+                file = File.open(cmdIn[1], "r")
+                puts file.read
+                file.close
+            rescue => e
+                Bbs::PrintColor.print_error("Error opening file: " + e.message)
+                return
+            end
+        end
+    end
 end
 
 end
