@@ -8,7 +8,7 @@
  * @version 0.1
  */
 
-electron = require('electron')
+electron = require('electron');
 
 /**
  * @param {String} data - The text to write to the clipboard.
