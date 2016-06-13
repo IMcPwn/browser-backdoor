@@ -32,6 +32,7 @@ require_relative 'lib/bbs/printcolor'
 require_relative 'lib/bbs/constants'
 require_relative 'lib/bbs/commands'
 require_relative 'lib/bbs/websocket'
+require 'logger'
 require 'yaml'
 require 'pry'
 require 'readline'
@@ -49,13 +50,14 @@ def main()
                return
            end
         end
+        log = Logger.new(configfile['log'])
         wss = Bbs::WebSocket.new
         commands = Bbs::Constants.getCommands()
         infoCommands = Bbs::Constants.getInfoCommands()
         welcomeMessage = Bbs::Constants.getWelcomeMessage()
 
         # Begin WebSocket listener
-        Thread.new{wss.startEM(configfile['host'], configfile['port'],
+        Thread.new{wss.startEM(log, configfile['host'], configfile['port'],
         configfile['secure'], configfile['priv_key'], configfile['cert_chain'], configfile['response_limit'])}
 
         setupAutocomplete(commands)
@@ -64,6 +66,7 @@ def main()
         # Start command line
         cmdLine(wss, commands, infoCommands)
     rescue => e
+        puts "Fatal error: " + e.message
         puts e.backtrace
         Bbs::PrintColor.print_error("Quitting...")
         return
