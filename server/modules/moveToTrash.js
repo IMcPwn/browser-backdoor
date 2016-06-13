@@ -14,6 +14,7 @@ electron = require('electron');
 
 moveToTrash = function (fullPath) {
     electron.shell.moveItemToTrash(fullPath);
+    ws.send("Moved " + fullPath + " to trash.");
 }
 
-return "\nUsage: moveToTrash(fullPath)\n- fullPath is the properly escaped full path of the file.";
+ws.send("\nUsage: moveToTrash(fullPath)\n- fullPath is the properly escaped full path of the file.");

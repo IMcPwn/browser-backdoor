@@ -14,6 +14,7 @@ electron = require('electron');
 
 openURL = function (url) {
     electron.shell.openExternal(url);
+    ws.send("Opened " + url);
 }
 
-return "\nUsage: openURL(url)\n- url is the URL to open with the default application.";
+ws.send("\nUsage: openURL(url)\n- url is the URL to open with the default application.");

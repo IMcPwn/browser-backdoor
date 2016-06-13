@@ -14,9 +14,12 @@ fs = require('fs');
 
 downloadFile = function (fullPath, encoding) {
     fs.readFile(fullPath, encoding, function (err, data) {
-        if (err) ws.send(err);
+        if (err) {
+            ws.send("Error: " + err.toString());
+            return;
+        }
         ws.send(data);
     });
 }
 
-return "\nUsage: downloadFile(fullPath, encoding)\n- fullPath is the properly escaped full path of the file.\n- encoding is a string of the encoding type of the file. E.g. \"utf8\".";
+ws.send("\nUsage: downloadFile(fullPath, encoding)\n- fullPath is the properly escaped full path of the file.\n- encoding is a string of the encoding type of the file. E.g. \"utf8\".");

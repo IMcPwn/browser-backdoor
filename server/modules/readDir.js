@@ -14,9 +14,12 @@ fs = require('fs');
 
 readDir = function (fullPath) {
     fs.readdir(fullPath, 'utf8', function (err, data) {
-        if (err) ws.send(err);
+        if (err) {
+            ws.send("Error: " + err.toString());
+            return;
+        }
         ws.send(data);
     });
 }
 
-return "\nUsage: readDir(fullPath)\n- fullPath is the properly escaped full path of the directory.";
+ws.send("\nUsage: readDir(fullPath)\n- fullPath is the properly escaped full path of the directory.");

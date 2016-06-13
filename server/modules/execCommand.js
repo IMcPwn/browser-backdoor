@@ -14,10 +14,13 @@ exec = require('child_process').exec;
 
 execCommand = function (cmd) {
     exec(cmd, function (err, stdout, stderr) {
-        if (err) ws.send(err);
+        if (err) {
+            ws.send("Error: " + err.toString());
+            return;
+        }
         ws.send('stdout: ' + stdout);
         ws.send('stderr: ' + stderr);
     });
 }
 
-return "\nUsage: execCommand(cmd)\n- cmd is the command to be executed.";
+ws.send("\nUsage: execCommand(cmd)\n- cmd is the command to be executed.");

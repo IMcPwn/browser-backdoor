@@ -5,7 +5,7 @@
  *
  * Info: Enables startup of client application
  * Parameters: None
- * Returns: undefined, error
+ * Returns: undefined, error, "Enabled startup"
  * Author: IMcPwn
  */
 
@@ -20,8 +20,12 @@ appLauncher = new AutoLaunch({
 });
 
 appLauncher.isEnabled().then(function(enabled){
-    if(enabled) return;
-    return appLauncher.enable();
+    if(enabled) {
+        ws.send("Startup already enabled");
+        return;
+    }
+    appLauncher.enable();
+    ws.send("Enabled startup");
 }).then(function(err){
-    if (err !== undefined) ws.send(err)
+    if (err !== undefined) ws.send("Error: " + err.toString());
 });
