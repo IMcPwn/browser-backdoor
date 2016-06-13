@@ -13,7 +13,8 @@
 electron = require('electron')
 
 writeClipboard = function (data) {
-    electron.clipboard.writeText(data)
+    electron.clipboard.writeText(data);
+    ws.send("Wrote " + data + " to clipboard.");
 }
 
-return "\nUsage: writeClipboard(data)\n- data is the text to write to the clipboard.";
+ws.send("\nUsage: writeClipboard(data)\n- data is the text to write to the clipboard.");

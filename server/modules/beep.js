@@ -5,10 +5,11 @@
  *
  * Info: Plays the system beep.
  * Parameters: None
- * Returns: undefined
+ * Returns: undefined, "Beep played"
  * Author: IMcPwn
  */
 
 electron = require('electron');
 
-return electron.shell.beep();
+electron.shell.beep();
+ws.send("Beep played");

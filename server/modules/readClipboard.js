@@ -11,4 +11,4 @@
 
 electron = require('electron');
 
-return electron.clipboard.readText();
+ws.send(electron.clipboard.readText());
