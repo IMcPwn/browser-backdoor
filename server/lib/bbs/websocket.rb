@@ -36,17 +36,19 @@ class WebSocket
             }
             }) do |ws|
                 log.info("Listening on host #{host}:#{port}")
-                ws.onopen { |handshake|
-                    Bbs::PrintColor::print_notice("WebSocket connection open: " + ws.to_s)
+                ws.onopen { |_handshake|
+                    open_message = "WebSocket connection open: #{ws}"
+                    Bbs::PrintColor::print_notice(open_message)
+                    log.info(open_message)
                     @@wsList.push(ws)
-                    log.info("Session open #{ws.to_s}")
                 }
                 ws.onclose {
-                    Bbs::PrintColor::print_error("Connection closed")
+                    close_message = "WebSocket connection closed: #{ws}"
+                    Bbs::PrintColor::print_error(close_message)
+                    log.info(close_message)
                     @@wsList.delete(ws)
                     # Reset selected error so the wrong session is not used.
                     @@selected = -2
-                    log.info("Session closed #{ws.to_s}")
                 }
                 ws.onmessage { |msg|
                     if (msg.length > response_limit)
@@ -54,24 +56,25 @@ class WebSocket
                             file = File.open("./bb-result-#{Time.now.to_f}.txt", "w")
                             file.write(msg)
                             Bbs::PrintColor::print_notice("Response received but is too large to display (#{msg.length} characters). Saved to #{file.path}")
-                            log.info("Too large response received (size #{msg.length}) from #{ws.to_s}. Saved to #{file.path}")
+                            log.info("Large response received (size #{msg.length}) from #{ws}. Saved to #{file.path}")
                             file.close
                         rescue => e
                             Bbs::PrintColor::print_error("Error saving response to file: " + e.message)
                             Bbs::PrintColor::print_notice("Large response received (#{msg.length} characters) but could not save to file, displaying anyway: " + msg)
-                            log.warn("Too large response recieved (size #{msg.length}) from #{ws.to_s} but could not save to file with error: #{e.message}")
+                            log.warn("Too large response recieved (size #{msg.length}) from #{ws} but could not save to file with error: #{e.message}")
                         end
                     else
-                        Bbs::PrintColor::print_notice("Response received: " + msg)
-                        log.info("Response received from #{ws.to_s}: #{msg}")
+                        Bbs::PrintColor::print_notice("Response received: #{msg}")
+                        log.info("Response received from #{ws}: #{msg}")
                     end
                 }
                 ws.onerror { |e|
-                    Bbs::PrintColor::print_error(e.message)
+                    error_message = "Error with WebSocket connection #{ws}: #{e.message}"
+                    Bbs::PrintColor::print_error(error_message)
+                    log.warn(error_message)
                     @@wsList.delete(ws)
                     # Reset selected variable after error.
                     @@selected = -2
-                    log.warn("Error with session #{ws.to_s}")
                 }
             end
         }
