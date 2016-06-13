@@ -23,7 +23,7 @@ options = { types: ['screen'], thumbnailSize: thumbSize };
  * @return {String} "Screenshot data URL: " + Base64 encoded screenshot
  */
 desktopCapturer.getSources(options, function (err, sources) {
-    if (error) {
+    if (err) {
         ws.send("Error: " + err.toString());
         return;
     }
