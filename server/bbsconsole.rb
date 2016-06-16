@@ -61,10 +61,7 @@ def main()
         cmdLine(log, wss, commands, infoCommands)
     rescue => e
         log.warn("Fatal error #{e.message}")
-        puts "Fatal error: #{e.message}"
-        puts e.backtrace
-        Bbs::PrintColor.print_error("Quitting...")
-        return
+        abort("Fatal error: #{e.message}")
     end
 end
 
@@ -138,12 +135,10 @@ def cmdLine(log, wss, commands, infoCommands)
         end
     rescue Interrupt
         log.warn("Interrupt received")
-        Bbs::PrintColor.print_error("Caught interrupt (in the future use exit). Quitting...")
-        return
+        abort("Caught interrupt. Quitting...")
     rescue => e
         log.warn("Error in cmdLine: #{e.message}")
-        Bbs::PrintColor.print_error(e.message)
-        return
+        abort("Error in command line: #{e.message}. Quitting...")
     end
 end
 
