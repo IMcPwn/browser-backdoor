@@ -17,7 +17,7 @@ module Command
         }
     end
 
-    def Command.infoCommand(info_commands, selected, wsList)
+    def Command.infoCommand(log, info_commands, selected, wsList)
         info_commands.each {|_key, cmd|
             begin
                 if selected != -1
@@ -26,8 +26,8 @@ module Command
                     sendAllSessions(cmd, wsList)
                 end
             rescue => e
-                puts e.message
-                Bbs::PrintColor.print_error("Error sending command. Selected session may no longer exist.")
+                log.warn("Error executing info command: #{e.message}")
+                Bbs::PrintColor.print_error("Error executing info command. Session may no longer exist: #{e.message}")
                 break
             end
         }
@@ -51,7 +51,7 @@ module Command
         }
     end
 
-    def Command.execCommandLoop(wss)
+    def Command.execCommandLoop(log, wss)
         puts "Commands are sent in anonymous functions wrapped in setTimeout(fn, 0) and the eval'd results are returned."
         puts "Commands are also automatically wrapped in ws.send(), so omit any semicolons (;)."
         puts "Enter the command to send (exit to return to the previous prompt)."
@@ -71,18 +71,19 @@ module Command
                     sendAllSessions(wsSendCmd, wsList)
                 end
             rescue => e
-                Bbs::PrintColor.print_error("Error sending command: " + e.message)
+                log.warn("Error sending command in execCommandLoop: #{e.message}")
+                Bbs::PrintColor.print_error("Error sending command: #{e.message}")
                 next
             end
             Readline::HISTORY.push(cmdSend)
         end
     end
 
-    def Command.execCommand(wss, cmdIn)
+    def Command.execCommand(log, wss, cmdIn)
         selected = wss.getSelected()
         wsList = wss.getWsList()
         if cmdIn.length < 2
-            execCommandLoop(wss)
+            execCommandLoop(log, wss)
         else
             begin
                 file = File.open(cmdIn[1], "r")
@@ -94,7 +95,8 @@ module Command
                     cmdSend = file.read
                     file.close
                 rescue => e
-                    Bbs::PrintColor.print_error("Could not open file to execute. Paths attempted: #{cmdIn[1]}, modules/#{cmdIn[1]}.js. Error: " + e.message)
+                    log.warn("Could not open file to execute in execCommand: #{e.message}")
+                    Bbs::PrintColor.print_error("Could not open file to execute. Paths attempted: #{cmdIn[1]}, modules/#{cmdIn[1]}.js. Error: #{e.message}")
                     return
                 end
             end
@@ -115,11 +117,7 @@ module Command
             return
         end
         selectIn = cmdIn[1].to_i
-        if selectIn > wss.getWsList().length - 1
-            Bbs::PrintColor.print_error("Session does not exist.")
-            return
-        end
-        if Bbs::WebSocket::validSession?(selectIn, wss.getWsList())
+        if Bbs::WebSocket.validSession?(selectIn, wss.getWsList())
             wss.setSelected(selectIn)
         else
             return
@@ -164,7 +162,7 @@ module Command
         end
     end
 
-    def Command.catCommand(cmdIn)
+    def Command.catCommand(log, cmdIn)
         if cmdIn.length < 2
             Bbs::PrintColor.print_error("Usage is cat FILE_PATH. Type help for help.")
         else
@@ -173,7 +171,8 @@ module Command
                 puts file.read
                 file.close
             rescue => e
-                Bbs::PrintColor.print_error("Error opening file: " + e.message)
+                log.warn("Error opening file in cat: #{e.message}")
+                Bbs::PrintColor.print_error("Error opening file: #{e.message}")
                 return
             end
         end
