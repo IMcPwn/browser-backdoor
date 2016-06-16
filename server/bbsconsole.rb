@@ -32,7 +32,7 @@ require_relative 'lib/bbs/printcolor'
 require_relative 'lib/bbs/constants'
 require_relative 'lib/bbs/commands'
 require_relative 'lib/bbs/websocket'
-require 'logger'
+require_relative 'lib/bbs/config'
 require 'yaml'
 require 'pry'
 require 'readline'
@@ -40,17 +40,11 @@ require 'colorize'
 
 def main()
     begin
-        configfile = YAML.load_file("config.yml")
-        if configfile['secure']
-           if !File.exist?(configfile['priv_key'])
-               Bbs::PrintColor.print_error(configfile['priv_key'] + " does not exist.")
-               return
-           elsif !File.exist?(configfile['cert_chain'])
-               Bbs::PrintColor.print_error(configfile['cert_chain'] + " does not exist.")
-               return
-           end
-        end
-        log = Logger.new(configfile['log'])
+        Bbs::Config.loadConfig()
+        Bbs::Config.loadLog()
+        configfile = Bbs::Config.getConfig()
+        log = Bbs::Config.getLog()
+
         wss = Bbs::WebSocket.new
         commands = Bbs::Constants.getCommands()
         infoCommands = Bbs::Constants.getInfoCommands()
@@ -64,9 +58,10 @@ def main()
         printWelcome(welcomeMessage, configfile['host'], configfile['port'], configfile['secure'])
 
         # Start command line
-        cmdLine(wss, commands, infoCommands)
+        cmdLine(log, wss, commands, infoCommands)
     rescue => e
-        puts "Fatal error: " + e.message
+        log.warn("Fatal error #{e.message}")
+        puts "Fatal error: #{e.message}"
         puts e.backtrace
         Bbs::PrintColor.print_error("Quitting...")
         return
@@ -88,38 +83,51 @@ def setupAutocomplete(commands)
     Readline::completion_proc = cmdAuto
 end
 
-def cmdLine(wss, commands, infoCommands)
+def cmdLine(log, wss, commands, infoCommands)
+    log.info("Command line started")
     begin
         while cmdIn = Readline::readline("\nbbs > ".colorize(:cyan))
             case cmdIn.split()[0]
             when "help"
+                log.info("Help command called.")
                 Bbs::Command.helpCommand(commands)
             when "exit"
+                log.info("Exit command called.")
                 break
             when "sessions"
+                log.info("Sessions command called.")
                 Bbs::Command.sessionsCommand(wss.getSelected(), wss.getWsList())
             when "target"
+                log.info("Target command called.")
                 Bbs::Command.targetCommand(wss, cmdIn.split())
             when "info"
                 if Bbs::WebSocket.validSession?(wss.getSelected(), wss.getWsList())
-                    Bbs::Command.infoCommand(infoCommands, wss.getSelected(), wss.getWsList())
+                    log.info("Info command called.")
+                    Bbs::Command.infoCommand(log, infoCommands, wss.getSelected(), wss.getWsList())
                 end
             when "exec"
                 if Bbs::WebSocket.validSession?(wss.getSelected(), wss.getWsList())
-                    Bbs::Command.execCommand(wss, cmdIn.split())
+                    log.info("Exec command called.")
+                    Bbs::Command.execCommand(log, wss, cmdIn.split())
                 end
             when "get_cert"
+                log.info("Get_cert command called.")
                 Bbs::Command.getCertCommand()
             when "pry"
+                log.info("Pry command called.")
                 binding.pry
                 setupAutocomplete(commands)
             when "clear"
+                log.info("Clear command called.")
                 Bbs::Command.clearCommand()
             when "ls"
+                log.info("Ls command called.")
                 Bbs::Command.lsCommand(cmdIn.split())
             when "cat"
-                Bbs::Command.catCommand(cmdIn.split())
+                log.info("Cat command called.")
+                Bbs::Command.catCommand(log, cmdIn.split())
             when "modules"
+                log.info("Modules command called")
                 Bbs::Command.modulesCommand()
             when nil
                 next
@@ -129,9 +137,11 @@ def cmdLine(wss, commands, infoCommands)
             Readline::HISTORY.push(cmdIn)
         end
     rescue Interrupt
+        log.warn("Interrupt received")
         Bbs::PrintColor.print_error("Caught interrupt (in the future use exit). Quitting...")
         return
     rescue => e
+        log.warn("Error in cmdLine: #{e.message}")
         Bbs::PrintColor.print_error(e.message)
         return
     end
