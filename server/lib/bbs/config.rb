@@ -17,18 +17,16 @@ module Config
         @@configfile = YAML.load_file("config.yml")
         if @@configfile['secure']
             if !File.exist?(@@configfile['priv_key'])
-                Bbs::PrintColor.print_error(@@configfile['priv_key'] + " does not exist.")
-                exit
+                abort(@@configfile['priv_key'] + " does not exist.")
             elsif !File.exist?(@@configfile['cert_chain'])
-                Bbs::PrintColor.print_error(@@configfile['cert_chain'] + " does not exist.")
-                exit
+                abort(@@configfile['cert_chain'] + " does not exist.")
             end
-         end
+        end
     end
     
     def Config.loadLog
         if @@configfile == nil
-            Bbs::PrintColor.print_error("Config has not been loaded. Try loadConfig() first")
+            abort("Config has not been loaded. loadConfig() must be called first.")
         else
             @@log = Logger.new(@@configfile['log'])
         end
