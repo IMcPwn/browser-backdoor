@@ -23,7 +23,7 @@ module Config
                 Bbs::PrintColor.print_error(@@configfile['cert_chain'] + " does not exist.")
                 exit
             end
-         end
+        end
     end
     
     def Config.loadLog
