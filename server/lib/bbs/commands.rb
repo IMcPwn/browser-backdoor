@@ -26,8 +26,8 @@ module Command
                     sendAllSessions(cmd, wsList)
                 end
             rescue => e
-                log.warn("Error executing info command: #{e.message}")
-                Bbs::PrintColor.print_error("Error executing info command. Session may no longer exist: #{e.message}")
+                log.error("Error executing info command: #{e.message}.")
+                Bbs::PrintColor.print_error("Error executing info command: #{e.message}.")
                 break
             end
         }
@@ -71,8 +71,8 @@ module Command
                     sendAllSessions(wsSendCmd, wsList)
                 end
             rescue => e
-                log.warn("Error sending command in execCommandLoop: #{e.message}")
-                Bbs::PrintColor.print_error("Error sending command: #{e.message}")
+                log.error("Error sending command in execCommandLoop: #{e.message}.")
+                Bbs::PrintColor.print_error("Error sending command: #{e.message}.")
                 next
             end
             Readline::HISTORY.push(cmdSend)
@@ -95,8 +95,8 @@ module Command
                     cmdSend = file.read
                     file.close
                 rescue => e
-                    log.warn("Could not open file to execute in execCommand: #{e.message}")
-                    Bbs::PrintColor.print_error("Could not open file to execute. Paths attempted: #{cmdIn[1]}, modules/#{cmdIn[1]}.js. Error: #{e.message}")
+                    log.error("Could not open file to execute in execCommand: #{e.message}.")
+                    Bbs::PrintColor.print_error("Could not open file to execute. Paths attempted: #{cmdIn[1]}, modules/#{cmdIn[1]}.js. Error: #{e.message}.")
                     return
                 end
             end
@@ -171,8 +171,8 @@ module Command
                 puts file.read
                 file.close
             rescue => e
-                log.warn("Error opening file in cat: #{e.message}")
-                Bbs::PrintColor.print_error("Error opening file: #{e.message}")
+                log.error("Error opening file in cat: #{e.message}.")
+                Bbs::PrintColor.print_error("Error opening file to read: #{e.message}.")
                 return
             end
         end

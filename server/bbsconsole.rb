@@ -60,7 +60,7 @@ def main()
         # Start command line
         cmdLine(log, wss, commands, infoCommands)
     rescue => e
-        log.warn("Fatal error #{e.message}")
+        log.fatal("Fatal error #{e.message}.")
         abort("Fatal error: #{e.message}")
     end
 end
@@ -81,7 +81,7 @@ def setupAutocomplete(commands)
 end
 
 def cmdLine(log, wss, commands, infoCommands)
-    log.info("Command line started")
+    log.info("Command line started.")
     begin
         while cmdIn = Readline::readline("\nbbs > ".colorize(:cyan))
             case cmdIn.split()[0]
@@ -134,10 +134,10 @@ def cmdLine(log, wss, commands, infoCommands)
             Readline::HISTORY.push(cmdIn)
         end
     rescue Interrupt
-        log.warn("Interrupt received")
+        log.warn("Caught interrupt.")
         abort("Caught interrupt. Quitting...")
     rescue => e
-        log.warn("Error in cmdLine: #{e.message}")
+        log.fatal("Error in cmdLine: #{e.message}.")
         abort("Error in command line: #{e.message}. Quitting...")
     end
 end
