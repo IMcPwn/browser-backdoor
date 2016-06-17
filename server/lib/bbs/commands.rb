@@ -106,7 +106,7 @@ module Command
                 sendAllSessions(cmdSend, wsList)
             end
             if cmdSend.lines.first.chomp == "// INTERACTIVE"
-                execCommandLoop(wss)
+                execCommandLoop(log, wss)
             end
         end
     end
