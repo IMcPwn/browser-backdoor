@@ -61,7 +61,7 @@ class WebSocket
                         rescue => e
                             Bbs::PrintColor::print_error("Error saving response to file: " + e.message)
                             Bbs::PrintColor::print_notice("Large response received (#{msg.length} characters) but could not save to file, displaying anyway: " + msg)
-                            log.warn("Too large response recieved (size #{msg.length}) from #{ws} but could not save to file with error: #{e.message}")
+                            log.error("Too large response recieved (size #{msg.length}) from #{ws} but could not save to file with error: #{e.message}")
                         end
                     else
                         Bbs::PrintColor::print_notice("Response received: #{msg}")
@@ -71,7 +71,7 @@ class WebSocket
                 ws.onerror { |e|
                     error_message = "Error with WebSocket connection #{ws}: #{e.message}"
                     Bbs::PrintColor::print_error(error_message)
-                    log.warn(error_message)
+                    log.error(error_message)
                     @@wsList.delete(ws)
                     # Reset selected variable after error.
                     @@selected = -2

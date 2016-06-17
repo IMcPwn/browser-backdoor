@@ -15,18 +15,19 @@ module Config
     
     def Config.loadConfig
         @@configfile = YAML.load_file("config.yml")
+        # TODO: Log these aborts()
         if @@configfile['secure']
             if !File.exist?(@@configfile['priv_key'])
-                abort(@@configfile['priv_key'] + " does not exist.")
+                abort("Fatal error: " + @@configfile['priv_key'] + " does not exist but is configured in config.yml.")
             elsif !File.exist?(@@configfile['cert_chain'])
-                abort(@@configfile['cert_chain'] + " does not exist.")
+                abort("Fatal error: " + @@configfile['cert_chain'] + " does not exist but is configured in config.yml.")
             end
         end
     end
     
     def Config.loadLog
         if @@configfile == nil
-            abort("Config has not been loaded. loadConfig() must be called first.")
+            abort("Fatal error: Config has not been loaded. Config.loadConfig() must be called before Config.loadLog().")
         else
             @@log = Logger.new(@@configfile['log'])
         end
