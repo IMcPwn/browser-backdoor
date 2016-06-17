@@ -54,11 +54,13 @@ The server application's usage can be accessed by typing help in the command lin
 Installing
 ===================
 
-NodeJS and NPM are required for BrowserBackdoor.
+Requirements for client:
+- Latest Node.js and npm
 
-Ruby 2.1+ and the gems in the Gemfile are required for BrowserBackdoorServer.
+Requirements for server:
+- Ruby 2.1+ and the gems in the Gemfile
 
-BrowserBackdoor is supported on all devices supported by Electron. 
+BrowserBackdoor Client is supported on all devices supported by Electron. 
 Currently that is [Windows 32/64, OS X 64, and Linux 32/64](https://github.com/electron-userland/electron-packager#supported-platforms).
 
 BrowserBackdoorServer has been tested on Ubuntu 14.04, Debian 8, and Kali Linux. 
@@ -71,34 +73,39 @@ git clone https://github.com/IMcPwn/browser-backdoor
 cd browser-backdoor
 ```
 
-How to install and run the BrowserBackdoor Electron application.
+How to install and run the BrowserBackdoor client application:
 
 ```sh
 cd client
 npm install
-# Configure index.html and main.js before the next command
+#
+# Configure index.html and main.js before the next command.
+#
 npm start
 ```
 
-Building executables for all platforms. (see [here](https://github.com/electron-userland/electron-packager) for more information)
+How to build client executables (see [here](https://github.com/electron-userland/electron-packager) for more information):
 ```sh
 cd client
 npm install electron-packager -g
 electron-packager . --all
 ```
 
-How to install and run BrowserBackdoorServer.
+How to run BrowserBackdoorServer:
+
 ```sh
 cd server
 gem install bundler
 bundle install
+#
 # Configure config.yml before the next command
+#
 ruby bbsconsole.rb
 ```
 
 License
 ===================
-MIT License
+MIT
 
 Disclaimer
 ===================
