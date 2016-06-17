@@ -2,19 +2,11 @@ language: ruby
 rvm:
   - 2.1.5
 
-addons:
-  apt:
-    packages:
-    - xvfb
-
 gemfile: server/Gemfile
 
 env: NODE_VERSION=4
 
 install:
-  - export DISPLAY=':99.0'
-  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-  
   - git clone https://github.com/creationix/nvm.git /tmp/.nvm
   - source /tmp/.nvm/nvm.sh
   - nvm install $NODE_VERSION
