@@ -64,7 +64,7 @@ function manageStartup(enable) {
 }
 
 function createWindow() {
-    // Change CommandOrControl+Alt+\ to the shortcut to manage the application.
+    // You can change CommandOrControl+Alt+\ to the shortcut to manage the application.
     globalShortcut.register('CommandOrControl+Alt+\\', function () {
         let result = dialog.showMessageBox({
             type: 'info',
@@ -104,6 +104,13 @@ function createWindow() {
     });
 }
 
+/*
+Uncomment the below code to allow certificate errors.
+WARNING! This should only be used if you have a self signed certificate as
+this will allow the client to MiTM'd. Use with caution!
+*/
+//app.commandLine.appendSwitch('ignore-certificate-errors');
+
 // Only allow one instance of the application at a time.
 const shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => {
     if (mainWindow === null) {
@@ -141,10 +148,6 @@ app.on('will-quit', function() {
     globalShortcut.unregisterAll();
 });
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-app.on('ready', createWindow);
-
 // Re-open if all windows are closed.
 app.on('window-all-closed', function() {
     createWindow();
@@ -156,3 +159,7 @@ app.on('activate', function() {
         createWindow();
     }
 });
+
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+app.on('ready', createWindow);
