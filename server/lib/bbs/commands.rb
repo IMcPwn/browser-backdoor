@@ -121,6 +121,8 @@ module Command
 
     def self.uglifyJS(js)
         begin
+            require 'therubyracer'
+            require 'execjs'
             require 'uglifier'
             return Uglifier.new.compile(js)
         rescue => e
