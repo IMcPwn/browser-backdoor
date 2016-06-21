@@ -79,7 +79,7 @@ module Command
         end
     end
 
-    def Command.execCommand(log, wss, cmdIn)
+    def Command.execCommand(log, wss, obfuscate, cmdIn)
         selected = wss.getSelected()
         wsList = wss.getWsList()
         if cmdIn.length < 2
@@ -89,11 +89,19 @@ module Command
                 file = File.open(cmdIn[1], "r")
                 cmdSend = file.read
                 file.close
+                if obfuscate
+                    cmdSend = obfuscateJS(cmdSend)
+                    return if cmdSend == nil
+                end
             rescue => e
                 begin
                     file = File.open("modules/#{cmdIn[1]}.js", "r")
                     cmdSend = file.read
                     file.close
+                    if obfuscate
+                        cmdSend = obfuscateJS(cmdSend)
+                        return if cmdSend == nil
+                    end
                 rescue => e
                     log.error("Could not open file to execute in execCommand: #{e.message}.")
                     Bbs::PrintColor.print_error("Could not open file to execute. Paths attempted: #{cmdIn[1]}, modules/#{cmdIn[1]}.js. Error: #{e.message}.")
@@ -108,6 +116,18 @@ module Command
             if cmdSend.lines.first.chomp == "// INTERACTIVE"
                 execCommandLoop(log, wss)
             end
+        end
+    end
+
+    def self.obfuscateJS(js)
+        begin
+            require 'uglifier'
+            return Uglifier.new.compile(js)
+        rescue => e
+            error_message = "Error obfuscating JavaScript code: #{e.message}."
+            log.error(error_message)
+            Bbs::PrintColor.print_error(error_message)
+            return
         end
     end
 
