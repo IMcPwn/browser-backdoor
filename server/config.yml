@@ -19,6 +19,6 @@ response_limit: 500
 # Set to /dev/null to disable.
 log: bbs.log
 
-# Obfuscate JavaScript source
-# when sending to client.
-obfuscate: true
+# Compress module code
+# when sending to client with UglifyJS.
+uglify: true

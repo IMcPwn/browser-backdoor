@@ -105,7 +105,7 @@ def cmdLine(log, wss, configfile, commands, infoCommands)
             when "exec"
                 if Bbs::WebSocket.validSession?(wss.getSelected(), wss.getWsList())
                     log.info("Exec command called.")
-                    Bbs::Command.execCommand(log, wss, configfile['obfuscate'], cmdIn.split())
+                    Bbs::Command.execCommand(log, wss, configfile['uglify'], cmdIn.split())
                 end
             when "get_cert"
                 log.info("Get_cert command called.")

@@ -79,7 +79,7 @@ module Command
         end
     end
 
-    def Command.execCommand(log, wss, obfuscate, cmdIn)
+    def Command.execCommand(log, wss, uglify, cmdIn)
         selected = wss.getSelected()
         wsList = wss.getWsList()
         if cmdIn.length < 2
@@ -89,8 +89,8 @@ module Command
                 file = File.open(cmdIn[1], "r")
                 cmdSend = file.read
                 file.close
-                if obfuscate
-                    cmdSend = obfuscateJS(cmdSend)
+                if uglify
+                    cmdSend = uglifyJS(cmdSend)
                     return if cmdSend == nil
                 end
             rescue => e
@@ -98,8 +98,8 @@ module Command
                     file = File.open("modules/#{cmdIn[1]}.js", "r")
                     cmdSend = file.read
                     file.close
-                    if obfuscate
-                        cmdSend = obfuscateJS(cmdSend)
+                    if uglify
+                        cmdSend = uglifyJS(cmdSend)
                         return if cmdSend == nil
                     end
                 rescue => e
@@ -119,7 +119,7 @@ module Command
         end
     end
 
-    def self.obfuscateJS(js)
+    def self.uglifyJS(js)
         begin
             require 'uglifier'
             return Uglifier.new.compile(js)
