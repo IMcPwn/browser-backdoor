@@ -22,11 +22,11 @@ module Constants
         "info" => "Get session information (IP, User Agent, Operating System, Language).",
         "exec" => "Execute commands on the targeted session interactively. Provide an argument to execute a file's contents (e.g. a module).",
         "get_cert" => "Get a free TLS certificate from LetsEncrypt.",
-        "pry" => "Drop into a Pry session.",
+        "pry" => "Drop into a local Pry session.",
         "clear" => "Clear the console screen.",
-        "ls" => "List directory contents.",
-        "cat" => "Read the contents of a file.",
-        "modules" => "List all modules in modules directory. To execute a module use exec MODULE_NAME."
+        "ls" => "List local directory contents.",
+        "cat" => "Read the contents of a local file.",
+        "modules" => "List all modules in modules directory. To execute a module enter exec MODULE_NAME."
     }.sort
     @infoCommands = {
         "IP" => "var xhttp = new XMLHttpRequest();xhttp.onreadystatechange = function() 
