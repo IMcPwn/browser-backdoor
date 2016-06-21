@@ -87,33 +87,31 @@ module Command
         else
             begin
                 file = File.open(cmdIn[1], "r")
-                cmdSend = file.read
+                fileContent = file.read
+                cmdSend = fileContent
                 file.close
-                if uglify
-                    cmdSend = uglifyJS(cmdSend)
-                    return if cmdSend == nil
-                end
             rescue => e
                 begin
                     file = File.open("modules/#{cmdIn[1]}.js", "r")
-                    cmdSend = file.read
+                    fileContent = file.read
+                    cmdSend = fileContent
                     file.close
-                    if uglify
-                        cmdSend = uglifyJS(cmdSend)
-                        return if cmdSend == nil
-                    end
                 rescue => e
                     log.error("Could not open file to execute in execCommand: #{e.message}.")
                     Bbs::PrintColor.print_error("Could not open file to execute. Paths attempted: #{cmdIn[1]}, modules/#{cmdIn[1]}.js. Error: #{e.message}.")
                     return
                 end
             end
+            if uglify
+                cmdSend = uglifyJS(cmdSend)
+                return if cmdSend == nil
+            end
             if selected != -1
                 Bbs::WebSocket.sendCommand(cmdSend, wsList[selected])
             else
                 sendAllSessions(cmdSend, wsList)
             end
-            if cmdSend.lines.first.chomp == "// INTERACTIVE"
+            if fileContent.lines.first.chomp == "// INTERACTIVE"
                 execCommandLoop(log, wss)
             end
         end
