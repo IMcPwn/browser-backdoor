@@ -58,7 +58,7 @@ def main()
         printWelcome(welcomeMessage, configfile['host'], configfile['port'], configfile['secure'])
 
         # Start command line
-        cmdLine(log, wss, commands, infoCommands)
+        cmdLine(log, wss, configfile, commands, infoCommands)
     rescue => e
         log.fatal("Fatal error #{e.message}.")
         abort("Fatal error: #{e.message}")
@@ -80,7 +80,7 @@ def setupAutocomplete(commands)
     Readline::completion_proc = cmdAuto
 end
 
-def cmdLine(log, wss, commands, infoCommands)
+def cmdLine(log, wss, configfile, commands, infoCommands)
     log.info("Command line started.")
     begin
         while cmdIn = Readline::readline("\nbbs > ".colorize(:cyan))
@@ -105,7 +105,7 @@ def cmdLine(log, wss, commands, infoCommands)
             when "exec"
                 if Bbs::WebSocket.validSession?(wss.getSelected(), wss.getWsList())
                     log.info("Exec command called.")
-                    Bbs::Command.execCommand(log, wss, cmdIn.split())
+                    Bbs::Command.execCommand(log, wss, configfile['uglify'], cmdIn.split())
                 end
             when "get_cert"
                 log.info("Get_cert command called.")
