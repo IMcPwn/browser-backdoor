@@ -15,6 +15,10 @@ cert_chain: "cert.pem"
 # Anything larger will be saved to bb-result-(TIME).txt
 response_limit: 500
 
-# The name of the log
-# Set to /dev/null to disable
+# The name of the log.
+# Set to /dev/null to disable.
 log: bbs.log
+
+# Obfuscate JavaScript source
+# when sending to client.
+obfuscate: true
