@@ -26,7 +26,7 @@
 
         function pullConfig(url) {
             var request = new XMLHttpRequest();
-            request.open('get', url, false);
+            request.open("GET", url, false);
             request.send();
 
             if (request.readyState === 4 && request.status === 200) {
@@ -56,7 +56,7 @@
                     wsConnect(url);
                 }
             }, timeout);
-        };
+        }
 
         main();
     </script>
