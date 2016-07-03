@@ -81,7 +81,8 @@ class WebSocket
     def self.writeScreenshot(msg, ws, log)
         begin
             encodedImage = msg.gsub(/Screenshot data URL: data:image\/png;base64,/, "")
-            image = Base64.decode64(encodedImage)
+            if encodedImage == "" then raise "Screenshot is empty" end
+            image = Base64.strict_decode64(encodedImage)
             file = File.open("./bb-result-#{Time.now.to_f}.png", "w")
             file.write(image)
             Bbs::PrintColor.print_notice("Screenshot received (size #{msg.length} characters). Saved to #{file.path}")
