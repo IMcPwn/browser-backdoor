@@ -197,7 +197,24 @@ module Command
     end
 
     def Command.modulesCommand()
-        puts Dir.glob("modules/*.js").select{ |e| File.file? e }.join(' ').gsub(/(modules\/|.\js)/, '')
+        puts "Modules with a star (*) afterwords are interactive modules."
+        puts
+        modules = Dir.glob("modules/*.js").select{ |e| File.file? e }
+        modules.each do |currModule|
+            begin
+                file = File.open(currModule)
+                fileContent = file.read
+                file.close
+                print currModule.gsub(/(modules\/|.\js)/, '')
+                if fileContent.lines.first.chomp == "// INTERACTIVE"
+                  print "*"
+                end
+                print " "
+            rescue => e
+                Bbs::PrintColor.print_error("Error reading modules: #{e.message}.")
+                return
+            end
+        end
     end
 end
 
