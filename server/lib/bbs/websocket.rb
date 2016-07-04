@@ -83,14 +83,14 @@ class WebSocket
             encodedImage = msg.gsub(/Screenshot data URL: data:image\/png;base64,/, "")
             if encodedImage == "" then raise "Screenshot is empty" end
             image = Base64.strict_decode64(encodedImage)
-            file = File.open("./bb-result-#{Time.now.to_f}.png", "w")
+            file = File.open("./bb-screenshot-#{Time.now.to_f}.png", "w")
             file.write(image)
             Bbs::PrintColor.print_notice("Screenshot received (size #{msg.length} characters). Saved to #{file.path}")
             log.info("Screenshot received (size #{msg.length}) from #{ws}. Saved to #{file.path}")
             file.close
         rescue => e
             Bbs::PrintColor.print_error("Error converting incoming screenshot to PNG automatically (#{e.message}). Attempting to save as .txt")
-            log.error("Screenshot received (size #{msg.length}) from #{ws} but could not conver to PNG automatically with error: #{e.message}")
+            log.error("Screenshot received (size #{msg.length}) from #{ws} but could not convert to PNG automatically with error: #{e.message}")
             Bbs::WebSocket.writeResult(msg, ws, log)
         end
     end
