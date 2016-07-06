@@ -22,7 +22,7 @@ module Config
                 abort("Fatal error: Certificate chain (#{@@configfile['cert_chain']}) does not exist but is configured in config.yml.")
             end
         end
-        if !File.exists?(@@configfile['out_location'])
+        if !File.exist?(@@configfile['out_location'])
             begin
                 Dir.mkdir(@@configfile['out_location'])
             rescue => e
