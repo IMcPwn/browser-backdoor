@@ -116,4 +116,4 @@ Contact
 ===================
 This program is made by Carleton Stuberg.
 
-Contact information such as email, twitter, and other methods of contact are avaliable here: http://imcpwn.com
+Contact information such as email, twitter, and other methods of contact are avaliable here: http://carleton.tech
