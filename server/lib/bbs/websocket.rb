@@ -83,7 +83,7 @@ class WebSocket
     def self.writeWebm(msg, ws, log)
         begin
             encodedWebm = msg.gsub(/Webm data URL: data:(audio|video)\/webm;base64,/, "")
-            if encodedWebm == "" then raise "Webm is empty" end
+            if encodedWebm == "" || encodedWebm == "Webm data URL: data:" then raise "Webm is empty" end
             webm = Base64.strict_decode64(encodedWebm)
             if msg.match(/Webm data URL: data:audio\/webm;base64,/)
                 file = File.open("./bb-audio-#{Time.now.to_f}.webm", "w")
