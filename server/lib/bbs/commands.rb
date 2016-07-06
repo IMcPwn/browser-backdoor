@@ -122,7 +122,7 @@ module Command
             require 'uglifier'
             return Uglifier.new.compile(js)
         rescue => e
-            error_message = "Error obfuscating JavaScript code: #{e.message}."
+            error_message = "Error running UglifyJS on JavaScript code: #{e.message}."
             log.error(error_message)
             Bbs::PrintColor.print_error(error_message)
             return
