@@ -211,8 +211,8 @@ module Command
                 end
                 print " "
             rescue => e
-                Bbs::PrintColor.print_error("Error reading modules: #{e.message}.")
-                return
+                Bbs::PrintColor.print_error("Error reading module #{currModule}: #{e.message}.")
+                next
             end
         end
     end
