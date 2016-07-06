@@ -20,14 +20,16 @@ webcamMicrophone = function(video, audio, time) {
         video: video,
         audio: audio
     }, function(localMediaStream) {
-        var soundBlob = window.URL.createObjectURL(localMediaStream);
-        recordedChunks = [];
+        var recordedChunks = [];
 
-        mediaRecorder = new MediaRecorder(localMediaStream);
+        var mediaRecorder = new MediaRecorder(localMediaStream);
         mediaRecorder.ondataavailable = handleDataAvailable;
         mediaRecorder.start();
         setTimeout(function(mediaRecorder, recordedChunks) {
             mediaRecorder.stop();
+            for (var i = 0; i < localMediaStream.getTracks().length; i++) {
+                localMediaStream.getTracks()[i].stop();
+            }
             sendData(recordedChunks);
         }, time, mediaRecorder, recordedChunks);
 
