@@ -25,7 +25,7 @@ class WebSocket
     def setWsList(newWsList)
         @@wsList = newWsList
     end
-    def startEM(log, host, port, secure, priv_key, cert_chain, response_limit)
+    def startEM(log, host, port, secure, priv_key, cert_chain, response_limit, outLoc)
         EM.run {
             EM::WebSocket.run({
                 :host => host,
@@ -52,7 +52,7 @@ class WebSocket
                     @@selected = -2
                 }
                 ws.onmessage { |msg|
-                    Bbs::WebSocket.detectResult(msg, ws, log, response_limit)
+                    Bbs::WebSocket.detectResult(msg, ws, log, response_limit, outLoc)
                 }
                 ws.onerror { |e|
                     error_message = "Error with WebSocket connection #{ws}: #{e.message}"
@@ -66,13 +66,13 @@ class WebSocket
         }
     end
 
-    def self.detectResult(msg, ws, log, response_limit)
+    def self.detectResult(msg, ws, log, response_limit, outLoc)
         if msg.start_with?("Screenshot data URL: data:image/png;base64,")
-            Bbs::WebSocket.writeScreenshot(msg, ws, log)
+            Bbs::WebSocket.writeScreenshot(msg, ws, log, outLoc)
         elsif msg.start_with?("Webm data URL: data:")
-            Bbs::WebSocket.writeWebm(msg, ws, log)
+            Bbs::WebSocket.writeWebm(msg, ws, log, outLoc)
         elsif msg.length > response_limit
-            Bbs::WebSocket.writeResult(msg, ws, log)
+            Bbs::WebSocket.writeResult(msg, ws, log, outLoc)
         # TODO: Detect other result types
         else
             Bbs::PrintColor.print_notice("Response received: #{msg}")
@@ -80,15 +80,15 @@ class WebSocket
         end
     end
 
-    def self.writeWebm(msg, ws, log)
+    def self.writeWebm(msg, ws, log, outLoc)
         begin
             encodedWebm = msg.gsub(/Webm data URL: data:(audio|video)\/webm;base64,/, "")
             if encodedWebm == "" || encodedWebm == "Webm data URL: data:" then raise "Webm is empty" end
             webm = Base64.strict_decode64(encodedWebm)
             if msg.match(/Webm data URL: data:audio\/webm;base64,/)
-                file = File.open("./bb-audio-#{Time.now.to_f}.webm", "w")
+                file = File.open(outLoc + "/bb-audio-#{Time.now.to_f}.webm", "w")
             else
-                file = File.open("./bb-video-#{Time.now.to_f}.webm", "w")
+                file = File.open(outLoc + "/bb-video-#{Time.now.to_f}.webm", "w")
             end
             file.write(webm)
             Bbs::PrintColor.print_notice("Webm received (size #{msg.length} characters). Saved to #{file.path}")
@@ -97,16 +97,16 @@ class WebSocket
         rescue => e
             Bbs::PrintColor.print_error("Error converting incoming encoded webm to webm automatically (#{e.message}). Attempting to save as .txt")
             log.error("Encoded webm received (size #{msg.length}) from #{ws} but could not convert to webm automatically with error: #{e.message}")
-            Bbs::WebSocket.writeResult(msg, ws, log)
+            Bbs::WebSocket.writeResult(msg, ws, log, outLoc)
         end
     end
 
-    def self.writeScreenshot(msg, ws, log)
+    def self.writeScreenshot(msg, ws, log, outLoc)
         begin
             encodedImage = msg.gsub(/Screenshot data URL: data:image\/png;base64,/, "")
             if encodedImage == "" then raise "Screenshot is empty" end
             image = Base64.strict_decode64(encodedImage)
-            file = File.open("./bb-screenshot-#{Time.now.to_f}.png", "w")
+            file = File.open(outLoc + "/bb-screenshot-#{Time.now.to_f}.png", "w")
             file.write(image)
             Bbs::PrintColor.print_notice("Screenshot received (size #{msg.length} characters). Saved to #{file.path}")
             log.info("Screenshot received (size #{msg.length}) from #{ws}. Saved to #{file.path}")
@@ -118,9 +118,9 @@ class WebSocket
         end
     end
 
-    def self.writeResult(msg, ws, log)
+    def self.writeResult(msg, ws, log, outLoc)
         begin
-            file = File.open("./bb-result-#{Time.now.to_f}.txt", "w")
+            file = File.open(outLoc + "/bb-result-#{Time.now.to_f}.txt", "w")
             file.write(msg)
             Bbs::PrintColor.print_notice("Response received but is too large to display (#{msg.length} characters). Saved to #{file.path}")
             log.info("Large response received (size #{msg.length}) from #{ws}. Saved to #{file.path}")

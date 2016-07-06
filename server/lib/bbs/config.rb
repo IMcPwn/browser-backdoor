@@ -15,12 +15,18 @@ module Config
     
     def Config.loadConfig
         @@configfile = YAML.load_file("config.yml")
-        # TODO: Log these aborts()
         if @@configfile['secure']
             if !File.exist?(@@configfile['priv_key'])
-                abort("Fatal error: " + @@configfile['priv_key'] + " does not exist but is configured in config.yml.")
+                abort("Fatal error: Private key (#{@@configfile['priv_key']}) does not exist but is configured in config.yml.")
             elsif !File.exist?(@@configfile['cert_chain'])
-                abort("Fatal error: " + @@configfile['cert_chain'] + " does not exist but is configured in config.yml.")
+                abort("Fatal error: Certificate chain (#{@@configfile['cert_chain']}) does not exist but is configured in config.yml.")
+            end
+        end
+        if !File.exists?(@@configfile['out_location'])
+            begin
+                Dir.mkdir(@@configfile['out_location'])
+            rescue => e
+                abort("Fatal error: Output folder (#{@@configfile['out_location']}) cannot be created because of error: #{e.message}")
             end
         end
     end
