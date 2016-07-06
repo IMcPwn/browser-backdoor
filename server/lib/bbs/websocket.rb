@@ -69,12 +69,35 @@ class WebSocket
     def self.detectResult(msg, ws, log, response_limit)
         if msg.start_with?("Screenshot data URL: data:image/png;base64,")
             Bbs::WebSocket.writeScreenshot(msg, ws, log)
+        elsif msg.start_with?("Webm data URL: data:")
+            Bbs::WebSocket.writeWebm(msg, ws, log)
         elsif msg.length > response_limit
             Bbs::WebSocket.writeResult(msg, ws, log)
         # TODO: Detect other result types
         else
             Bbs::PrintColor.print_notice("Response received: #{msg}")
             log.info("Response received from #{ws}: #{msg}")
+        end
+    end
+
+    def self.writeWebm(msg, ws, log)
+        begin
+            encodedWebm = msg.gsub(/Webm data URL: data:(audio|video)\/webm;base64,/, "")
+            if encodedWebm == "" then raise "Webm is empty" end
+            webm = Base64.strict_decode64(encodedWebm)
+            if msg.match(/Webm data URL: data:audio\/webm;base64,/)
+                file = File.open("./bb-audio-#{Time.now.to_f}.webm", "w")
+            else
+                file = File.open("./bb-video-#{Time.now.to_f}.webm", "w")
+            end
+            file.write(webm)
+            Bbs::PrintColor.print_notice("Webm received (size #{msg.length} characters). Saved to #{file.path}")
+            log.info("Webm received (size #{msg.length}) from #{ws}. Saved to #{file.path}")
+            file.close
+        rescue => e
+            Bbs::PrintColor.print_error("Error converting incoming encoded webm to webm automatically (#{e.message}). Attempting to save as .txt")
+            log.error("Encoded webm received (size #{msg.length}) from #{ws} but could not convert to webm automatically with error: #{e.message}")
+            Bbs::WebSocket.writeResult(msg, ws, log)
         end
     end
 
@@ -89,8 +112,8 @@ class WebSocket
             log.info("Screenshot received (size #{msg.length}) from #{ws}. Saved to #{file.path}")
             file.close
         rescue => e
-            Bbs::PrintColor.print_error("Error converting incoming screenshot to PNG automatically (#{e.message}). Attempting to save as .txt")
-            log.error("Screenshot received (size #{msg.length}) from #{ws} but could not convert to PNG automatically with error: #{e.message}")
+            Bbs::PrintColor.print_error("Error converting incoming encoded screenshot to PNG automatically (#{e.message}). Attempting to save as .txt")
+            log.error("Encoded screenshot received (size #{msg.length}) from #{ws} but could not convert to PNG automatically with error: #{e.message}")
             Bbs::WebSocket.writeResult(msg, ws, log)
         end
     end
