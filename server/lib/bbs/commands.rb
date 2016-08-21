@@ -103,7 +103,7 @@ module Command
                 end
             end
             if uglify
-                cmdSend = uglifyJS(cmdSend)
+                cmdSend = uglifyJS(log, cmdSend)
                 return if cmdSend == nil
             end
             if selected != -1
@@ -117,7 +117,7 @@ module Command
         end
     end
 
-    def self.uglifyJS(js)
+    def self.uglifyJS(log, js)
         begin
             require 'uglifier'
             return Uglifier.new.compile(js)
