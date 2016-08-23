@@ -21,7 +21,7 @@ log: bbs.log
 
 # Compress module code
 # when sending to client with UglifyJS.
-uglify: true
+uglify: false
 
 # Directory for output files.
 # Set to . to use the current directory.
