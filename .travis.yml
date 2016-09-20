@@ -2,9 +2,10 @@ language: ruby
 rvm:
   - 2.1.5
 
-addons:		
-  apt:		
-    packages:		
+addons:
+  apt:
+    packages:
+      - wine
       - xvfb
 
 gemfile: server/Gemfile
