@@ -40,12 +40,12 @@ module Command
         end
         puts "The session ID with astericks is the currently targeted session."
         puts "If no target is selected (ID -1), all sessions are targeted."
-        puts "ID : Identifier"
+        puts "ID / IP / Identifier"
         wsList.each_with_index {|val, index|
             if index == selected
-                current = "*" + index.to_s + "*" + " : " + val.to_s
+                current = "*" + index.to_s + "*" + " / " + Bbs::WebSocket.convertIP(val) + " / " + val.to_s
             else
-                current = index.to_s + " : " + val.to_s
+                current = index.to_s + " / " + Bbs::WebSocket.convertIP(val) + " / " + val.to_s
             end
             puts current
         }
