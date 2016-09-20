@@ -116,4 +116,4 @@ Contact
 ===================
 This program is made by IMcPwn .
 
-Contact information such as email, twitter, and other methods of contact are avaliable here: http://IMcPwn.tech
+Contact information such as email, twitter, and other methods of contact are avaliable here: https://imcpwn.com
