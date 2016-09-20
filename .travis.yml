@@ -2,6 +2,11 @@ language: ruby
 rvm:
   - 2.1.5
 
+addons:		
+  apt:		
+    packages:		
+      - xvfb
+
 gemfile: server/Gemfile
 
 env: NODE_VERSION=4
