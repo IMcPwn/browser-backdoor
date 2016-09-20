@@ -5,7 +5,7 @@ rvm:
 addons:		
   apt:		
     packages:		
-      - xvfb
+      - wine
 
 gemfile: server/Gemfile
 
