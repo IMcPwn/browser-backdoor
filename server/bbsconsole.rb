@@ -124,8 +124,11 @@ def cmdLine(log, wss, configfile, commands, infoCommands)
                 log.info("Cat command called.")
                 Bbs::Command.catCommand(log, cmdIn.split())
             when "modules"
-                log.info("Modules command called")
+                log.info("Modules command called.")
                 Bbs::Command.modulesCommand()
+            when "rm"
+                log.info("Rm command called.")
+                Bbs::Command.rmCommand(log, cmdIn.split())
             when nil
                 next
             else
