@@ -196,6 +196,20 @@ module Command
         end
     end
 
+    def Command.rmCommand(log, cmdIn)
+        if cmdIn.length < 2
+            Bbs::PrintColor.print_error("Usage is rm FILE_PATH. Type help for help.")
+        else
+            begin
+                File.delete(cmdIn[1])
+            rescue => e
+                log.error("Error deleting file in rm: #{e.message}.")
+                Bbs::PrintColor.print_error("Error deleting file: #{e.message}.")
+                return
+            end
+        end
+    end
+
     def Command.modulesCommand()
         puts "Modules with a star (*) afterwords are interactive modules."
         puts

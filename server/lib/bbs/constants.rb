@@ -26,7 +26,8 @@ module Constants
         "clear" => "Clear the console screen.",
         "ls" => "List local directory contents.",
         "cat" => "Read the contents of a local file.",
-        "modules" => "List all modules in modules directory. To execute a module enter exec MODULE_NAME."
+        "modules" => "List all modules in modules directory. To execute a module enter exec MODULE_NAME.",
+        "rm" => "Delete a local file."
     }.sort
     @infoCommands = {
         "USER_AGENT" => "ws.send(\"User agent: \" + navigator.appVersion);",
