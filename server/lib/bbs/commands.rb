@@ -131,7 +131,7 @@ module Command
 
     def Command.targetCommand(wss, cmdIn)
         if cmdIn.length < 2
-            Bbs::PrintColor.print_error("Usage is target SESSION_ID. Type help for help.")
+            Bbs::PrintColor.print_notice("Currently targeted session is #{wss.getSelected()}.")
             return
         end
         selectIn = cmdIn[1].to_i
