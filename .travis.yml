@@ -2,22 +2,7 @@ language: ruby
 rvm:
   - 2.1.5
 
-addons:
-  apt:
-    packages:
-      - wine
-      - xvfb
-
 gemfile: server/Gemfile
-
-env: NODE_VERSION=4
-
-install:
-  - git clone https://github.com/creationix/nvm.git /tmp/.nvm
-  - source /tmp/.nvm/nvm.sh
-  - nvm install $NODE_VERSION
-  - nvm use $NODE_VERSION
-  - npm install electron-packager -g
 
 script:
   - bash tools/cibuild.sh
