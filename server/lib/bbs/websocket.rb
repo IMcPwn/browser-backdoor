@@ -44,7 +44,7 @@ class WebSocket
                     @@wsList.push(ws)
                 }
                 ws.onclose {
-                    close_message = "WebSocket connection closed: #{ws} from " + Bbs::WebSocket.convertIP(ws)
+                    close_message = "WebSocket connection closed: #{ws}"
                     Bbs::PrintColor.print_error(close_message)
                     log.info(close_message)
                     @@wsList.delete(ws)
@@ -67,7 +67,12 @@ class WebSocket
     end
 
     def self.convertIP(ws)
-        return ws.get_peername[2,6].unpack('nC4')[1..4].join('.')
+        begin
+            return ws.get_peername[2,6].unpack('nC4')[1..4].join('.')
+        rescue => e
+            Bbs::PrintColor.print_error("Error converting WebSocket connection #{ws} to IP address.")
+            log.error("Unable to convert #{ws} to IP address with error: #{e.message}")
+        end
     end
 
     def self.detectResult(msg, ws, log, response_limit, outLoc)
