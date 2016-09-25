@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/IMcPwn/browser-backdoor",
   "devDependencies": {
-    "electron-prebuilt": "^1.1.2",
-    "auto-launch": "2.0.1"
+    "electron-prebuilt": "^1.1.2"
+  },
+  "dependencies": {
+    "auto-launch": "5.0.1" 
   }
 }
