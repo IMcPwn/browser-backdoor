@@ -27,4 +27,4 @@ createFileForce = function (fullPath, data, encoding) {
     }); 
 }
 
-ws.send("\nUsage: createFileForce(fullPath, data, encoding)\n- fullPath is the properly escaped full path of the file.\n- data is the text to write to the file.\n- encoding is a string of the encoding type of the data. E.g. \"utf8\"."");
+ws.send("\nUsage: createFileForce(fullPath, data, encoding)\n- fullPath is the properly escaped full path of the file.\n- data is the text to write to the file.\n- encoding is a string of the encoding type of the data. E.g. \"utf8\".");
