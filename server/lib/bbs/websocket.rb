@@ -58,9 +58,6 @@ class WebSocket
                     error_message = "Error with WebSocket connection #{ws} from " + Bbs::WebSocket.convertIP(ws) + ": #{e.message}"
                     Bbs::PrintColor.print_error(error_message)
                     log.error(error_message)
-                    @@wsList.delete(ws)
-                    # Reset selected variable after error.
-                    @@selected = -2
                 }
             end
         }
