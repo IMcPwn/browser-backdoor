@@ -19,11 +19,12 @@ fs = require('fs');
 createFile = function (fullPath, data) {
     fs.writeFile(fullPath, data, function(err) {
         if (err) {
-            ws.send("Error: " + err.toString());
-            return;
+            ws.send("Error creating file: " + err.toString());
+        }
+        else {
+            ws.send("Created " + fullPath);
         }
     }); 
-    ws.send("File created");
 }
 
 ws.send("\nUsage: createFile(fullPath, data)\n- fullPath is the properly escaped full path of the file.\n- data is the text to write to the file.");

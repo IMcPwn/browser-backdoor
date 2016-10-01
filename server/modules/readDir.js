@@ -18,10 +18,10 @@ fs = require('fs');
 readDir = function (fullPath) {
     fs.readdir(fullPath, 'utf8', function (err, data) {
         if (err) {
-            ws.send("Error: " + err.toString());
-            return;
+            ws.send("Error reading directory: " + err.toString());
+        } else {
+            ws.send(data);
         }
-        ws.send(data);
     });
 }
 
