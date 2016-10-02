@@ -9,7 +9,7 @@ port: 1234
 # Requires valid private key and certificate.
 secure: false
 priv_key: "privkey.pem"
-cert_chain: "cert.pem"
+cert_chain: "fullchain.pem"
 
 # Maximum size response to display on screen.
 # Anything larger will be saved to bb-result-(TIME).txt
