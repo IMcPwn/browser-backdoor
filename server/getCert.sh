@@ -14,12 +14,12 @@ echo "Downloading certbot"
 wget https://dl.eff.org/certbot-auto
 chmod a+x certbot-auto
 
-printf "Enter the domain for the certificate: "
+printf "Enter the domain for the certificate (getCert.sh only supports one domain per use): "
 read -r domain
 
 ./certbot-auto certonly --standalone --domain "$domain"
 
-echo "Creating symlinks for privkey.pem and cert.pem"
+echo "Creating symlinks for privkey.pem and fullchain.pem"
 if [[ -e $(pwd)/privkey.pem || -h $(pwd)/privkey.pem ]]
 then
     printf "privkey.pem already exists. Delete? y | n: "
@@ -32,18 +32,18 @@ then
         exit
     fi
 fi
-if [[ -e $(pwd)/cert.pem || -h $(pwd)/cert.pem ]]
+if [[ -e $(pwd)/fullchain.pem || -h $(pwd)/fullchain.pem ]]
 then
-    printf "cert.pem already exists. Delete? y | n: "
+    printf "fullchain.pem already exists. Delete? y | n: "
     read -r deleteCert
     if [[ $deleteCert == "y" ]]
     then
-        rm -f "$(pwd)/cert.pem"
+        rm -f "$(pwd)/fullchain.pem"
     else
         echo "Quitting"
         exit
     fi
 fi
 ln -s "/etc/letsencrypt/live/$domain/privkey.pem" "$(pwd)"
-ln -s "/etc/letsencrypt/live/$domain/cert.pem" "$(pwd)"
-echo "privkey.pem and cert.pem should be in the current directory."
+ln -s "/etc/letsencrypt/live/$domain/fullchain.pem" "$(pwd)"
+echo "privkey.pem and fullchain.pem should be in the current directory."
