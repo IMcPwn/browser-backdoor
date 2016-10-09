@@ -26,6 +26,7 @@ class WebSocket
         @@wsList = newWsList
     end
     def startEM(log, host, port, secure, priv_key, cert_chain, response_limit, outLoc)
+        log.info("Listening on host #{host}:#{port}")
         EM.run {
             EM::WebSocket.run({
                 :host => host,
@@ -36,7 +37,6 @@ class WebSocket
                     :cert_chain_file => cert_chain
             }
             }) do |ws|
-                log.info("Listening on host #{host}:#{port}")
                 ws.onopen { |_handshake|
                     open_message = "WebSocket connection open: #{ws} from " + Bbs::WebSocket.convertIP(ws)
                     Bbs::PrintColor.print_notice(open_message)
