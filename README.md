@@ -35,8 +35,6 @@ Support
 
 If you find an issue with the program please use the issue tracker: https://github.com/IMcPwn/browser-backdoor/issues
 
-For general help/support join the Discord server: [![Discord](https://img.shields.io/badge/Discord-%23BrowserBackdoor-blue.svg)](https://discord.gg/013wk2VPnnuw9iLmU)
-
 Wiki
 ===================
 Screenshots are avaliable on the Wiki!
