@@ -1,4 +1,4 @@
-BrowserBackdoor [![Build Status](https://travis-ci.org/IMcPwn/browser-backdoor.svg?branch=master)](https://travis-ci.org/IMcPwn/browser-backdoor) [![Code Climate](https://codeclimate.com/github/IMcPwn/browser-backdoor/badges/gpa.svg)](https://codeclimate.com/github/IMcPwn/browser-backdoor) [![License](https://img.shields.io/badge/license-MIT-orange.svg)](https://github.com/IMcPwn/browser-backdoor/blob/master/LICENSE) [![Discord](https://img.shields.io/badge/Discord-%23BrowserBackdoor-blue.svg)](https://discord.gg/013wk2VPnnuw9iLmU)
+BrowserBackdoor [![Build Status](https://travis-ci.org/IMcPwn/browser-backdoor.svg?branch=master)](https://travis-ci.org/IMcPwn/browser-backdoor) [![Code Climate](https://codeclimate.com/github/IMcPwn/browser-backdoor/badges/gpa.svg)](https://codeclimate.com/github/IMcPwn/browser-backdoor) [![License](https://img.shields.io/badge/license-MIT-orange.svg)](https://github.com/IMcPwn/browser-backdoor/blob/master/LICENSE)
 ===================
 
  [![Screenshots](https://github.com/IMcPwn/browser-backdoor/wiki/images/BbsConsole.png)](https://github.com/IMcPwn/browser-backdoor/wiki/Screenshots)
