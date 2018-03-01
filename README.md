@@ -13,20 +13,15 @@ It will not have access to the Electron API of the host computer unless the Brow
 
 Some things you can do if you have access to the Electron API:
 
-1. [Open new browser windows that can point to any website.]
-(http://electron.atom.io/docs/api/shell/#shellopenexternalurl-options) (already built-in. See: [server/modules/openURL.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/openURL.js)).
+1. [Open new browser windows that can point to any website.](http://electron.atom.io/docs/api/shell/#shellopenexternalurl-options) (already built-in. See: [server/modules/openURL.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/openURL.js)).
 
-2. [Change and read the clipboard.]
-(http://electron.atom.io/docs/api/clipboard/#clipboard) (already built-in. See: [server/modules/readClipboard.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/readClipboard.js) and [server/modules/writeClipboard.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/writeClipboard.js)).
+2. [Change and read the clipboard.](http://electron.atom.io/docs/api/clipboard/#clipboard) (already built-in. See: [server/modules/readClipboard.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/readClipboard.js) and [server/modules/writeClipboard.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/writeClipboard.js)).
 
-3. [Access cross-platform Operating System notifications and the tray on OS X and Windows.]
-(http://electron.atom.io/docs/api/tray/#tray)
+3. [Access cross-platform Operating System notifications and the tray on OS X and Windows.](http://electron.atom.io/docs/api/tray/#tray)
 
-4. [Take screenshots.]
-(http://electron.atom.io/docs/api/desktop-capturer/#desktopcapturer) (already built-in. See: [server/modules/screenshot.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/screenshot.js)).
+4. [Take screenshots.](http://electron.atom.io/docs/api/desktop-capturer/#desktopcapturer) (already built-in. See: [server/modules/screenshot.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/screenshot.js)).
 
-5. [Execute arbitrary system commands.]
-(http://stackoverflow.com/a/28394895) (already built-in. See: [server/modules/execCommand.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/execCommand.js))
+5. [Execute arbitrary system commands.](http://stackoverflow.com/a/28394895) (already built-in. See: [server/modules/execCommand.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/execCommand.js))
 
 6. [Run at startup.](https://www.npmjs.com/package/auto-launch) (already built-in. See: [client/main.js](https://github.com/IMcPwn/browser-backdoor/blob/master/client/main.js) and [server/modules/manageStartup.js](https://github.com/IMcPwn/browser-backdoor/blob/master/server/modules/manageStartup.js)).
 
@@ -44,7 +39,7 @@ More information will be added to it soon.
 
 Usage
 ===================
-The client application will run in the background and provide no user interface while running. 
+The client application will run in the background and provide no user interface while running.
 To check that it's running, quit it, or enable/disable system startup press Command (OS X) OR Control (Windows/Linux) + Alt + \ or whatever you configured the shortcut as in client/main.js.
 
 The server application's usage can be accessed by typing help in the command line.
@@ -58,10 +53,10 @@ Requirements for client:
 Requirements for server:
 - Ruby 2.1+ and the gems in the Gemfile
 
-BrowserBackdoor Client is supported on all devices supported by Electron. 
+BrowserBackdoor Client is supported on all devices supported by Electron.
 Currently that is [Windows 32/64, OS X 64, and Linux 32/64](https://github.com/electron-userland/electron-packager#supported-platforms).
 
-BrowserBackdoorServer has been tested on Ubuntu 14.04, Debian 8, and Kali Linux. 
+BrowserBackdoorServer has been tested on Ubuntu 14.04, Debian 8, and Kali Linux.
 It should work on any similar Linux operating system.
 
 To install anything, first, clone the repository. All the rest of the commands shown assume you are in the root of the repository.
